@@ -13,6 +13,15 @@
   --ok:#1a7f45;--ok-bg:#e8f5ee;--warn:#b45309;--warn-bg:#fef3e2;
   --danger:#c0392b;--danger-bg:#fdecea;--info:#1558b0;--info-bg:#e8f0fe;
   --shadow:0 1px 4px #1a223318;
+
+/* ── DARK THEME (applied via body.dark) ── */
+body.dark{
+  --bg:#0d1117;--surface:#161b22;--card:#1c2430;--border:#30363d;
+  --text:#e6edf3;--muted:#8b949e;
+  --ok:#2ea44f;--ok-bg:#0a2014;--warn:#d29922;--warn-bg:#261e08;
+  --danger:#f85149;--danger-bg:#2a0808;--info:#58a6ff;--info-bg:#0d1e36;
+  --shadow:0 1px 6px #00000055;
+}
   --c-analgesic:#d4520a;--c-analgesic-bg:#fff2eb;--c-analgesic-bd:#f0883e55;
   --c-nsaid:#7c3aed;--c-nsaid-bg:#f3f0ff;--c-nsaid-bd:#a78bfa55;
   --c-antibiotic:#1558b0;--c-antibiotic-bg:#e8f0fe;--c-antibiotic-bd:#58a6ff55;
@@ -56,15 +65,36 @@ body{display:flex;flex-direction:column;min-height:100vh;}
 .leftnav-inner{overflow-y:auto;flex:1;padding:4px 0 20px;}
 .leftnav-inner::-webkit-scrollbar{width:3px;}
 .leftnav-inner::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-.cat-hdr{display:flex;align-items:center;gap:7px;padding:9px 12px 4px;
-  font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;}
+/* ── COLLAPSIBLE CATEGORY HEADERS ── */
+.cat-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;cursor:pointer;user-select:none;
+  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  transition:background .1s;border-radius:0;
+}
+.cat-hdr:hover{background:var(--card);}
+.cat-hdr-left{display:flex;align-items:center;gap:7px;}
 .cat-pip{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
-.drug-item{display:flex;align-items:center;width:100%;padding:7px 12px 7px 22px;
+.cat-arrow{font-size:10px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.cat-arrow.open{transform:rotate(180deg);}
+/* ── DRUG ITEMS WITHIN COLLAPSIBLE GROUP ── */
+.cat-group{overflow:hidden;transition:max-height .25s ease;}
+.cat-group.collapsed{max-height:0 !important;}
+.drug-item{
+  display:flex;align-items:center;width:100%;padding:7px 12px 7px 26px;
   background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--sans);
-  font-size:12.5px;text-align:left;transition:background .1s,color .1s;border-left:3px solid transparent;}
+  font-size:12px;text-align:left;transition:background .1s,color .1s;border-left:3px solid transparent;
+}
 .drug-item:hover{background:var(--card);color:var(--text);}
 .drug-item.active{color:var(--text);font-weight:600;}
 .drug-item.hidden{display:none;}
+/* ── THEME TOGGLE BUTTON ── */
+.theme-btn{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:5px 10px;cursor:pointer;font-size:13px;line-height:1;
+  transition:all .15s;color:var(--text);
+}
+.theme-btn:hover{border-color:var(--info);}
 .no-results{padding:12px 14px;font-size:12px;color:var(--muted);font-style:italic;}
 /* CENTER */
 .center{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
@@ -283,6 +313,15 @@ body{display:flex;flex-direction:column;min-height:100vh;}
 footer{background:var(--surface);border-top:1px solid var(--border);
   padding:9px 16px;text-align:center;font-size:10px;color:var(--muted);flex-shrink:0;}
 footer strong{color:var(--text);}
+/* ── DARK THEME OVERRIDES ── */
+body.dark .emerg-item{background:var(--card);}
+body.dark .field input, body.dark .field select{background:#0d1117;color:var(--text);}
+body.dark .pres-btn{background:var(--card);}
+body.dark .nav-search{background:#0d1117;color:var(--text);}
+body.dark .drawer-search{background:#0d1117;color:var(--text);}
+body.dark .hdr{background:var(--surface);}
+body.dark .rx-text{color:var(--text);}
+body.dark .theme-btn{background:var(--card);}
 </style>
 </head>
 <body>
@@ -295,6 +334,7 @@ footer strong{color:var(--text);}
     </div>
   </div>
   <div class="hdr-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
     <div class="pt-switch" id="ptSwitch">
       <button class="pt-btn ped-active" id="btn-ped" onclick="setPatientType('ped')">👶 Pediátrico</button>
       <button class="pt-btn" id="btn-adult" onclick="setPatientType('adult')">🧑 Adulto</button>
@@ -1532,7 +1572,26 @@ function freqN(f) {
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
+// ── THEME ──────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('prescriber_theme', isDark ? 'dark' : 'light'); } catch(e) {}
+}
+function applyStoredTheme() {
+  try {
+    const t = localStorage.getItem('prescriber_theme');
+    if (t === 'dark') {
+      document.body.classList.add('dark');
+      const btn = document.getElementById('themeBtn');
+      if (btn) btn.textContent = '☀️';
+    }
+  } catch(e) {}
+}
+
 window.onload = () => {
+  applyStoredTheme();
   buildNav('leftnav-inner');
   buildNav('drawerBody');
   renderEmergList();
@@ -1545,24 +1604,59 @@ window.onload = () => {
 function buildNav(targetId) {
   const el = document.getElementById(targetId);
   if (!el) return;
+  const suffix = targetId.replace(/[^a-z]/gi, '');
   let html = '';
-  CAT_ORDER.forEach(cat => {
-    const drugs = Object.entries(DRUGS).filter(([,d])=>d.cat===cat);
+  CAT_ORDER.forEach((cat, idx) => {
+    const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
     if (!drugs.length) return;
     const c = CATS[cat];
-    html += `<div class="cat-hdr" data-cat="${safe(cat)}">
-      <span class="cat-pip" style="background:${safe(c.color)}"></span>
-      <span style="color:${safe(c.color)}">${safe(c.name)}</span>
-    </div>`;
+    const isOpen = CAT_OPEN[cat] !== undefined ? CAT_OPEN[cat] : false;
+    const groupId = `cg-${cat}-${suffix}`;
+    const arrowId = `ca-${cat}-${suffix}`;
+    const mh = drugs.length * 36 + 4;
+    html += `<div class="cat-hdr" data-cat="${safe(cat)}" onclick="toggleCat('${safe(cat)}')">
+      <div class="cat-hdr-left">
+        <span class="cat-pip" style="background:${safe(c.color)}"></span>
+        <span style="color:${safe(c.color)}">${safe(c.name)}</span>
+        <span style="color:var(--muted);font-size:8px;margin-left:3px">(${drugs.length})</span>
+      </div>
+      <span class="cat-arrow ${isOpen ? 'open' : ''}" id="${arrowId}">▼</span>
+    </div>
+    <div class="cat-group${isOpen ? '' : ' collapsed'}" id="${groupId}" style="max-height:${isOpen ? mh : 0}px">`;
     drugs.forEach(([key,d]) => {
-      const hasCI = d.pedCI ? ' style="position:relative"' : '';
       html += `<button class="drug-item cat-${safe(cat)}"
         data-key="${safe(key)}"
         data-name="${safe((d.name+'|'+d.class+'|'+d.ind+'|'+d.mech).toLowerCase())}"
-        onclick="selectDrug('${safe(key)}')"${hasCI}>${safe(d.name)}${d.pedCI?'<span style="color:var(--danger);font-size:9px;margin-left:4px">⚠</span>':''}</button>`;
+        onclick="selectDrug('${safe(key)}')">${safe(d.name)}${d.pedCI ? '<span style="color:var(--danger);font-size:9px;margin-left:3px">⚠</span>' : ''}</button>`;
     });
+    html += `</div>`;
   });
   el.innerHTML = html;
+}
+
+// Track open/closed state per category — all collapsed by default
+const CAT_OPEN = {};
+
+function toggleCat(cat) {
+  CAT_OPEN[cat] = !CAT_OPEN[cat];
+  const isOpen = CAT_OPEN[cat];
+  const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
+  const mh = drugs.length * 36 + 4;
+  ['leftnav-inner', 'drawerBody'].forEach(navId => {
+    const suffix = navId.replace(/[^a-z]/gi, '');
+    const group = document.getElementById(`cg-${cat}-${suffix}`);
+    const arrow = document.getElementById(`ca-${cat}-${suffix}`);
+    if (!group) return;
+    if (isOpen) {
+      group.classList.remove('collapsed');
+      group.style.maxHeight = mh + 'px';
+      if (arrow) arrow.classList.add('open');
+    } else {
+      group.classList.add('collapsed');
+      group.style.maxHeight = '0px';
+      if (arrow) arrow.classList.remove('open');
+    }
+  });
 }
 
 // ── SMART SEARCH ───────────────────────────────────────────────────────────
@@ -1584,10 +1678,39 @@ function filterNav(query, targetId='leftnav-inner') {
       const nm = b.dataset.name || '';
       const match = !q || nm.includes(q);
       b.classList.toggle('hidden', !match);
-      if (match) { visibleCats.add(b.className.replace(/.*cat-(\w+).*/,'$1')); noRes = false; }
+      if (match) {
+        const catMatch = (b.className.match(/cat-(\w+)/) || [])[1];
+        if (catMatch) visibleCats.add(catMatch);
+        noRes = false;
+      }
     });
     catHdrs.forEach(h => {
-      h.style.display = (!q || visibleCats.has(h.dataset.cat)) ? '' : 'none';
+      const cat = h.dataset.cat;
+      const show = !q || visibleCats.has(cat);
+      h.style.display = show ? '' : 'none';
+      // Auto-expand matched categories when searching
+      if (q && show) {
+        const suffix = id.replace(/[^a-z]/gi, '');
+        const group = document.getElementById(`cg-${cat}-${suffix}`);
+        const arrow = document.getElementById(`ca-${cat}-${suffix}`);
+        if (group) {
+          const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
+          const mh = drugs.length * 36 + 4;
+          group.classList.remove('collapsed');
+          group.style.maxHeight = mh + 'px';
+          if (arrow) arrow.classList.add('open');
+        }
+      } else if (!q) {
+        // Restore collapsed state when search cleared
+        const suffix = id.replace(/[^a-z]/gi, '');
+        const group = document.getElementById(`cg-${cat}-${suffix}`);
+        const arrow = document.getElementById(`ca-${cat}-${suffix}`);
+        if (group && !CAT_OPEN[cat]) {
+          group.classList.add('collapsed');
+          group.style.maxHeight = '0px';
+          if (arrow) arrow.classList.remove('open');
+        }
+      }
     });
     el.querySelector('.no-results')?.remove();
     if (noRes && q) {
@@ -1604,16 +1727,18 @@ function selectDrug(key) {
   if (!DRUGS[key]) return;
   currentDrug = key; currentPres = null;
   currentVia  = Object.keys(DRUGS[key].routes)[0];
+  // Auto-expand category of selected drug
+  const cat = DRUGS[key].cat;
+  if (!CAT_OPEN[cat]) { CAT_OPEN[cat] = true; toggleCat(cat); }
   document.querySelectorAll('.drug-item').forEach(b => {
     b.classList.remove('active');
     b.style.background=''; b.style.borderLeftColor='transparent'; b.style.color='';
   });
   document.querySelectorAll(`.drug-item[data-key="${key}"]`).forEach(b => {
-    const cat = DRUGS[key].cat;
     b.classList.add('active');
-    b.style.background     = `var(--c-${cat}-bg)`;
-    b.style.borderLeftColor= `var(--c-${cat})`;
-    b.style.color          = `var(--c-${cat})`;
+    b.style.background      = `var(--c-${cat}-bg)`;
+    b.style.borderLeftColor = `var(--c-${cat})`;
+    b.style.color           = `var(--c-${cat})`;
   });
   switchMod('calc'); setBnav('calc'); closeDrawer();
   renderDrug(key);
