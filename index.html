@@ -376,15 +376,122 @@ footer{background:var(--surface);border-top:1px solid var(--border);
   padding:10px 16px;text-align:center;font-size:10px;color:var(--muted);flex-shrink:0;letter-spacing:.2px;font-family:'Plus Jakarta Sans',sans-serif;}
 footer strong{color:var(--text);font-weight:700;}
 /* ── DARK THEME OVERRIDES ── */
-body.dark .emerg-item{background:var(--card);}
-body.dark .field input, body.dark .field select{background:#0d1117;color:var(--text);}
-body.dark .field input:focus,.field.dark select:focus{background:#161b22;}
-body.dark .pres-btn{background:var(--card);}
-body.dark .nav-search{background:#0d1117;color:var(--text);}
-body.dark .drawer-search{background:#0d1117;color:var(--text);}
-body.dark .hdr{background:var(--surface);}
-body.dark .rx-text{color:var(--text);}
-body.dark .theme-btn{background:var(--card);}
+/* ════ COMPREHENSIVE DARK MODE ════ */
+body.dark .pat-card,body.dark .dose-card,body.dark .rx-box,
+body.dark .emerg-drug-card,body.dark .group-card,body.dark .gdl-item,
+body.dark .pres-btn{background:#161b22;border-color:#30363d;color:#e6edf3;}
+body.dark .di{background:#1c2430;border-color:#30363d;}
+body.dark .dil-card{background:#0a2014;border-color:#2ea44f40;}
+body.dark .dil-text{color:#7ee787;}
+body.dark .pat-summary{background:#1c2430;border-color:#30363d;}
+body.dark .emerg-item,body.dark .emax-item{background:#1c2430;border-color:#f8514930;}
+body.dark .emerg-box{background:#2a0808;border-color:#f8514960;}
+body.dark .weight-req{background:#2a0808;border-color:#f8514960;}
+body.dark .contrain-box.cb-danger{background:#2a0808;}
+body.dark .contrain-box.cb-warn{background:#261e08;}
+body.dark .field input,body.dark .field select{background:#0d1117 !important;color:#e6edf3 !important;border-color:#30363d !important;}
+body.dark .field input:focus,body.dark .field select:focus{background:#161b22 !important;border-color:#58a6ff !important;}
+body.dark .nav-search,body.dark .drawer-search{background:#0d1117 !important;color:#e6edf3 !important;border-color:#30363d !important;}
+body.dark .hdr{background:#161b22 !important;border-bottom-color:#30363d;}
+body.dark .mod-tabs,body.dark .bottomnav,body.dark footer{background:#161b22;border-color:#30363d;}
+body.dark .mod-tab:hover{background:#1c2430;}
+body.dark .leftnav{background:#161b22;border-color:#30363d;}
+body.dark .cat-hdr:hover,body.dark .drug-item:hover,body.dark .drug-item.active,body.dark .edc-hdr:hover{background:#1c2430;}
+body.dark .drawer-hdr,body.dark .drawer-body{background:#161b22;border-color:#30363d;}
+body.dark .rx-text,body.dark .copy-btn,body.dark .via-btn,body.dark .theme-btn{color:#e6edf3;}
+body.dark .copy-btn,body.dark .via-btn,body.dark .theme-btn{background:#1c2430;border-color:#30363d;}
+body.dark .note-bar.nb-info{background:#0d1e36;color:#79c0ff;border-left-color:#58a6ff;}
+body.dark .note-bar.nb-warn{background:#261e08;color:#e3b341;border-left-color:#d29922;}
+body.dark .al-info{background:#0d1e36;border-color:#58a6ff40;color:#79c0ff;}
+body.dark .al-warn{background:#261e08;border-color:#d2992240;color:#e3b341;}
+body.dark .al-danger{background:#2a0808;border-color:#f8514940;color:#ff7b72;}
+body.dark .emax-note{background:#261e08;border-color:#fbbf2440;color:#e3b341;}
+body.dark .type-badge.tb-ped{background:#0a2014;color:#7ee787;border-color:#2ea44f40;}
+body.dark .type-badge.tb-adult{background:#0d1e36;color:#79c0ff;border-color:#58a6ff40;}
+body.dark .cat-count{background:#1c2430;border-color:#30363d;}
+body.dark .renal-alert{background:#261e08;border-color:#fbbf2440;color:#e3b341;}
+body.dark .nav-search-wrap{border-color:#30363d;}
+body.dark .pres-section h3,body.dark .sec-label,body.dark .di-lbl,body.dark .ei-label,body.dark .emax-lbl{color:#8b949e;}
+body.dark .drug-name{color:inherit;}
+body.dark .drug-class{color:#8b949e;}
+/* Safety modules dark */
+body.dark .safety-panel,body.dark .allergy-chip,body.dark .interaction-item{background:#161b22;border-color:#30363d;}
+body.dark .allergy-chip{background:#2a0808;border-color:#f8514940;color:#ff7b72;}
+
+/* ════ SAFETY MODULES ════ */
+/* Allergy panel */
+.safety-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.safety-panel-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.safety-panel-title{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;}
+.allergy-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.allergy-chip{display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+  background:var(--danger-bg);color:var(--danger);border:1px solid #f8514950;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:default;}
+.allergy-chip .rm-btn{background:none;border:none;cursor:pointer;color:var(--danger);
+  font-size:13px;line-height:1;padding:0;margin-left:2px;opacity:.7;}
+.allergy-chip .rm-btn:hover{opacity:1;}
+.allergy-input-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.allergy-input{flex:1;min-width:140px;padding:6px 10px;border:1px solid var(--border);
+  border-radius:7px;background:var(--card);color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;outline:none;
+  transition:border .15s;}
+.allergy-input:focus{border-color:var(--danger);}
+.allergy-add-btn{padding:6px 12px;border-radius:7px;border:1px solid #f8514950;
+  background:var(--danger-bg);color:var(--danger);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.allergy-add-btn:hover{background:var(--danger);color:#fff;}
+.no-allergy{font-size:11.5px;color:var(--muted);font-style:italic;}
+
+/* Dose validation warning */
+.dose-block-warning{
+  background:#2a0808;border:2px solid #f8514980;border-radius:10px;
+  padding:14px 16px;margin-bottom:14px;
+}
+.dose-block-warning.warn-level{background:var(--warn-bg);border-color:#fbbf2480;}
+.dbw-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.dbw-icon{font-size:20px;}
+.dbw-title{font-size:12px;font-weight:800;color:var(--danger);
+  font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.3px;}
+.dose-block-warning.warn-level .dbw-title{color:var(--warn);}
+.dbw-body{font-size:12px;color:#ff7b72;line-height:1.65;font-weight:500;}
+.dose-block-warning.warn-level .dbw-body{color:var(--warn);}
+.dbw-values{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.dbw-val{background:#ffffff18;padding:5px 10px;border-radius:6px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#ff7b72;}
+.dose-block-warning.warn-level .dbw-val{color:var(--warn);background:var(--card);}
+
+/* Interactions panel */
+.interaction-panel{background:var(--warn-bg);border:1px solid #fbbf2455;
+  border-radius:10px;padding:13px 14px;margin-bottom:14px;}
+.interaction-panel-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.interaction-panel-title{font-size:10px;font-weight:800;color:var(--warn);
+  text-transform:uppercase;letter-spacing:.8px;font-family:'Plus Jakarta Sans',sans-serif;}
+.interaction-item{display:flex;gap:10px;align-items:flex-start;
+  padding:9px 12px;background:var(--surface);border:1px solid #fbbf2440;
+  border-radius:8px;margin-bottom:6px;font-size:11.5px;line-height:1.55;}
+.interaction-item:last-child{margin-bottom:0;}
+.interaction-sev{font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;
+  flex-shrink:0;margin-top:1px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.3px;}
+.sev-major{background:var(--danger-bg);color:var(--danger);border:1px solid #f8514950;}
+.sev-moderate{background:var(--warn-bg);color:var(--warn);border:1px solid #fbbf2450;}
+.sev-minor{background:var(--info-bg);color:var(--info);border:1px solid #58a6ff50;}
+
+/* Prescribed drugs list */
+.prescribed-list{display:flex;gap:5px;flex-wrap:wrap;}
+.px-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;
+  border-radius:20px;font-size:11px;font-weight:700;background:var(--info-bg);
+  color:var(--info);border:1px solid #58a6ff40;font-family:'Plus Jakarta Sans',sans-serif;}
+.px-chip .rm-btn{background:none;border:none;cursor:pointer;color:var(--info);
+  font-size:13px;line-height:1;padding:0;opacity:.7;}
+.px-chip .rm-btn:hover{opacity:1;}
+
+/* Allergy match alert */
+.allergy-match-alert{background:#2a0808;border:2px solid #f8514980;border-radius:9px;
+  padding:10px 13px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start;
+  font-size:12px;color:#ff7b72;line-height:1.55;font-weight:600;}
 </style>
 </head>
 <body>
@@ -465,6 +572,49 @@ body.dark .theme-btn{background:var(--card);}
             * Peso obligatorio en modo pediátrico. Talla real obligatoria para SC. Peso ≤50 kg → dosificación por mg/kg siempre.
           </div>
         </div>
+        <!-- SAFETY PANEL: Allergies + Active Prescriptions -->
+        <div class="safety-panel" id="safetyPanel">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <!-- ALLERGIES -->
+            <div style="flex:1;min-width:220px;">
+              <div class="safety-panel-hdr">
+                <span class="safety-panel-title">🚫 Alergias conocidas</span>
+              </div>
+              <div class="allergy-row" id="allergyChips">
+                <span class="no-allergy" id="noAllergyMsg">Sin alergias registradas</span>
+              </div>
+              <div class="allergy-input-row">
+                <input type="text" class="allergy-input" id="allergyInput"
+                  placeholder="ej. Penicilina, Sulfa, AINE..."
+                  onkeydown="if(event.key==='Enter')addAllergy()">
+                <button class="allergy-add-btn" onclick="addAllergy()">+ Agregar</button>
+              </div>
+            </div>
+            <!-- ACTIVE PRESCRIPTIONS -->
+            <div style="flex:1;min-width:220px;">
+              <div class="safety-panel-hdr">
+                <span class="safety-panel-title">💊 Prescripciones activas</span>
+                <button onclick="clearPrescribed()" style="font-size:10px;background:none;border:none;
+                  color:var(--muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
+                  font-weight:600;padding:0;text-decoration:underline;">Limpiar</button>
+              </div>
+              <div class="prescribed-list" id="prescribedChips">
+                <span class="no-allergy" id="noPxMsg">Ninguna prescrita aún</span>
+              </div>
+            </div>
+          </div>
+          <!-- INTERACTION PANEL (hidden until ≥2 drugs) -->
+          <div id="interactionPanel" style="display:none;margin-top:12px;">
+            <div class="interaction-panel">
+              <div class="interaction-panel-hdr">
+                <span style="font-size:16px">⚠️</span>
+                <span class="interaction-panel-title">Interacciones detectadas</span>
+              </div>
+              <div id="interactionList"></div>
+            </div>
+          </div>
+        </div>
+
         <div id="calcPanel">
           <div class="drug-empty" id="drugEmpty">
             <div class="drug-empty-icon">🔍</div>
@@ -2189,6 +2339,528 @@ function renderGrupos() {
 
 function openGrupo(cat) { gruposSubview = cat;  renderGrupos(); }
 function backGrupos()   { gruposSubview = null; renderGrupos(); }
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  CLINICAL SAFETY MODULE — Prescriber v2.1
+//  1. Dose validation with hard blocks and warnings
+//  2. Allergy registry with cross-check against active drug
+//  3. Drug interaction matrix (clinically significant pairs)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const ALLERGIES    = [];   // string array of allergy entries
+const PRESCRIBED   = [];   // array of { key, name, cat }
+
+// ── INTERACTION DATABASE ───────────────────────────────────────────────────
+// Format: [drugA, drugB, severity ('major'|'moderate'|'minor'), description]
+const INTERACTIONS = [
+  // Opioids + BZDs
+  ['morfina','diazepam','major',
+    'Depresión respiratoria sinérgica potencialmente fatal. Monitoreo continuo SpO₂/FR obligatorio. Reducir dosis de ambos 25-50%.'],
+  ['morfina','midazolam','major',
+    'Depresión respiratoria y del SNC sinérgica. Riesgo de apnea. Evitar o usar con monitoreo en UCI.'],
+  ['tramadol','diazepam','moderate',
+    'Potenciación de depresión del SNC. Sedación excesiva. Reducir dosis y monitorear.'],
+  ['tramadol','midazolam','moderate',
+    'Potenciación sedación SNC. Precaución especial en ancianos y pediátrico.'],
+  // Tramadol serotonergic
+  ['tramadol','metamizol','minor',
+    'Tramadol tiene actividad serotoninérgica. Combinación habitual pero monitorear síntomas serotoninérgicos.'],
+  // QT prolongation
+  ['azitromicina','ondansetron','major',
+    'PROLONGACIÓN QT ADITIVA. Riesgo de torsades de pointes y fibrilación ventricular. Contraindicado.'],
+  ['azitromicina','metoclopramida','major',
+    'Prolongación QT aditiva. Riesgo de arritmias graves. Evitar combinación.'],
+  ['ondansetron','metoclopramida','moderate',
+    'Efecto antagónico (5-HT3 bloqueado vs 5-HT4 agonismo). Reduce eficacia procinética de metoclopramida.'],
+  // NSAIDs interactions
+  ['ibuprofeno','ketorolac','major',
+    'Dos AINEs sistémicos simultáneos. Riesgo muy aumentado de sangrado GI, nefrotoxicidad y úlcera. CONTRAINDICADO.'],
+  ['diclofenac','ketorolac','major',
+    'Dos AINEs sistémicos. Riesgo muy aumentado de sangrado GI y nefrotoxicidad. CONTRAINDICADO.'],
+  ['ibuprofeno','diclofenac','major',
+    'Dos AINEs sistémicos. Toxicidad aditiva GI y renal. CONTRAINDICADO combinar.'],
+  ['ketorolac','metamizol','moderate',
+    'AINEs + dipirona: potenciación de toxicidad GI y renal. Evitar; si necesario, monitorear función renal.'],
+  ['ibuprofeno','metamizol','moderate',
+    'Potenciación riesgo GI y renal. Usar solo si beneficio supera riesgo, con gastroprotección (IBP).'],
+  ['diclofenac','metamizol','moderate',
+    'Potenciación riesgo GI y renal. Monitorear y usar con IBP.'],
+  // Corticosteroids + NSAIDs
+  ['prednisona','ibuprofeno','moderate',
+    'Riesgo aumentado de sangrado GI y úlcera péptica. Usar IBP (omeprazol) de protección.'],
+  ['prednisona','diclofenac','moderate',
+    'Riesgo aumentado de sangrado GI. Añadir omeprazol como gastroprotección.'],
+  ['prednisona','ketorolac','major',
+    'Riesgo muy elevado de hemorragia GI. Evitar combinación. Si imprescindible: IBP + monitoreo estricto.'],
+  ['hidrocortisona','ibuprofeno','moderate',
+    'Riesgo aumentado de complicaciones GI. Añadir gastroprotección.'],
+  ['dexametasona','ibuprofeno','moderate',
+    'Riesgo aumentado de sangrado GI. Añadir omeprazol.'],
+  // ACE inhibitors + NSAIDs
+  ['captopril','ibuprofeno','moderate',
+    'AINEs reducen eficacia antihipertensiva de IECA y aumentan riesgo nefrotóxico. Monitorear PA y función renal.'],
+  ['enalapril','ibuprofeno','moderate',
+    'AINEs reducen eficacia de IECA y aumentan riesgo nefrotóxico. Monitorear PA y creatinina.'],
+  ['captopril','ketorolac','major',
+    'Ketorolac puede antagonizar IECA y causar falla renal aguda. Evitar combinación.'],
+  ['enalapril','ketorolac','major',
+    'Riesgo de falla renal aguda. Monitorear función renal si combinación inevitable.'],
+  ['labetalol','furosemida','moderate',
+    'Hipotensión aditiva potencial. Iniciar con dosis bajas; monitorear PA.'],
+  // Aminoglycosides
+  ['gentamicina','furosemida','major',
+    'OTOTOXICIDAD Y NEFROTOXICIDAD ADITIVAS. Riesgo de daño auditivo y renal permanente. Evitar. Si imprescindible: monitorear niveles, creatinina y audiometría.'],
+  ['gentamicina','ketorolac','major',
+    'Nefrotoxicidad aditiva. Contraindicado. Monitorear creatinina estrictamente si inevitable.'],
+  ['gentamicina','metamizol','minor',
+    'Potenciación nefrotóxica menor. Monitorear creatinina.'],
+  // Furosemide
+  ['furosemida','captopril','moderate',
+    'Hipotensión de primera dosis potenciada. Iniciar IECA con dosis muy bajas si ya está con furosemida.'],
+  ['furosemida','enalapril','moderate',
+    'Hipotensión aditiva. Monitorear PA especialmente al inicio del tratamiento.'],
+  // Opioid + tramadol (serotonin)
+  ['tramadol','morfina','moderate',
+    'Riesgo de síndrome serotoninérgico (tramadol inhibe recaptación 5-HT). Evitar combinación de dos opioides sin indicación clara.'],
+  // Metoclopramide restrictions
+  ['metoclopramida','ondansetron','moderate',
+    'Efectos farmacológicos antagónicos. La combinación reduce la eficacia antiemética de ambos.'],
+  // BZD combinations
+  ['diazepam','midazolam','major',
+    'Dos benzodiacepinas simultáneas: depresión SNC/respiratoria grave. CONTRAINDICADO salvo titulación cuidadosa en UCI.'],
+  // Omeprazole interactions
+  ['omeprazol','ketorolac','minor',
+    'Omeprazol protege mucosa frente a toxicidad GI de AINEs. Combinación RECOMENDADA si AINE es necesario.'],
+  ['omeprazol','ibuprofeno','minor',
+    'Gastroprotección IBP recomendada con AINEs. Combinación apropiada.'],
+  // Naloxona reversal
+  ['naloxona','morfina','moderate',
+    'Naloxona revierte analgesia de morfina. Titular dosis para revertir solo depresión respiratoria sin precipitar dolor agudo severo o abstinencia.'],
+  ['naloxona','tramadol','moderate',
+    'Naloxona revierte efecto opioide de tramadol pero NO el serotoninérgico. Dosis repetidas necesarias.'],
+  // Corticoid + BZD
+  ['prednisona','diazepam','minor',
+    'Corticosteroides pueden reducir niveles de BZD. Monitorear respuesta clínica.'],
+  // Atropine
+  ['atropina','metoclopramida','moderate',
+    'Atropina antagoniza efecto procinético de metoclopramida. Eficacia antiemética reducida.'],
+  // Furosemide + omeprazole
+  ['furosemida','omeprazol','minor',
+    'Omeprazol puede aumentar ligeramente niveles de furosemida. Generalmente bien tolerado.'],
+  // Labetalol + others
+  ['labetalol','nifedipino','moderate',
+    'Hipotensión aditiva. Monitorear PA. Combinación posible pero con titulación cuidadosa.'],
+  ['captopril','nifedipino','moderate',
+    'Hipotensión aditiva. Útil en HTA severa pero monitorear PA frecuentemente.'],
+];
+
+// Build lookup map for O(1) interaction check
+const INTERACTION_MAP = {};
+INTERACTIONS.forEach(([a,b,sev,desc]) => {
+  const key1 = `${a}|${b}`, key2 = `${b}|${a}`;
+  INTERACTION_MAP[key1] = {sev, desc, pair:[a,b]};
+  INTERACTION_MAP[key2] = {sev, desc, pair:[a,b]};
+});
+
+// ── ALLERGY CROSS-CHECK DATABASE ───────────────────────────────────────────
+// Maps common allergy terms to drug keys that are contraindicated
+const ALLERGY_MAP = {
+  // Penicillin class
+  'penicilina':     ['amoxicilina','dicloxacilina','ampicilina'],
+  'penicilinas':    ['amoxicilina','dicloxacilina','ampicilina'],
+  'amoxicilina':    ['amoxicilina','dicloxacilina'],
+  'ampicilina':     ['ampicilina','amoxicilina'],
+  'betalactamico':  ['amoxicilina','dicloxacilina','ampicilina','ceftriaxona','cefalexina'],
+  'betalactámico':  ['amoxicilina','dicloxacilina','ampicilina','ceftriaxona','cefalexina'],
+  'betalactamicos': ['amoxicilina','dicloxacilina','ampicilina','ceftriaxona','cefalexina'],
+  'betalactámicos': ['amoxicilina','dicloxacilina','ampicilina','ceftriaxona','cefalexina'],
+  // Cephalosporins
+  'cefalosporina':  ['ceftriaxona','cefalexina'],
+  'cefalosporinas': ['ceftriaxona','cefalexina'],
+  'ceftriaxona':    ['ceftriaxona'],
+  'cefalexina':     ['cefalexina'],
+  // NSAIDs
+  'aine':           ['ibuprofeno','diclofenac','ketorolac','naproxeno','meloxicam'],
+  'aines':          ['ibuprofeno','diclofenac','ketorolac','naproxeno','meloxicam'],
+  'ibuprofeno':     ['ibuprofeno'],
+  'diclofenac':     ['diclofenac'],
+  'ketorolac':      ['ketorolac'],
+  'aspirina':       ['ibuprofeno','diclofenac','ketorolac'],
+  'salicilato':     ['ibuprofeno','diclofenac','ketorolac'],
+  'salicilatos':    ['ibuprofeno','diclofenac','ketorolac'],
+  // Opioids
+  'opioides':       ['morfina','tramadol','codeina'],
+  'opioide':        ['morfina','tramadol','codeina'],
+  'morfina':        ['morfina'],
+  'tramadol':       ['tramadol'],
+  'codeina':        ['codeina'],
+  'codeína':        ['codeina'],
+  // Macrolides
+  'macrolido':      ['azitromicina'],
+  'macrólido':      ['azitromicina'],
+  'macrolidos':     ['azitromicina'],
+  'macrólidos':     ['azitromicina'],
+  'azitromicina':   ['azitromicina'],
+  // Aminoglycosides
+  'aminoglucosido': ['gentamicina'],
+  'aminoglucósido': ['gentamicina'],
+  'aminoglucosidos':['gentamicina'],
+  'gentamicina':    ['gentamicina'],
+  // Sulfa
+  'sulfa':          [],
+  'sulfas':         [],
+  // BZD
+  'benzodiacepina': ['diazepam','midazolam','lorazepam','clonazepam'],
+  'benzodiacepinas':['diazepam','midazolam','lorazepam','clonazepam'],
+  'diazepam':       ['diazepam'],
+  'midazolam':      ['midazolam'],
+  // Dipirona/Metamizol
+  'dipirona':       ['metamizol'],
+  'metamizol':      ['metamizol'],
+  'paracetamol':    ['paracetamol'],
+  'acetaminofen':   ['paracetamol'],
+  'acetaminofén':   ['paracetamol'],
+  // Corticoids
+  'corticoide':     ['hidrocortisona','dexametasona','prednisona','metilprednisolona'],
+  'corticoides':    ['hidrocortisona','dexametasona','prednisona','metilprednisolona'],
+  // Contrast / latex (no specific drug but flag)
+  'contraste':      [],
+  'latex':          [],
+  'látex':          [],
+};
+
+// ── DOSE VALIDATION THRESHOLDS ────────────────────────────────────────────
+// Returns {level: 'ok'|'warn'|'block', message, detail}
+function validateDose(drugKey, calcMg, freq, p) {
+  const d = DRUGS[drugKey];
+  if (!d || !calcMg) return {level:'ok'};
+
+  const vk = currentVia || Object.keys(d.routes)[0];
+  const vd = d.routes[vk];
+  if (!vd) return {level:'ok'};
+
+  const cfg = (p.isPed && vd.ped) ? vd.ped : vd.adult;
+  if (!cfg) return {level:'ok'};
+
+  const freqPerDay = freqN(freq || cfg.freq || 'c/8h');
+  const dailyCalc  = calcMg * freqPerDay;
+  const maxSingle  = cfg.max_single;
+  const maxDaily   = cfg.max_daily;
+  const issues     = [];
+  let   level      = 'ok';
+
+  // Hard block: exceeds max single dose by >20%
+  if (maxSingle && calcMg > maxSingle * 1.2) {
+    issues.push(`Dosis calculada (${calcMg.toFixed(1)} mg) supera el máximo por dosis (${maxSingle} mg) en ${Math.round((calcMg/maxSingle-1)*100)}%.`);
+    level = 'block';
+  } else if (maxSingle && calcMg > maxSingle) {
+    issues.push(`Dosis (${calcMg.toFixed(1)} mg) en límite máximo por dosis (${maxSingle} mg). Ajustar a ${maxSingle} mg.`);
+    if (level !== 'block') level = 'warn';
+  }
+
+  // Daily dose check
+  if (maxDaily && dailyCalc > maxDaily * 1.1) {
+    issues.push(`Dosis diaria calculada (${Math.round(dailyCalc)} mg/día) supera el máximo diario (${maxDaily} mg/día).`);
+    if (level !== 'block') level = 'block';
+  } else if (maxDaily && dailyCalc > maxDaily * 0.95) {
+    issues.push(`Dosis diaria (~${Math.round(dailyCalc)} mg/día) cerca del límite máximo (${maxDaily} mg/día). Vigilar acumulación.`);
+    if (level === 'ok') level = 'warn';
+  }
+
+  // Weight-based safety net for pediátric
+  if (p.isPed && p.w > 0 && cfg.unit && cfg.unit.includes('mg/kg')) {
+    const dosePerKg = calcMg / p.w;
+    if (dosePerKg > cfg.dose * 1.5) {
+      issues.push(`Dosis por kg (${dosePerKg.toFixed(1)} mg/kg) supera 1.5× la dosis recomendada (${cfg.dose} mg/kg). Verificar peso.`);
+      level = 'block';
+    }
+  }
+
+  return {level, issues, maxSingle, maxDaily, dailyCalc};
+}
+
+// ── ALLERGY MANAGEMENT ─────────────────────────────────────────────────────
+function addAllergy() {
+  const inp = document.getElementById('allergyInput');
+  if (!inp) return;
+  const val = inp.value.trim();
+  if (!val) return;
+  // Normalize: remove duplicates
+  const norm = val.toLowerCase();
+  if (ALLERGIES.includes(norm)) { inp.value=''; return; }
+  ALLERGIES.push(norm);
+  inp.value = '';
+  renderAllergies();
+  // Re-check current drug
+  if (currentDrug) checkAllergyForDrug(currentDrug);
+}
+
+function removeAllergy(idx) {
+  ALLERGIES.splice(idx, 1);
+  renderAllergies();
+  if (currentDrug) checkAllergyForDrug(currentDrug);
+}
+
+function renderAllergies() {
+  const el = document.getElementById('allergyChips');
+  const nm = document.getElementById('noAllergyMsg');
+  if (!el) return;
+  if (ALLERGIES.length === 0) {
+    el.innerHTML = '<span class="no-allergy" id="noAllergyMsg">Sin alergias registradas</span>';
+    return;
+  }
+  el.innerHTML = ALLERGIES.map((a, i) =>
+    `<span class="allergy-chip">${safe(a.charAt(0).toUpperCase()+a.slice(1))}
+      <button class="rm-btn" onclick="removeAllergy(${i})" title="Eliminar">×</button>
+    </span>`
+  ).join('');
+}
+
+function checkAllergyForDrug(key) {
+  const d = DRUGS[key];
+  if (!d) return null;
+  const drugName = d.name.toLowerCase();
+  const matched = [];
+  ALLERGIES.forEach(allergy => {
+    const targets = ALLERGY_MAP[allergy] || [];
+    // Direct key match
+    if (targets.includes(key)) {
+      matched.push({allergy, reason: `${d.name} pertenece a la clase alérgena "${allergy}"`});
+    }
+    // Fuzzy: allergy text matches drug name
+    else if (drugName.includes(allergy) || allergy.includes(drugName.split(' ')[0].toLowerCase())) {
+      matched.push({allergy, reason: `"${allergy}" coincide con ${d.name}`});
+    }
+  });
+  return matched.length > 0 ? matched : null;
+}
+
+// ── PRESCRIBED DRUGS MANAGEMENT ───────────────────────────────────────────
+function addToPrescribed(key) {
+  if (!DRUGS[key]) return;
+  if (PRESCRIBED.find(p => p.key === key)) return; // already added
+  PRESCRIBED.push({key, name:DRUGS[key].name, cat:DRUGS[key].cat});
+  renderPrescribed();
+  checkInteractions();
+}
+
+function removeFromPrescribed(idx) {
+  PRESCRIBED.splice(idx, 1);
+  renderPrescribed();
+  checkInteractions();
+}
+
+function clearPrescribed() {
+  PRESCRIBED.length = 0;
+  renderPrescribed();
+  checkInteractions();
+}
+
+function renderPrescribed() {
+  const el  = document.getElementById('prescribedChips');
+  const msg = document.getElementById('noPxMsg');
+  if (!el) return;
+  if (PRESCRIBED.length === 0) {
+    el.innerHTML = '<span class="no-allergy" id="noPxMsg">Ninguna prescrita aún</span>';
+    return;
+  }
+  el.innerHTML = PRESCRIBED.map((px, i) => {
+    const cc = `var(--c-${px.cat})`;
+    const cbg = `var(--c-${px.cat}-bg)`;
+    return `<span class="px-chip" style="background:${cbg};color:${cc};border-color:${cc}40">
+      ${safe(px.name)}
+      <button class="rm-btn" onclick="removeFromPrescribed(${i})" title="Quitar" style="color:${cc}">×</button>
+    </span>`;
+  }).join('');
+}
+
+function checkInteractions() {
+  const panel = document.getElementById('interactionPanel');
+  const list  = document.getElementById('interactionList');
+  if (!panel || !list) return;
+
+  if (PRESCRIBED.length < 2) {
+    panel.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+
+  const found = [];
+  for (let i = 0; i < PRESCRIBED.length; i++) {
+    for (let j = i+1; j < PRESCRIBED.length; j++) {
+      const key = `${PRESCRIBED[i].key}|${PRESCRIBED[j].key}`;
+      const ix  = INTERACTION_MAP[key];
+      if (ix) {
+        found.push({
+          a: PRESCRIBED[i].name,
+          b: PRESCRIBED[j].name,
+          sev: ix.sev,
+          desc: ix.desc
+        });
+      }
+    }
+  }
+
+  if (found.length === 0) {
+    panel.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+
+  // Sort: major first
+  const order = {major:0, moderate:1, minor:2};
+  found.sort((a,b) => order[a.sev] - order[b.sev]);
+
+  const sevLabel = {major:'⚠ MAYOR',moderate:'MODERADA',minor:'MENOR'};
+  list.innerHTML = found.map(ix => `
+    <div class="interaction-item">
+      <span class="interaction-sev sev-${safe(ix.sev)}">${safe(sevLabel[ix.sev]||ix.sev)}</span>
+      <div>
+        <div style="font-weight:700;margin-bottom:3px;font-size:12px">
+          ${safe(ix.a)} ↔ ${safe(ix.b)}
+        </div>
+        <div style="color:var(--muted);font-size:11.5px;line-height:1.55">${safe(ix.desc)}</div>
+      </div>
+    </div>`).join('');
+
+  panel.style.display = 'block';
+}
+
+// ── HOOK INTO renderDrug TO ADD SAFETY CHECKS ─────────────────────────────
+const _origRenderDrug = renderDrug;
+renderDrug = function(key) {
+  _origRenderDrug(key);
+  // After render, inject safety checks into drugContent
+  injectSafetyIntoPanel(key);
+};
+
+function injectSafetyIntoPanel(key) {
+  const d = DRUGS[key];
+  if (!d) return;
+  const dc = document.getElementById('drugContent');
+  if (!dc || dc.style.display === 'none') return;
+  const p = getPatient();
+
+  // Get dose result
+  const vk  = (currentVia && d.routes[currentVia]) ? currentVia : Object.keys(d.routes)[0];
+  const res  = (p.w > 0 || p.a > 0 || patientType==='adult') ? calcDose(d, vk, p) : null;
+
+  let safetyHtml = '';
+
+  // 1. Allergy check
+  const allergyMatches = checkAllergyForDrug(key);
+  if (allergyMatches && allergyMatches.length > 0) {
+    safetyHtml += `<div class="allergy-match-alert">
+      <span style="font-size:18px;flex-shrink:0">🚫</span>
+      <div>
+        <div style="font-weight:800;margin-bottom:4px;font-size:13px">ALERTA DE ALERGIA</div>
+        ${allergyMatches.map(m =>
+          `<div>El paciente tiene alergia registrada a <strong>${safe(m.allergy)}</strong> — ${safe(m.reason)}.</div>`
+        ).join('')}
+        <div style="margin-top:5px;font-size:11px;opacity:.8">Verifique con el paciente antes de prescribir.</div>
+      </div>
+    </div>`;
+  }
+
+  // 2. Dose validation
+  if (res && !res.error) {
+    const dR  = Math.round(res.calcMg * 100) / 100;
+    const val = validateDose(key, res.calcMg, res.freq, p);
+    if (val.level === 'block') {
+      safetyHtml += `<div class="dose-block-warning">
+        <div class="dbw-hdr">
+          <span class="dbw-icon">🛑</span>
+          <span class="dbw-title">DOSIS EXCEDE LÍMITE MÁXIMO</span>
+        </div>
+        <div class="dbw-body">
+          ${val.issues.map(i => `<div>• ${safe(i)}</div>`).join('')}
+        </div>
+        <div class="dbw-values">
+          <span class="dbw-val">Calculado: ${safe(dR)} mg</span>
+          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} mg</span>` : ''}
+          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} mg</span>` : ''}
+          ${val.dailyCalc ? `<span class="dbw-val">Total diario: ~${safe(Math.round(val.dailyCalc))} mg</span>` : ''}
+        </div>
+      </div>`;
+    } else if (val.level === 'warn') {
+      safetyHtml += `<div class="dose-block-warning warn-level">
+        <div class="dbw-hdr">
+          <span class="dbw-icon">⚠️</span>
+          <span class="dbw-title">ADVERTENCIA DE DOSIS</span>
+        </div>
+        <div class="dbw-body">
+          ${val.issues.map(i => `<div>• ${safe(i)}</div>`).join('')}
+        </div>
+        <div class="dbw-values">
+          <span class="dbw-val">Calculado: ${safe(dR)} mg</span>
+          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} mg</span>` : ''}
+          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} mg</span>` : ''}
+        </div>
+      </div>`;
+    }
+  }
+
+  // 3. Check interaction with currently prescribed drugs
+  if (PRESCRIBED.length > 0) {
+    const ixWarnings = [];
+    PRESCRIBED.forEach(px => {
+      if (px.key === key) return;
+      const ixKey = `${key}|${px.key}`;
+      const ix = INTERACTION_MAP[ixKey];
+      if (ix) {
+        ixWarnings.push({name: px.name, sev: ix.sev, desc: ix.desc});
+      }
+    });
+    if (ixWarnings.length > 0) {
+      const order = {major:0, moderate:1, minor:2};
+      ixWarnings.sort((a,b) => order[a.sev]-order[b.sev]);
+      const sevLabel = {major:'⚠ MAYOR',moderate:'MODERADA',minor:'MENOR'};
+      safetyHtml += `<div class="interaction-panel" style="margin-bottom:14px">
+        <div class="interaction-panel-hdr">
+          <span style="font-size:14px">⚡</span>
+          <span class="interaction-panel-title">Interacción con prescripciones activas</span>
+        </div>
+        ${ixWarnings.map(ix => `
+          <div class="interaction-item">
+            <span class="interaction-sev sev-${safe(ix.sev)}">${safe(sevLabel[ix.sev]||ix.sev)}</span>
+            <div>
+              <div style="font-weight:700;margin-bottom:3px;font-size:12px">${safe(d.name)} ↔ ${safe(ix.name)}</div>
+              <div style="color:var(--muted);font-size:11.5px;line-height:1.55">${safe(ix.desc)}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    }
+  }
+
+  // Inject safety html at top of drugContent
+  if (safetyHtml) {
+    dc.innerHTML = safetyHtml + dc.innerHTML;
+  }
+
+  // Add "Agregar a prescripciones" button to RX box
+  const rxHdr = dc.querySelector('.rx-hdr');
+  if (rxHdr && !dc.querySelector('.add-px-btn')) {
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-px-btn';
+    addBtn.style.cssText = `background:var(--ok-bg);border:1px solid ${PRESCRIBED.find(px=>px.key===key)?'var(--danger)':'var(--ok)'};
+      border-radius:7px;color:${PRESCRIBED.find(px=>px.key===key)?'var(--danger)':'var(--ok)'};
+      font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;
+      padding:5px 11px;cursor:pointer;transition:all .15s;`;
+    const alreadyPx = PRESCRIBED.find(px=>px.key===key);
+    addBtn.textContent = alreadyPx ? '✓ En prescripciones' : '+ Prescribir';
+    addBtn.onclick = function() {
+      if (alreadyPx) {
+        removeFromPrescribed(PRESCRIBED.findIndex(px=>px.key===key));
+      } else {
+        addToPrescribed(key);
+      }
+      renderDrug(key); // refresh
+    };
+    rxHdr.appendChild(addBtn);
+  }
+}
+
 </script>
 
 </body>
