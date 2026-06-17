@@ -516,144 +516,62 @@ body.dark .allergy-chip{background:#2a0808;border-color:#f8514940;color:#ff7b72;
   padding:10px 13px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start;
   font-size:12px;color:#ff7b72;line-height:1.55;font-weight:600;}
 
-/* ════ COMBOBOX / SEARCHABLE DROPDOWN ════ */
-.combo-wrap{
-  padding:12px 12px 8px;flex-shrink:0;
+/* ════ DRUG SELECT DROPDOWN ════ */
+.select-nav-wrap{
+  padding:14px 12px 10px;
+  flex-shrink:0;
   border-bottom:1px solid var(--border);
 }
-.combo-label{
-  font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;
-  letter-spacing:1px;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:5px;
+.select-nav-label{
+  font-size:9.5px;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  margin-bottom:6px;
 }
-.combo-container{
-  position:relative;display:flex;align-items:center;
-}
-.combo-input{
-  width:100%;padding:9px 56px 9px 12px;
-  border:1.5px solid var(--border);border-radius:9px;
-  background:var(--card);color:var(--text);
+.select-nav-container{position:relative;}
+.drug-select{
+  width:100%;
+  padding:10px 36px 10px 13px;
+  border:1.5px solid var(--border);
+  border-radius:9px;
+  background:var(--surface);
+  color:var(--text);
   font-family:'Plus Jakarta Sans',sans-serif;
   font-size:13px;font-weight:500;
-  outline:none;transition:all .18s;
-  cursor:text;
+  outline:none;cursor:pointer;
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  transition:border-color .18s,box-shadow .18s;
 }
-.combo-input:focus{
-  border-color:var(--info);background:#fff;
+.drug-select:focus{
+  border-color:var(--info);
   box-shadow:0 0 0 3px color-mix(in srgb,var(--info) 14%,transparent);
 }
-body.dark .combo-input{background:#0d1117;color:#e6edf3;border-color:#30363d;}
-body.dark .combo-input:focus{background:#161b22;border-color:#58a6ff;box-shadow:0 0 0 3px #58a6ff18;}
-.combo-clear{
-  position:absolute;right:30px;top:50%;transform:translateY(-50%);
-  background:none;border:none;cursor:pointer;color:var(--muted);
-  font-size:16px;line-height:1;padding:2px 4px;transition:color .15s;
-  font-family:sans-serif;
+.drug-select:hover{border-color:var(--info);}
+.drug-select optgroup{
+  font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--muted);background:var(--card);
 }
-.combo-clear:hover{color:var(--danger);}
-.combo-chevron{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  color:var(--muted);font-size:13px;cursor:pointer;
-  transition:transform .2s ease;user-select:none;
-  font-family:sans-serif;
-}
-.combo-chevron.open{transform:translateY(-50%) rotate(180deg);}
-/* DROPDOWN */
-.combo-dropdown{
-  position:absolute;top:calc(100% + 5px);left:0;right:0;
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:10px;box-shadow:0 8px 24px #1a223328,0 2px 8px #1a223318;
-  z-index:1000;max-height:320px;overflow-y:auto;
-  scrollbar-width:thin;
-  animation:comboFadeIn .15s ease;
-}
-body.dark .combo-dropdown{
-  background:#161b22;border-color:#30363d;
-  box-shadow:0 8px 24px #00000060;
-}
-@keyframes comboFadeIn{
-  from{opacity:0;transform:translateY(-6px);}
-  to{opacity:1;transform:translateY(0);}
-}
-.combo-dropdown::-webkit-scrollbar{width:4px;}
-.combo-dropdown::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-/* DROPDOWN GROUP HEADER */
-.combo-group-hdr{
-  display:flex;align-items:center;gap:7px;
-  padding:8px 12px 4px;
-  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;
-  color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;
-  position:sticky;top:0;background:var(--surface);z-index:1;
-  border-bottom:1px solid var(--border);
-}
-body.dark .combo-group-hdr{background:#161b22;border-color:#30363d;}
-.combo-group-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-/* DROPDOWN OPTION */
-.combo-option{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:9px 13px 9px 22px;cursor:pointer;
-  font-family:'Plus Jakarta Sans',sans-serif;
+.drug-select option{
   font-size:13px;font-weight:500;color:var(--text);
-  transition:background .1s;border-left:2px solid transparent;
+  background:var(--surface);padding:6px 12px;
 }
-.combo-option:hover,.combo-option.focused{
-  background:var(--card);
+.select-nav-arrow{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:14px;pointer-events:none;
+  transition:transform .2s;font-family:sans-serif;
 }
-body.dark .combo-option:hover,body.dark .combo-option.focused{background:#1c2430;}
-.combo-option.selected{
-  font-weight:700;border-left-color:inherit;
-  background:var(--card);
+.drug-select:focus + .select-nav-arrow{
+  transform:translateY(-50%) rotate(180deg);color:var(--info);
 }
-body.dark .combo-option.selected{background:#1c2430;}
-.combo-option-badge{
-  font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;
-  font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0;margin-left:6px;
-}
-/* highlight match */
-.combo-option mark{
-  background:color-mix(in srgb,var(--info) 20%,transparent);
-  color:var(--info);border-radius:2px;font-weight:700;
-}
-body.dark .combo-option mark{background:#1a3a5c;color:#79c0ff;}
-/* CI warning dot */
-.combo-ci-dot{
-  width:6px;height:6px;border-radius:50%;background:var(--danger);
-  flex-shrink:0;margin-left:4px;
-}
-/* No results */
-.combo-no-results{
-  padding:14px 12px;text-align:center;font-size:12px;
-  color:var(--muted);font-style:italic;
+body.dark .drug-select{background:#161b22 !important;color:#e6edf3 !important;border-color:#30363d !important;}
+body.dark .drug-select:focus{border-color:#58a6ff !important;box-shadow:0 0 0 3px #58a6ff18 !important;}
+body.dark .drug-select option,body.dark .drug-select optgroup{background:#161b22;color:#e6edf3;}
+.select-nav-chip{
+  margin-top:8px;padding:7px 12px;border-radius:8px;
+  font-size:11.5px;font-weight:700;
   font-family:'Plus Jakarta Sans',sans-serif;
-}
-/* SELECTED DRUG CHIP below input */
-.combo-selected-chip{
-  display:none;align-items:center;gap:7px;margin-top:7px;
-  padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;
-  font-family:'Plus Jakarta Sans',sans-serif;border:1px solid;
-}
-.combo-selected-chip.visible{display:flex;}
-
-/* ════ TWO-COLUMN CALCULATOR LAYOUT ════ */
-.calc-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  align-items:start;
-}
-.calc-col-left{}
-.calc-col-right{}
-/* Stack on narrow screens */
-@media(max-width:900px){
-  .calc-layout{grid-template-columns:1fr;}
-}
-/* Drug panel also two columns when wide */
-#drugContent .drug-hdr,
-#drugContent .contrain-box,
-#drugContent .allergy-match-alert,
-#drugContent .dose-block-warning,
-#drugContent .interaction-panel{
-  /* full width always */
-  grid-column: 1 / -1;
+  border:1px solid;line-height:1.4;
+  display:flex;align-items:center;gap:7px;
 }
 </style>
 </head>
@@ -676,30 +594,18 @@ body.dark .combo-option mark{background:#1a3a5c;color:#79c0ff;}
 </header>
 <div class="shell">
   <nav class="leftnav">
-    <!-- COMBOBOX SEARCHABLE DROPDOWN -->
-    <div class="combo-wrap">
-      <div class="combo-label">Medicamento</div>
-      <div class="combo-container" id="comboContainer">
-        <input
-          type="text"
-          id="comboInput"
-          class="combo-input"
-          placeholder="Buscar o seleccionar..."
-          autocomplete="off"
-          oninput="onComboInput(this.value)"
-          onfocus="openCombo()"
-          onkeydown="onComboKey(event)"
-          aria-autocomplete="list"
-          aria-haspopup="listbox"
-          role="combobox"
-        >
-        <button class="combo-clear" id="comboClear" onclick="clearCombo()" title="Limpiar" style="display:none">×</button>
-        <span class="combo-chevron" id="comboChevron" onclick="toggleCombo()">▾</span>
-        <div class="combo-dropdown" id="comboDropdown" role="listbox" style="display:none"></div>
+    <div class="select-nav-wrap">
+      <div class="select-nav-label">Medicamento</div>
+      <div class="select-nav-container">
+        <select id="drugSelect" class="drug-select" onchange="onDrugSelectChange(this.value)">
+          <option value="">Seleccione...</option>
+        </select>
+        <span class="select-nav-arrow">▾</span>
       </div>
-      <div class="combo-selected-chip" id="comboChip"></div>
+      <!-- Selected drug chip -->
+      <div class="select-nav-chip" id="selectNavChip" style="display:none"></div>
     </div>
-    <!-- CATEGORY NAV -->
+    <!-- Category index for quick jump (hidden on mobile) -->
     <div class="leftnav-inner" id="leftnav-inner"></div>
   </nav>
   <div class="center">
@@ -888,21 +794,7 @@ body.dark .combo-option mark{background:#1a3a5c;color:#79c0ff;}
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
       <div class="drawer-title">Seleccionar Medicamento</div>
     </div>
-    <!-- Mobile combobox inside drawer -->
-    <div class="combo-container" id="mobileComboContainer" style="margin-top:4px">
-      <input
-        type="text"
-        id="mobileComboInput"
-        class="combo-input"
-        placeholder="Buscar o seleccionar..."
-        autocomplete="off"
-        oninput="onMobileComboInput(this.value)"
-        onkeydown="onComboKey(event)"
-        style="font-size:14px;padding:10px 44px 10px 13px;"
-      >
-      <button class="combo-clear" id="mobileComboClear" onclick="clearMobileCombo()" style="display:none">×</button>
-      <span class="combo-chevron" style="pointer-events:none">▾</span>
-    </div>
+    <input type="search" class="drawer-search" placeholder="🔍 Buscar..." oninput="filterNav(this.value,'drawerBody')">
   </div>
   <div class="drawer-body" id="drawerBody"></div>
 </div>
@@ -2020,15 +1912,13 @@ function applyStoredTheme() {
 
 window.onload = () => {
   applyStoredTheme();
+  buildDrugSelect();
   buildNav('leftnav-inner');
   buildNav('drawerBody');
   renderEmergList();
   renderGrupos();
   setPatientType('ped');
   checkMobileSwitch();
-  // Init combobox placeholder text
-  const inp = document.getElementById('comboInput');
-  if (inp) inp.placeholder = `Buscar entre ${Object.keys(DRUGS).length} medicamentos...`;
 };
 
 // ── NAV BUILD ──────────────────────────────────────────────────────────────
@@ -3139,222 +3029,61 @@ function splitDrugContentTwoCol(dc) {
 
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  COMBOBOX / SEARCHABLE DROPDOWN — Prescriber v2.2
-//  Native HTML5, no external libs. Keyboard navigation, fuzzy search,
-//  category grouping, CI warnings, selected chip display.
+//  DRUG SELECT DROPDOWN — Prescriber v2.4
+//  Native HTML5 <select> with optgroups by category. Simple, fast,
+//  fully accessible, perfect mobile/touch support.
 // ═══════════════════════════════════════════════════════════════════════════
 
-let comboOpen    = false;
-let comboQuery   = '';
-let comboFocusIdx = -1;
-let comboOptions = []; // flat list of visible options for keyboard nav
-
-function buildComboOptions(query) {
-  const q = (query || '').toLowerCase().trim();
-  const groups = [];
+function buildDrugSelect() {
+  const sel = document.getElementById('drugSelect');
+  if (!sel) return;
+  let html = '<option value="">Seleccione...</option>';
   CAT_ORDER.forEach(cat => {
-    const catDrugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
-    const matched  = catDrugs.filter(([key, d]) => {
-      if (!q) return true;
-      const haystack = [d.name, d.class, d.ind, d.mech].join('|').toLowerCase();
-      return haystack.includes(q);
+    const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
+    if (!drugs.length) return;
+    const catCfg = CATS[cat];
+    html += `<optgroup label="${catCfg.icon} ${safe(catCfg.name)}">`;
+    drugs.forEach(([key, d]) => {
+      const ciFlag = (patientType === 'ped' && d.pedCI) ? ' ⚠' : '';
+      html += `<option value="${safe(key)}">${safe(d.name)}${ciFlag}</option>`;
     });
-    if (matched.length) groups.push({cat, matched});
+    html += '</optgroup>';
   });
-  return groups;
+  sel.innerHTML = html;
 }
 
-function highlightMatch(text, query) {
-  if (!query) return safe(text);
-  const idx = text.toLowerCase().indexOf(query.toLowerCase());
-  if (idx === -1) return safe(text);
-  return safe(text.slice(0, idx))
-    + '<mark>' + safe(text.slice(idx, idx + query.length)) + '</mark>'
-    + safe(text.slice(idx + query.length));
-}
-
-function renderComboDropdown(query) {
-  const dd  = document.getElementById('comboDropdown');
-  if (!dd) return;
-  const groups = buildComboOptions(query);
-  comboOptions = [];
-  let html = '';
-
-  if (!groups.length) {
-    html = `<div class="combo-no-results">Sin resultados para "<strong>${safe(query)}</strong>"</div>`;
-    dd.innerHTML = html;
+function onDrugSelectChange(key) {
+  if (!key) {
+    const chip = document.getElementById('selectNavChip');
+    if (chip) chip.style.display = 'none';
     return;
   }
-
-  groups.forEach(({cat, matched}) => {
-    const catCfg = CATS[cat];
-    html += `<div class="combo-group-hdr">
-      <span class="combo-group-pip" style="background:${safe(catCfg.color)}"></span>
-      <span style="color:${safe(catCfg.color)}">${safe(catCfg.name)}</span>
-      <span style="margin-left:auto;font-size:9px;opacity:.6">${matched.length}</span>
-    </div>`;
-    matched.forEach(([key, d]) => {
-      const isSel = key === currentDrug;
-      const hasCI = patientType === 'ped' && d.pedCI;
-      const cc    = `var(--c-${safe(cat)})`;
-      const cbg   = `var(--c-${safe(cat)}-bg)`;
-      const optIdx = comboOptions.length;
-      comboOptions.push(key);
-      html += `<div class="combo-option${isSel ? ' selected' : ''}"
-        id="copt-${safe(key)}"
-        data-key="${safe(key)}"
-        data-idx="${optIdx}"
-        style="${isSel ? `border-left-color:${cc};` : ''}"
-        onclick="comboSelect('${safe(key)}')"
-        onmouseenter="setComboFocus(${optIdx})"
-        role="option"
-        aria-selected="${isSel}">
-        <span style="flex:1">${highlightMatch(d.name, query)}</span>
-        ${hasCI ? '<span class="combo-ci-dot" title="Contraindicación pediátrica"></span>' : ''}
-        <span class="combo-option-badge" style="background:${cbg};color:${cc};border:1px solid ${cc}40">${safe(catCfg.icon)}</span>
-      </div>`;
-    });
-  });
-
-  dd.innerHTML = html;
-}
-
-function openCombo() {
-  comboOpen    = true;
-  comboFocusIdx = -1;
-  const dd  = document.getElementById('comboDropdown');
-  const chv = document.getElementById('comboChevron');
-  if (dd)  { dd.style.display  = 'block'; renderComboDropdown(comboQuery); }
-  if (chv) chv.classList.add('open');
-  // Scroll selected into view
-  if (currentDrug) {
-    setTimeout(() => {
-      const sel = document.getElementById('copt-'+currentDrug);
-      if (sel) sel.scrollIntoView({block:'nearest'});
-    }, 50);
-  }
-}
-
-function closeCombo() {
-  comboOpen = false;
-  const dd  = document.getElementById('comboDropdown');
-  const chv = document.getElementById('comboChevron');
-  if (dd)  dd.style.display  = 'none';
-  if (chv) chv.classList.remove('open');
-  comboFocusIdx = -1;
-}
-
-function toggleCombo() {
-  if (comboOpen) closeCombo();
-  else { document.getElementById('comboInput')?.focus(); openCombo(); }
-}
-
-function onComboInput(val) {
-  comboQuery = val;
-  const clr = document.getElementById('comboClear');
-  if (clr) clr.style.display = val ? 'block' : 'none';
-  comboFocusIdx = -1;
-  if (!comboOpen) openCombo();
-  else renderComboDropdown(val);
-}
-
-function clearCombo() {
-  const inp = document.getElementById('comboInput');
-  if (inp) { inp.value = ''; inp.focus(); }
-  comboQuery = '';
-  const clr = document.getElementById('comboClear');
-  if (clr) clr.style.display = 'none';
-  renderComboDropdown('');
-}
-
-function setComboFocus(idx) {
-  comboFocusIdx = idx;
-  document.querySelectorAll('.combo-option').forEach(el => el.classList.remove('focused'));
-  const tgt = document.querySelector(`.combo-option[data-idx="${idx}"]`);
-  if (tgt) { tgt.classList.add('focused'); tgt.scrollIntoView({block:'nearest'}); }
-}
-
-function onComboKey(e) {
-  if (!comboOpen && (e.key === 'ArrowDown' || e.key === 'Enter')) { openCombo(); return; }
-  if (!comboOpen) return;
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    setComboFocus(Math.min(comboFocusIdx + 1, comboOptions.length - 1));
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    setComboFocus(Math.max(comboFocusIdx - 1, 0));
-  } else if (e.key === 'Enter') {
-    e.preventDefault();
-    if (comboFocusIdx >= 0 && comboOptions[comboFocusIdx]) {
-      comboSelect(comboOptions[comboFocusIdx]);
-    }
-  } else if (e.key === 'Escape') {
-    closeCombo();
-    document.getElementById('comboInput')?.blur();
-  }
-}
-
-function comboSelect(key) {
-  if (!DRUGS[key]) return;
-  // Update input display
-  const inp = document.getElementById('comboInput');
-  if (inp) inp.value = DRUGS[key].name;
-  comboQuery = '';
-  const clr = document.getElementById('comboClear');
-  if (clr) clr.style.display = 'block';
-  closeCombo();
-  // Update selected chip
-  updateComboChip(key);
-  // Select drug (existing function)
   selectDrug(key);
 }
 
-function updateComboChip(key) {
-  const chip = document.getElementById('comboChip');
+function updateSelectChip(key) {
+  const chip = document.getElementById('selectNavChip');
   if (!chip || !DRUGS[key]) return;
   const d   = DRUGS[key];
   const cat = d.cat;
   const cc  = `var(--c-${cat})`;
   const cbg = `var(--c-${cat}-bg)`;
-  chip.className   = 'combo-selected-chip visible';
-  chip.style.cssText = `background:${cbg};color:${cc};border-color:${cc}50;`;
-  chip.innerHTML   = `<span>${safe(CATS[cat].icon)}</span><span>${safe(d.name)}</span><span style="font-size:9px;opacity:.7">${safe(d.class.split('·')[0].trim())}</span>`;
+  chip.style.display = 'flex';
+  chip.style.cssText = `display:flex;background:${cbg};color:${cc};border-color:${cc}50;margin-top:8px;padding:7px 12px;border-radius:8px;font-size:11.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:1px solid;line-height:1.4;align-items:center;gap:7px;`;
+  chip.innerHTML = `<span>${safe(CATS[cat].icon)}</span><span>${safe(d.name)}</span>`;
 }
 
-// Close combo when clicking outside
-document.addEventListener('click', e => {
-  const cc = document.getElementById('comboContainer');
-  if (cc && !cc.contains(e.target)) closeCombo();
-});
-
-// Sync combobox when drug selected from sidebar category nav or groups
+// Sync the <select> when a drug is chosen via sidebar category nav or Grupos
 const _origSelectDrug = selectDrug;
 selectDrug = function(key) {
   _origSelectDrug(key);
-  // Update combobox input to show selected drug name
   if (DRUGS[key]) {
-    const inp = document.getElementById('comboInput');
-    if (inp) inp.value = DRUGS[key].name;
-    const clr = document.getElementById('comboClear');
-    if (clr) clr.style.display = 'block';
-    updateComboChip(key);
+    const sel = document.getElementById('drugSelect');
+    if (sel) sel.value = key;
+    updateSelectChip(key);
   }
 };
 
-
-// Mobile drawer search uses filterNav (existing) but enhanced with combo styling
-function onMobileComboInput(val) {
-  const clr = document.getElementById('mobileComboClear');
-  if (clr) clr.style.display = val ? 'block' : 'none';
-  filterNav(val, 'drawerBody');
-}
-function clearMobileCombo() {
-  const inp = document.getElementById('mobileComboInput');
-  if (inp) { inp.value = ''; inp.focus(); }
-  const clr = document.getElementById('mobileComboClear');
-  if (clr) clr.style.display = 'none';
-  filterNav('', 'drawerBody');
-}
 
 </script>
 
