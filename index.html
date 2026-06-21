@@ -573,6 +573,86 @@ body.dark .drug-select option,body.dark .drug-select optgroup{background:#161b22
   border:1px solid;line-height:1.4;
   display:flex;align-items:center;gap:7px;
 }
+
+/* ════ HERO DOSE RESULT (mL/cc destacado) ════ */
+.hero-dose-card{
+  background:linear-gradient(135deg,var(--ok-bg) 0%,var(--surface) 100%);
+  border:2px solid var(--ok);
+  border-radius:14px;
+  padding:18px 20px;
+  margin-bottom:14px;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--ok) 15%,transparent);
+  position:relative;
+  overflow:hidden;
+}
+.hero-dose-card::before{
+  content:'';position:absolute;top:0;right:0;width:90px;height:90px;
+  background:radial-gradient(circle,color-mix(in srgb,var(--ok) 10%,transparent) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-dose-label{
+  font-size:10px;font-weight:800;color:var(--ok);text-transform:uppercase;
+  letter-spacing:1.2px;font-family:'Plus Jakarta Sans',sans-serif;
+  display:flex;align-items:center;gap:6px;margin-bottom:8px;
+}
+.hero-dose-main{
+  display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.hero-dose-value{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:42px;font-weight:800;color:var(--ok);
+  letter-spacing:-1.5px;line-height:1;
+}
+.hero-dose-unit{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:20px;font-weight:700;color:var(--ok);opacity:.85;
+}
+.hero-dose-freq{
+  font-size:15px;font-weight:700;color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  margin-top:4px;
+}
+.hero-dose-freq strong{color:var(--ok);}
+.hero-dose-dur{
+  font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px;
+}
+.hero-dose-sub{
+  display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;
+  padding-top:12px;border-top:1px solid color-mix(in srgb,var(--ok) 25%,transparent);
+}
+.hero-sub-item{display:flex;flex-direction:column;gap:2px;}
+.hero-sub-lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
+.hero-sub-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--text);}
+/* Dark mode hero */
+body.dark .hero-dose-card{
+  background:linear-gradient(135deg,#0a2014 0%,#161b22 100%);
+  border-color:#2ea44f;
+}
+body.dark .hero-dose-label,
+body.dark .hero-dose-value,
+body.dark .hero-dose-unit{color:#7ee787;}
+body.dark .hero-dose-freq strong{color:#7ee787;}
+/* Presentation select dropdown (replaces button row) */
+.pres-select-wrap{margin-bottom:12px;}
+.pres-select{
+  width:100%;padding:9px 36px 9px 13px;
+  border:1.5px solid var(--border);border-radius:9px;
+  background:var(--surface);color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;
+  outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.pres-select:focus{
+  border-color:var(--info);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--info) 14%,transparent);
+}
+.pres-select-container{position:relative;}
+.pres-select-arrow{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:13px;pointer-events:none;
+}
+body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;border-color:#30363d !important;}
 </style>
 </head>
 <body>
@@ -838,15 +918,24 @@ paracetamol:{
       adult:{dose:500,dose_max:1000,freq:'c/4-6h',max_daily:4000,note:'Hepatopatía/ERC: 500 mg c/8h.'},
       pres:[
         {name:'Jarabe 120 mg/5 mL',conc:'120 mg/5 mL',unit:'mL',f:5/120,via:'VO'},
+        {name:'Jarabe 160 mg/5 mL',conc:'160 mg/5 mL',unit:'mL',f:5/160,via:'VO'},
+        {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
         {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'gotas',f:20/100,dropsPerMl:20,dropNote:'20 gotas = 1 mL',via:'VO'},
+        {name:'Gotas 100 mg/mL (1 mL)',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
         {name:'Tab 500 mg',conc:'500 mg/tab',unit:'tab',f:1/500,via:'VO'},
-        {name:'Tab 1 000 mg',conc:'1 000 mg/tab',unit:'tab',f:1/1000,via:'VO'}
+        {name:'Tab 650 mg',conc:'650 mg/tab',unit:'tab',f:1/650,via:'VO'},
+        {name:'Tab 1 000 mg',conc:'1 000 mg/tab',unit:'tab',f:1/1000,via:'VO'},
+        {name:'Supos 125 mg',conc:'125 mg/sup',unit:'sup',f:1/125,via:'VR'},
+        {name:'Supos 300 mg',conc:'300 mg/sup',unit:'sup',f:1/300,via:'VR'}
       ]},
     iv:{label:'Intravenosa (IV)',
       dil:'Bolsa lista 10 mg/mL. ≤10 kg: diluir dosis en 100 mL SF. >10 kg: bolsa directa. Infusión en 15 min exactos. No mezclar con otros fármacos.',
       ped:{dose:15,unit:'mg/kg/dosis',freq:'c/6h',max_single:1000,max_daily:4000,note:'Infusión IV 15 min.'},
       adult:{dose:1000,dose_max:1000,freq:'c/6-8h',max_daily:4000,note:'Sin dilución adicional. Infusión 15 min.'},
-      pres:[{name:'Vial IV 10 mg/mL (100 mL)',conc:'10 mg/mL',unit:'mL',f:1/10,via:'IV'}]}
+      pres:[
+        {name:'Vial IV 10 mg/mL (50 mL)',conc:'10 mg/mL',unit:'mL',f:1/10,via:'IV'},
+        {name:'Vial IV 10 mg/mL (100 mL)',conc:'10 mg/mL',unit:'mL',f:1/10,via:'IV'}
+      ]}
   },
   alerts:[
     {t:'danger',txt:'Hepatotoxicidad >4 g/día, ayuno, etanol crónico. Antídoto: N-acetilcisteína IV (nomograma Rumack-Matthew).'},
@@ -962,9 +1051,12 @@ ibuprofeno:{
       adult:{dose:400,dose_max:800,freq:'c/6-8h',max_daily:3200,note:'Con alimentos.'},
       pres:[
         {name:'Susp 100 mg/5 mL',conc:'100 mg/5 mL',unit:'mL',f:5/100,via:'VO'},
+        {name:'Susp 200 mg/5 mL',conc:'200 mg/5 mL',unit:'mL',f:5/200,via:'VO'},
+        {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
         {name:'Tab 200 mg',conc:'200 mg/tab',unit:'tab',f:1/200,via:'VO'},
         {name:'Tab 400 mg',conc:'400 mg/tab',unit:'tab',f:1/400,via:'VO'},
-        {name:'Tab 600 mg',conc:'600 mg/tab',unit:'tab',f:1/600,via:'VO'}
+        {name:'Tab 600 mg',conc:'600 mg/tab',unit:'tab',f:1/600,via:'VO'},
+        {name:'Tab 800 mg',conc:'800 mg/tab',unit:'tab',f:1/800,via:'VO'}
       ]}
   },
   alerts:[
@@ -987,7 +1079,9 @@ diclofenac:{
       adult:{dose:50,dose_max:75,freq:'c/8-12h',max_daily:150,note:'Con alimentos.'},
       pres:[
         {name:'Tab 50 mg',conc:'50 mg/tab',unit:'tab',f:1/50,via:'VO'},
-        {name:'Tab LP 75 mg',conc:'75 mg/tab LP',unit:'tab',f:1/75,via:'VO'}
+        {name:'Tab LP 75 mg',conc:'75 mg/tab LP',unit:'tab',f:1/75,via:'VO'},
+        {name:'Tab LP 100 mg',conc:'100 mg/tab LP',unit:'tab',f:1/100,via:'VO'},
+        {name:'Gotas 15 mg/mL',conc:'15 mg/mL',unit:'mL',f:1/15,via:'VO'}
       ]},
     im:{label:'Intramuscular (IM) — máx 2 días',dil:null,
       ped:{dose:1,unit:'mg/kg/dosis',freq:'c/12h (máx 2 días)',max_single:50,max_daily:100,note:'MÁXIMO 2 días IM.'},
@@ -1054,6 +1148,9 @@ amoxicilina:{
       pres:[
         {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
         {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
+        {name:'Susp 500 mg/5 mL',conc:'500 mg/5 mL',unit:'mL',f:5/500,via:'VO'},
+        {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
+        {name:'Cáp 250 mg',conc:'250 mg/cáp',unit:'cáp',f:1/250,via:'VO'},
         {name:'Cáp 500 mg',conc:'500 mg/cáp',unit:'cáp',f:1/500,via:'VO'},
         {name:'Tab 875 mg',conc:'875 mg/tab',unit:'tab',f:1/875,via:'VO'}
       ]}
@@ -1078,6 +1175,8 @@ dicloxacilina:{
       adult:{dose:500,dose_max:500,freq:'c/6h',max_daily:2000,note:'SIEMPRE en ayunas.'},
       pres:[
         {name:'Susp 62.5 mg/5 mL',conc:'62.5 mg/5 mL',unit:'mL',f:5/62.5,via:'VO'},
+        {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
+        {name:'Cáp 250 mg',conc:'250 mg/cáp',unit:'cáp',f:1/250,via:'VO'},
         {name:'Cáp 500 mg',conc:'500 mg/cáp',unit:'cáp',f:1/500,via:'VO'}
       ]}
   },
@@ -1130,6 +1229,8 @@ azitromicina:{
       adult:{dose:500,dose_max:500,freq:'c/24h',max_daily:500,note:'ITS: 1 g dosis única.'},
       pres:[
         {name:'Susp 200 mg/5 mL',conc:'200 mg/5 mL',unit:'mL',f:5/200,via:'VO'},
+        {name:'Susp 100 mg/5 mL',conc:'100 mg/5 mL',unit:'mL',f:5/100,via:'VO'},
+        {name:'Tab 250 mg',conc:'250 mg/tab',unit:'tab',f:1/250,via:'VO'},
         {name:'Tab 500 mg',conc:'500 mg/tab',unit:'tab',f:1/500,via:'VO'}
       ]},
     iv:{label:'Intravenosa (IV) — infusión 60 min',
@@ -1291,7 +1392,8 @@ dexametasona:{
       pres:[
         {name:'Tab 0.5 mg',conc:'0.5 mg/tab',unit:'tab',f:1/0.5,via:'VO'},
         {name:'Tab 4 mg',conc:'4 mg/tab',unit:'tab',f:1/4,via:'VO'},
-        {name:'Sol 0.5 mg/5 mL',conc:'0.5 mg/5 mL',unit:'mL',f:5/0.5,via:'VO'}
+        {name:'Sol 0.5 mg/5 mL',conc:'0.5 mg/5 mL',unit:'mL',f:5/0.5,via:'VO'},
+        {name:'Sol 0.5 mg/mL (gotas)',conc:'0.5 mg/mL',unit:'mL',f:1/0.5,via:'VO'}
       ]},
     iv:{label:'Intravenosa (IV)',
       dil:'IV directo lento 1-2 min. O diluir en 50 mL SF, infusión 15 min.',
@@ -1328,7 +1430,8 @@ prednisona:{
         {name:'Tab 5 mg',conc:'5 mg/tab',unit:'tab',f:1/5,via:'VO'},
         {name:'Tab 20 mg',conc:'20 mg/tab',unit:'tab',f:1/20,via:'VO'},
         {name:'Tab 50 mg',conc:'50 mg/tab',unit:'tab',f:1/50,via:'VO'},
-        {name:'Sol 1 mg/mL (prednisolona)',conc:'1 mg/mL',unit:'mL',f:1/1,via:'VO'}
+        {name:'Sol 1 mg/mL (prednisolona)',conc:'1 mg/mL',unit:'mL',f:1/1,via:'VO'},
+        {name:'Sol 3 mg/mL (prednisolona)',conc:'3 mg/mL',unit:'mL',f:1/3,via:'VO'}
       ]}
   },
   alerts:[
@@ -1516,6 +1619,7 @@ ondansetron:{
       ped:{dose:0.15,unit:'mg/kg/dosis',freq:'c/8h',max_single:8,max_daily:24,note:'ODT: colocar en lengua sin agua.'},
       adult:{dose:4,dose_max:8,freq:'c/8h',max_daily:24,note:'ODT igual eficacia que IV.'},
       pres:[
+        {name:'Susp 4 mg/5 mL',conc:'4 mg/5 mL',unit:'mL',f:5/4,via:'VO'},
         {name:'Tab ODT 4 mg',conc:'4 mg/tab',unit:'tab',f:1/4,via:'VO'},
         {name:'Tab ODT 8 mg',conc:'8 mg/tab',unit:'tab',f:1/8,via:'VO'}
       ]},
@@ -1557,7 +1661,8 @@ metoclopramida:{
       adult:{dose:10,dose_max:10,freq:'c/6-8h (30 min a/c)',max_daily:40,note:'30 min antes comidas. MÁXIMO 5 días.'},
       pres:[
         {name:'Tab 10 mg',conc:'10 mg/tab',unit:'tab',f:1/10,via:'VO'},
-        {name:'Sol 1 mg/mL',conc:'1 mg/mL',unit:'mL',f:1/1,via:'VO'}
+        {name:'Sol 1 mg/mL',conc:'1 mg/mL',unit:'mL',f:1/1,via:'VO'},
+        {name:'Gotas 4 mg/mL',conc:'4 mg/mL',unit:'mL',f:1/4,via:'VO'}
       ]}
   },
   alerts:[
@@ -2190,6 +2295,20 @@ function renderDrug(key) {
     </div>
   </div>`;
 
+  // ── PRESENTATION SELECTOR (moved up: choose first, see mL instantly) ──
+  const presList = d.routes[vk]?.pres || [];
+  if (presList.length > 0 && p.w > 0 || (presList.length > 0 && patientType === 'adult')) {
+    html += `<div class="pres-select-wrap">
+      <div class="sec-label" style="margin-bottom:6px">📦 Presentación a utilizar</div>
+      <div class="pres-select-container">
+        <select class="pres-select" onchange="switchPres(parseInt(this.value))">
+          ${presList.map((pr,i) => `<option value="${i}" ${currentPres===i?'selected':''}>${safe(pr.name)} — ${safe(pr.conc)}</option>`).join('')}
+        </select>
+        <span class="pres-select-arrow">▾</span>
+      </div>
+    </div>`;
+  }
+
   // ── DOSE RESULT
   if (patientType==='ped' && !p.w) {
     // weight-required block already shown above
@@ -2204,13 +2323,60 @@ function renderDrug(key) {
     const daily = Math.min(dR * freqN(res.freq), res.maxDaily || 99999);
     const atMax = res.maxSingle && dR >= res.maxSingle;
 
-    // Presentation volume / drops calculation
+    // Auto-select first presentation if none chosen yet
+    if (currentPres === null && res.pres && res.pres.length > 0) {
+      currentPres = 0;
+    }
+
+    // ── HERO RESULT: if a presentation is selected, mL/cc is the STAR ──
+    if (currentPres !== null && res.pres[currentPres]) {
+      const pr  = res.pres[currentPres];
+      const qty = Math.round(res.calcMg * pr.f * 100) / 100;
+      const durTxt = d.dur ? d.dur.split('/')[0].trim() : '';
+
+      let heroUnit = pr.unit;
+      let heroQty  = qty;
+      let dropsSubH = '';
+      if (pr.dropsPerMl && pr.unit === 'gotas') {
+        const mlEq = Math.round((qty / pr.dropsPerMl) * 100) / 100;
+        dropsSubH = `<div class="hero-sub-item">
+          <div class="hero-sub-lbl">Equivalente</div>
+          <div class="hero-sub-val">${safe(mlEq)} mL</div>
+        </div>`;
+      }
+
+      html += `<div class="hero-dose-card">
+        <div class="hero-dose-label">💧 Administrar</div>
+        <div class="hero-dose-main">
+          <span class="hero-dose-value">${safe(heroQty)}</span>
+          <span class="hero-dose-unit">${safe(heroUnit)}</span>
+        </div>
+        <div class="hero-dose-freq">cada <strong>${safe(res.freq.replace('c/',''))}</strong></div>
+        ${durTxt ? `<div class="hero-dose-dur">⏱ Durante ${safe(durTxt)}</div>` : ''}
+        <div class="hero-dose-sub">
+          <div class="hero-sub-item">
+            <div class="hero-sub-lbl">Dosis en mg</div>
+            <div class="hero-sub-val">${safe(dR)} mg</div>
+          </div>
+          <div class="hero-sub-item">
+            <div class="hero-sub-lbl">Presentación</div>
+            <div class="hero-sub-val" style="font-size:11px">${safe(pr.conc)}</div>
+          </div>
+          ${dropsSubH}
+          <div class="hero-sub-item">
+            <div class="hero-sub-lbl">Dosis diaria</div>
+            <div class="hero-sub-val">~${safe(Math.round(daily))} mg</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Presentation volume / drops calculation (kept for non-hero fallback)
     let presCalcH = '';
     if (currentPres !== null && res.pres[currentPres]) {
       const pr  = res.pres[currentPres];
       const qty = Math.round(res.calcMg * pr.f * 100) / 100;
       let qtyDisplay = `${safe(qty)} ${safe(pr.unit)}`;
-      // CORRECCIÓN dropsPerMl: mostrar equivalencia en mL para gotas
       if (pr.dropsPerMl && pr.unit === 'gotas') {
         const mlEq = Math.round((qty / pr.dropsPerMl) * 100) / 100;
         qtyDisplay += ` (≈ ${safe(mlEq)} mL)`;
@@ -2223,7 +2389,7 @@ function renderDrug(key) {
     }
 
     html += `<div class="dose-card">
-      <h3>💊 Dosis Calculada — ${res.isAdultFlat?'🧑 Adulto':'👶 Pediátrico'} · ${safe(d.routes[vk].label)}</h3>
+      <h3>💊 Detalle del Cálculo — ${res.isAdultFlat?'🧑 Adulto':'👶 Pediátrico'} · ${safe(d.routes[vk].label)}</h3>
       <div class="dose-grid">
         <div class="di">
           <div class="di-lbl">Dosis / toma</div>
@@ -2240,7 +2406,6 @@ function renderDrug(key) {
           <div class="di-val ${atMax?'danger':'ok'}">${safe(res.maxSingle)} mg</div>
           <div class="di-sub">${atMax ? '⚠ En límite máximo' : '✓ Dentro de rango'}</div>
         </div>` : ''}
-        ${presCalcH}
       </div>
       ${res.note ? `<div class="note-bar nb-info">📌 ${safe(res.note)}</div>` : ''}
     </div>`;
@@ -2252,25 +2417,6 @@ function renderDrug(key) {
         <div class="dil-text">${safe(res.dil)}</div>
       </div>`;
     }
-  }
-
-  // ── PRESENTATIONS
-  const pres = res?.pres || d.routes[vk]?.pres || [];
-  if (pres.length) {
-    html += `<div class="pres-section">
-      <h3>📦 Presentaciones disponibles</h3>
-      <div class="pres-row">
-        ${pres.map((pr,i) => `
-          <button class="pres-btn ${currentPres===i?'active':''}"
-            onclick="switchPres(${i})"
-            style="${currentPres===i ? `border-color:${cc};background:${cbg};` : ''}">
-            <div class="pn">${safe(pr.name)}</div>
-            <div class="pc">${safe(pr.conc)}</div>
-            ${pr.dropNote ? `<div class="pc" style="color:var(--info)">${safe(pr.dropNote)}</div>` : ''}
-            <span class="pv" style="background:${cbg};color:${cc};border:1px solid ${cbd}">${safe(pr.via)}</span>
-          </button>`).join('')}
-      </div>
-    </div>`;
   }
 
   // ── PRESCRIPTION TEXT — con vía explícita
