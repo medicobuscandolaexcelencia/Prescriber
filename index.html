@@ -653,6 +653,30 @@ body.dark .hero-dose-freq strong{color:#7ee787;}
   color:var(--muted);font-size:13px;pointer-events:none;
 }
 body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;border-color:#30363d !important;}
+
+/* ════ MOBILE DRUG SELECT (shown <769px only) ════ */
+.mobile-drug-select-wrap{
+  display:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+@media(max-width:768px){
+  .mobile-drug-select-wrap{display:block;}
+}
+
+/* ════ MOBILE LAYOUT REORDER: drug result before safety panel ════ */
+@media(max-width:768px){
+  #mod-calc{display:flex;flex-direction:column;}
+  .mobile-drug-select-wrap{order:1;}
+  .calc-top-row{order:2;display:flex;flex-direction:column;gap:0;}
+  .calc-top-row .pat-card{order:1;}
+  .calc-top-row #safetyPanel{order:3;margin-top:12px;}
+  #calcPanel{order:2;}
+}
 </style>
 </head>
 <body>
@@ -702,6 +726,17 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
     <div class="content" id="mainContent">
       <!-- CALCULADORA -->
       <div class="mod-panel active" id="mod-calc">
+        <!-- MOBILE DRUG SELECT (visible only <769px, mirrors sidebar select) -->
+        <div class="mobile-drug-select-wrap" id="mobileDrugSelectWrap">
+          <div class="select-nav-label">💊 Medicamento</div>
+          <div class="select-nav-container">
+            <select id="mobileDrugSelect" class="drug-select" onchange="onDrugSelectChange(this.value)">
+              <option value="">Seleccione...</option>
+            </select>
+            <span class="select-nav-arrow">▾</span>
+          </div>
+          <div class="select-nav-chip" id="mobileSelectNavChip" style="display:none"></div>
+        </div>
         <div class="calc-top-row">
         <div class="pat-card">
           <div class="sec-label">📋 Datos del Paciente</div>
@@ -1450,7 +1485,7 @@ diazepam:{
   },
   routes:{
     iv:{label:'Intravenosa (IV) — lento 1-2 mg/min',
-      dil:'NO diluir (precipita en agua). IV directo lento a 1-2 mg/min. Tener O₂ y ambu disponibles. Monitorear SpO₂ y FR.',
+      dil:'NO diluir en soluciones acuosas (SF 0.9%, D5%) — el diazepam precipita por su vehículo propilenglicol/etanol. Administrar IV DIRECTO sin diluir, lento a 1-2 mg/min. Si requiere dilución para microgoteo, usar SOLO el mismo frasco de vidrio (no bolsa plástica) y administrar inmediatamente. Tener O₂ y ambú disponibles. Monitorear SpO₂ y FR.',
       ped:{dose:0.2,unit:'mg/kg/dosis',freq:'c/5-10 min (máx 3)',max_single:10,max_daily:30,note:'IV lento 1 mg/min.'},
       adult:{dose:5,dose_max:10,freq:'c/5-10 min (máx 3)',max_daily:30,note:'5-10 mg IV lento 1-2 mg/min.'},
       pres:[{name:'Amp 5 mg/mL (2 mL)',conc:'5 mg/mL',unit:'mL',f:1/5,via:'IV'}]},
@@ -1786,7 +1821,344 @@ omeprazol:{
     {t:'info',txt:'Cápsulas entéricas: NO partir ni triturar. Si SNG: usar suspensión o IV.'},
     {t:'warn',txt:'Uso prolongado: ↓Mg²⁺, ↓B12, riesgo fractura. Revisar indicación anualmente.'}
   ]
+},
+carvedilol:{
+  name:'Carvedilol',cat:'cardiac',class:'Betabloqueante no selectivo + alfa-1 bloqueante',
+  mech:'Bloqueo β1+β2+α1 → ↓FC, ↓RVP, ↓remodelado cardíaco',
+  ind:'ICC (FEVI reducida), HTA, post-IAM con disfunción VI',dur:'Crónico, titulación lenta',refs:'ESC 2024, BNF 2025',
+  pedCI:'menores de 18 años (uso no establecido en pediatría salvo indicación especializada)',
+  emerg:{
+    ped:{dose:'No indicado en emergencia pediátrica',max_single:'—',max_daily:'—',note:'Uso solo bajo supervisión de cardiología pediátrica especializada.'},
+    adult:{dose:'3.125-25 mg c/12h',max_single:'25 mg',max_daily:'50 mg',note:'Iniciar dosis baja (3.125 mg c/12h), titular c/2 semanas. Tomar con alimentos para evitar hipotensión.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO) — con alimentos',dil:null,
+      ped:{dose:0.1,unit:'mg/kg/dosis',freq:'c/12h',max_single:25,max_daily:50,note:'Solo bajo supervisión especializada. No uso rutinario en pediatría.',minAgeMonths:216,pedWarn:true},
+      adult:{dose:6.25,dose_max:25,freq:'c/12h',max_daily:50,note:'Iniciar 3.125-6.25 mg c/12h. Titular dosis doble cada 2 semanas según tolerancia. SIEMPRE con alimentos.'},
+      pres:[
+        {name:'Tab 6.25 mg',conc:'6.25 mg/tab',unit:'tab',f:1/6.25,via:'VO'},
+        {name:'Tab 12.5 mg',conc:'12.5 mg/tab',unit:'tab',f:1/12.5,via:'VO'},
+        {name:'Tab 25 mg',conc:'25 mg/tab',unit:'tab',f:1/25,via:'VO'}
+      ]}
+  },
+  alerts:[
+    {t:'danger',txt:'Contraindicado: asma/EPOC severo, bloqueo AV 2-3°, shock cardiogénico, bradicardia severa, ICC descompensada aguda.'},
+    {t:'warn',txt:'NUNCA suspender abruptamente (riesgo de rebote hipertensivo/isquemia). Reducir dosis gradualmente.'},
+    {t:'info',txt:'Tomar con alimentos reduce hipotensión ortostática y mejora tolerancia.'}
+  ]
+},
+losartan:{
+  name:'Losartán',cat:'antihyp',class:'ARA-II (antagonista receptor angiotensina II)',
+  mech:'Bloqueo selectivo receptor AT1 → vasodilatación sin tos (a diferencia de IECA)',
+  ind:'HTA, nefroprotección diabética, ICC (alternativa a IECA)',dur:'Crónico',refs:'JNC 8, ESC 2024, BNF 2025',
+  pedCI:'menores de 6 años; contraindicado en embarazo (todos los trimestres)',
+  emerg:{
+    ped:{dose:'0.7 mg/kg/día',max_single:'50 mg',max_daily:'100 mg',note:'Solo >6 años. Iniciar dosis baja, titular según respuesta.'},
+    adult:{dose:'50 mg/día',max_single:'100 mg',max_daily:'100 mg',note:'Iniciar 50 mg/día; titular a 100 mg si necesario. ICC: iniciar 12.5 mg/día.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO)',dil:null,
+      ped:{dose:0.7,unit:'mg/kg/dosis',freq:'c/24h',max_single:50,max_daily:100,note:'Solo >6 años y >20 kg. Iniciar dosis baja.',minAgeMonths:72},
+      adult:{dose:50,dose_max:100,freq:'c/24h',max_daily:100,note:'ICC: iniciar 12.5 mg/día, titular lento. HTA: 50 mg/día inicial.'},
+      pres:[
+        {name:'Tab 12.5 mg',conc:'12.5 mg/tab',unit:'tab',f:1/12.5,via:'VO'},
+        {name:'Tab 25 mg',conc:'25 mg/tab',unit:'tab',f:1/25,via:'VO'},
+        {name:'Tab 50 mg',conc:'50 mg/tab',unit:'tab',f:1/50,via:'VO'},
+        {name:'Tab 100 mg',conc:'100 mg/tab',unit:'tab',f:1/100,via:'VO'}
+      ]}
+  },
+  alerts:[
+    {t:'danger',txt:'CONTRAINDICADO en embarazo (todos los trimestres) — teratogénico, falla renal fetal. Suspender inmediatamente si se confirma embarazo.'},
+    {t:'warn',txt:'Hiperpotasemia, especialmente con IECA, diuréticos ahorradores de K+ o suplementos de potasio. Monitorear electrolitos.'},
+    {t:'info',txt:'Sin tos seca (a diferencia de IECA) por no afectar bradiquinina. Alternativa de elección si hay intolerancia a captopril/enalapril.'}
+  ]
 }
+,
+fenitoina:{
+  name:'Fenitoína Sódica',cat:'benzo',class:'Anticonvulsivante (bloqueador canales Na+ voltaje-dependientes)',
+  mech:'Bloqueo canales Na+ neuronales → estabiliza membrana, inhibe propagación de descargas',
+  ind:'Status epiléptico (2ª línea tras BZD), profilaxis convulsiones, arritmias por digoxina',dur:'Carga única + mantenimiento',refs:'Harriet Lane 23a, ILAE 2022, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'20 mg/kg carga IV',max_single:'1 500 mg',max_daily:'1 500 mg (carga) + mantenimiento',note:'CARGA: 20 mg/kg IV diluido en SF, velocidad máx 1 mg/kg/min (máx 50 mg/min). NUNCA bolo rápido (arritmias/hipotensión). Mantenimiento: 5-8 mg/kg/día.'},
+    adult:{dose:'15-20 mg/kg carga IV',max_single:'1 500 mg',max_daily:'1 500 mg (carga) + 300 mg/día mant.',note:'CARGA: 15-20 mg/kg IV diluido en SF 0.9%, velocidad máx 50 mg/min. Mantenimiento: 300 mg/día ÷ c/8-12h.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV) — DILUIR EN SOLUCIÓN SALINA',
+      dil:'DILUCIÓN OBLIGATORIA EN SOLUCIÓN SALINA 0.9% (NUNCA en dextrosa — precipita). Concentración máxima 6.7 mg/mL. Infundir a velocidad máxima de 1 mg/kg/min en niños y 50 mg/min en adultos (más rápido causa hipotensión y arritmias graves). Usar filtro en línea. Monitoreo ECG y PA continuo durante infusión.',
+      ped:{dose:20,unit:'mg/kg/dosis',freq:'dosis de carga única',max_single:1500,max_daily:1500,note:'CARGA única IV lenta. Diluir en SF 0.9% SOLAMENTE. Velocidad máx 1 mg/kg/min. Monitoreo ECG/PA continuo.'},
+      adult:{dose:1000,dose_max:1500,freq:'dosis de carga única',max_daily:1500,note:'CARGA 15-20 mg/kg (≈1000-1500 mg). Diluir en SF 0.9% SOLAMENTE. Velocidad máx 50 mg/min. Monitoreo ECG/PA.'},
+      pres:[
+        {name:'Amp 50 mg/mL (5 mL = 250 mg)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IV'},
+        {name:'Amp 50 mg/mL (2 mL = 100 mg)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IV'}
+      ]},
+    oral:{label:'Oral (VO) — mantenimiento',dil:null,
+      ped:{dose:2.5,unit:'mg/kg/dosis',freq:'c/12h (mantenimiento)',max_single:150,max_daily:300,note:'Mantenimiento tras carga IV. Niveles séricos terapéuticos: 10-20 mcg/mL.'},
+      adult:{dose:100,dose_max:150,freq:'c/8-12h (mantenimiento)',max_daily:300,note:'Mantenimiento tras carga IV. Niveles séricos: 10-20 mcg/mL.'},
+      pres:[
+        {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
+        {name:'Cáp 100 mg',conc:'100 mg/cáp',unit:'cáp',f:1/100,via:'VO'},
+        {name:'Tab 100 mg',conc:'100 mg/tab',unit:'tab',f:1/100,via:'VO'}
+      ]}
+  },
+  alerts:[
+    {t:'danger',txt:'NUNCA diluir en dextrosa (precipita inmediatamente). SOLO solución salina 0.9%. Infusión rápida → hipotensión severa, arritmias, paro cardíaco.'},
+    {t:'danger',txt:'Extravasación → "síndrome del guante púrpura" (necrosis tisular). Usar vena gruesa, vigilar sitio de punción constantemente.'},
+    {t:'warn',txt:'Ventana terapéutica estrecha (10-20 mcg/mL). Niveles >20 mcg/mL → nistagmo, ataxia, letargia. >30 → coma.'},
+    {t:'info',txt:'Interacciones múltiples: induce CYP450 (reduce eficacia de anticonceptivos orales, warfarina, otros anticonvulsivantes).'}
+  ]
+},
+cefazolina:{
+  name:'Cefazolina',cat:'antibiotic',class:'Cefalosporina 1ª generación',
+  mech:'Inhibición síntesis pared bacteriana (PBP), espectro gram-positivo principalmente',
+  ind:'Profilaxis quirúrgica, infecciones piel/tejidos blandos por S. aureus/Streptococcus',dur:'Profilaxis: dosis única; tratamiento: 5-10 días',refs:'Red Book 2024, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'25-50 mg/kg',max_single:'1 000 mg',max_daily:'6 000 mg',note:'Profilaxis quirúrgica: 30 mg/kg IV 30-60 min antes de incisión. Infusión 3-5 min o IM.'},
+    adult:{dose:'1-2 g IV/IM',max_single:'2 000 mg',max_daily:'6 000 mg',note:'Profilaxis: 1-2 g IV 30-60 min antes de incisión. Tratamiento: 1 g c/8h.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV)',
+      dil:'Reconstituir vial 1 g en 10 mL agua para inyección. Diluir en 50-100 mL SF 0.9% o D5%. Infusión 15-30 min, o IV directo lento 3-5 min si dosis pequeña.',
+      ped:{dose:25,unit:'mg/kg/dosis',freq:'c/8h',max_single:1000,max_daily:6000,note:'Profilaxis: 30 mg/kg dosis única 30-60 min preincisión.'},
+      adult:{dose:1000,dose_max:2000,freq:'c/8h',max_daily:6000,note:'Profilaxis: 1-2 g única dosis. Tratamiento: 1 g c/8h.'},
+      pres:[
+        {name:'Vial 500 mg',conc:'500 mg/vial',unit:'mL',f:1/500,via:'IV'},
+        {name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IV'}
+      ]},
+    im:{label:'Intramuscular (IM)',dil:'Reconstituir con agua para inyección o lidocaína 1% para menos dolor.',
+      ped:{dose:25,unit:'mg/kg/dosis',freq:'c/8h',max_single:1000,max_daily:6000,note:'IM profundo glúteo.'},
+      adult:{dose:1000,dose_max:1000,freq:'c/8h',max_daily:6000,note:'IM profundo glúteo.'},
+      pres:[{name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IM'}]}
+  },
+  alerts:[
+    {t:'warn',txt:'Verificar alergia a betalactámicos. Reactividad cruzada con penicilinas ~1-2%.'},
+    {t:'info',txt:'Profilaxis quirúrgica estándar: administrar 30-60 min antes de incisión para concentración tisular óptima.'}
+  ]
+},
+ampicilina_sulbactam:{
+  name:'Ampicilina/Sulbactam',cat:'antibiotic',class:'Aminopenicilina + inhibidor de betalactamasa',
+  mech:'Ampicilina inhibe PBP; sulbactam protege de betalactamasas, ampliando espectro a productores de betalactamasa',
+  ind:'Infecciones respiratorias, intraabdominales, ginecológicas, piel/tejidos blandos',dur:'5-14 días según indicación',refs:'Red Book 2024, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'50 mg/kg (ampicilina)',max_single:'2 000 mg',max_daily:'8 000 mg',note:'Dosis expresada en componente ampicilina. Infusión IV 15-30 min. Relación 2:1 ampicilina:sulbactam.'},
+    adult:{dose:'1.5-3 g IV/IM',max_single:'3 000 mg',max_daily:'12 000 mg',note:'1.5-3 g (ampicilina+sulbactam combinados) c/6h. Infusión 15-30 min.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV)',
+      dil:'Reconstituir vial según presentación. Diluir en 50-100 mL SF 0.9%. Infusión 15-30 min. No mezclar con aminoglucósidos en la misma jeringa/línea.',
+      ped:{dose:50,unit:'mg/kg/dosis',freq:'c/6h',max_single:2000,max_daily:8000,note:'Dosis en base a ampicilina. Infusión 15-30 min.'},
+      adult:{dose:1500,dose_max:3000,freq:'c/6h',max_daily:12000,note:'1.5-3 g c/6h (combinado). Infusión 15-30 min.'},
+      pres:[
+        {name:'Vial 1.5 g (1 g amp + 0.5 g sulb)',conc:'1 500 mg/vial',unit:'mL',f:1/1500,via:'IV'},
+        {name:'Vial 3 g (2 g amp + 1 g sulb)',conc:'3 000 mg/vial',unit:'mL',f:1/3000,via:'IV'}
+      ]},
+    im:{label:'Intramuscular (IM)',dil:'Reconstituir con agua para inyección o lidocaína 0.5% para reducir dolor.',
+      ped:{dose:50,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:1500,max_daily:6000,note:'IM profundo. Menos doloroso con lidocaína.'},
+      adult:{dose:1500,dose_max:1500,freq:'c/6-8h',max_daily:6000,note:'IM profundo glúteo.'},
+      pres:[{name:'Vial 1.5 g',conc:'1 500 mg/vial',unit:'mL',f:1/1500,via:'IM'}]}
+  },
+  alerts:[
+    {t:'warn',txt:'Verificar alergia a penicilinas. Reacciones cutáneas más frecuentes que con ampicilina sola.'},
+    {t:'info',txt:'Cubre productores de betalactamasa (H. influenzae, M. catarrhalis, algunos S. aureus) que ampicilina sola no cubre.'}
+  ]
+},
+cefalexina:{
+  name:'Cefalexina',cat:'antibiotic',class:'Cefalosporina 1ª generación oral',
+  mech:'Inhibición síntesis pared bacteriana (PBP), espectro gram-positivo, algunos gram-negativos',
+  ind:'Infecciones piel/tejidos blandos, faringitis, IVU no complicada',dur:'7-10 días',refs:'Red Book 2024, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'25-50 mg/kg/día÷4',max_single:'1 000 mg',max_daily:'4 000 mg',note:'Dividir en 4 dosis/día. Tomar con o sin alimentos.'},
+    adult:{dose:'250-500 mg c/6h',max_single:'1 000 mg',max_daily:'4 000 mg',note:'Infecciones severas: hasta 4 g/día divididos.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO)',dil:null,
+      ped:{dose:12.5,unit:'mg/kg/dosis',freq:'c/6h',max_single:1000,max_daily:4000,note:'25-50 mg/kg/día dividido c/6h. Bien tolerado con alimentos.'},
+      adult:{dose:500,dose_max:1000,freq:'c/6h',max_daily:4000,note:'250-500 mg c/6h habitual. Severas: hasta 1 g c/6h.'},
+      pres:[
+        {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
+        {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
+        {name:'Cáp 250 mg',conc:'250 mg/cáp',unit:'cáp',f:1/250,via:'VO'},
+        {name:'Cáp 500 mg',conc:'500 mg/cáp',unit:'cáp',f:1/500,via:'VO'},
+        {name:'Tab 1 g',conc:'1 000 mg/tab',unit:'tab',f:1/1000,via:'VO'}
+      ]}
+  },
+  alerts:[
+    {t:'warn',txt:'Verificar alergia a betalactámicos. Reactividad cruzada con penicilinas ~1-2%.'},
+    {t:'info',txt:'Buena biodisponibilidad oral (~90%). No requiere ajuste con alimentos.'}
+  ]
+}
+,
+nitrofurantoina:{
+  name:'Nitrofurantoína',cat:'antibiotic',class:'Antiséptico urinario (nitrofurano)',
+  mech:'Daño múltiple a enzimas bacterianas y ADN, activado por reductasas bacterianas',
+  ind:'Infección de vías urinarias bajas no complicada (cistitis), profilaxis ITU recurrente',dur:'5-7 días tratamiento; profilaxis: prolongado',refs:'BNF 2025, IDSA Guidelines 2024',
+  pedCI:'menores de 1 mes (riesgo de anemia hemolítica); contraindicado en embarazo a término (36-42 semanas) y durante el parto',
+  emerg:{
+    ped:{dose:'5-7 mg/kg/día÷4',max_single:'100 mg',max_daily:'400 mg',note:'Solo >1 mes. Tomar con alimentos para mejorar absorción y tolerancia GI.'},
+    adult:{dose:'100 mg c/6h',max_single:'100 mg',max_daily:'400 mg',note:'Macrocristales: 100 mg c/12h x5d. Con alimentos.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO) — con alimentos',dil:null,
+      ped:{dose:1.5,unit:'mg/kg/dosis',freq:'c/6h',max_single:100,max_daily:400,note:'Solo >1 mes. Con alimentos (mejora absorción, reduce náusea).',minAgeMonths:1},
+      adult:{dose:100,dose_max:100,freq:'c/6-12h',max_daily:400,note:'Cistitis no complicada: 100 mg c/12h x5d (macrocristales) ó c/6h x7d.'},
+      pres:[
+        {name:'Susp 25 mg/5 mL',conc:'25 mg/5 mL',unit:'mL',f:5/25,via:'VO'},
+        {name:'Cáp 50 mg',conc:'50 mg/cáp',unit:'cáp',f:1/50,via:'VO'},
+        {name:'Cáp 100 mg (macrocristales)',conc:'100 mg/cáp',unit:'cáp',f:1/100,via:'VO'}
+      ]}
+  },
+  alerts:[
+    {t:'danger',txt:'CONTRAINDICADO en embarazo a término (36-42 sem) y durante el parto — riesgo de anemia hemolítica neonatal (hemólisis por déficit G6PD fetal).'},
+    {t:'warn',txt:'No usar si ClCr <60 mL/min (ineficaz y tóxico, no alcanza concentración urinaria adecuada).'},
+    {t:'info',txt:'Solo eficaz para infecciones urinarias bajas (cistitis); NO alcanza concentración sérica útil para pielonefritis.'}
+  ]
+},
+sulfametoxazol_trimetoprim:{
+  name:'Sulfametoxazol/Trimetoprim',cat:'antibiotic',class:'Sulfonamida + inhibidor dihidrofolato reductasa (sinergismo)',
+  mech:'Doble bloqueo secuencial de síntesis de ácido fólico bacteriano (sulfa: PABA; trimetoprim: DHFR)',
+  ind:'ITU, otitis media, profilaxis PCP (Pneumocystis), shigelosis',dur:'5-10 días; profilaxis PCP: prolongado',refs:'Red Book 2024, BNF 2025',
+  pedCI:'menores de 2 meses (riesgo de kernicterus por desplazamiento de bilirrubina)',
+  emerg:{
+    ped:{dose:'8 mg/kg/día (TMP)÷2',max_single:'160 mg (TMP)',max_daily:'320 mg (TMP)',note:'Dosis en base a trimetoprim (TMP). Solo >2 meses. Profilaxis PCP: dosis menor diaria.'},
+    adult:{dose:'160/800 mg c/12h',max_single:'320/1600 mg',max_daily:'640/3200 mg',note:'1 tableta forte (160/800 mg) c/12h. Hidratación adecuada (riesgo cristaluria).'}
+  },
+  routes:{
+    oral:{label:'Oral (VO)',dil:null,
+      ped:{dose:4,unit:'mg/kg/dosis',freq:'c/12h',max_single:160,max_daily:320,note:'Dosis en TMP. Solo >2 meses. Con abundante líquido.',minAgeMonths:2},
+      adult:{dose:160,dose_max:160,freq:'c/12h',max_daily:320,note:'1 tab forte (160 mg TMP/800 mg SMX) c/12h. Hidratación abundante.'},
+      pres:[
+        {name:'Susp 40/200 mg por 5 mL',conc:'40 mg TMP/200 mg SMX por 5 mL',unit:'mL',f:5/40,via:'VO'},
+        {name:'Tab 80/400 mg (simple)',conc:'80 mg TMP/400 mg SMX',unit:'tab',f:1/80,via:'VO'},
+        {name:'Tab 160/800 mg (forte)',conc:'160 mg TMP/800 mg SMX',unit:'tab',f:1/160,via:'VO'}
+      ]},
+    iv:{label:'Intravenosa (IV)',
+      dil:'Diluir cada 5 mL del concentrado en 125 mL SF o D5% (no exceder concentración). Infusión 60-90 min. No usar si la solución está turbia.',
+      ped:{dose:4,unit:'mg/kg/dosis',freq:'c/12h',max_single:160,max_daily:320,note:'PCP severo: 5 mg/kg (TMP) c/6h. Infusión 60-90 min.'},
+      adult:{dose:160,dose_max:160,freq:'c/12h',max_daily:320,note:'Infusión 60-90 min diluido. PCP severo: dosis más altas c/6-8h.'},
+      pres:[{name:'Amp 16/80 mg por mL (5 mL)',conc:'16 mg TMP/80 mg SMX por mL',unit:'mL',f:1/16,via:'IV'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'CONTRAINDICADO <2 meses (riesgo de kernicterus). Contraindicado en déficit G6PD (hemólisis) y en el tercer trimestre del embarazo.'},
+    {t:'warn',txt:'Hiperpotasemia, especialmente con IECA/ARA-II. Síndrome de Stevens-Johnson (raro pero grave). Hidratación abundante para prevenir cristaluria.'},
+    {t:'warn',txt:'Potencia el efecto de warfarina (desplaza de proteínas plasmáticas) — riesgo de sangrado si coadministrado.'}
+  ]
+},
+ciprofloxacino:{
+  name:'Ciprofloxacino',cat:'antibiotic',class:'Fluoroquinolona de 2ª generación',
+  mech:'Inhibición de ADN girasa y topoisomerasa IV bacterianas → bloqueo de replicación de ADN',
+  ind:'ITU complicada, infecciones gastrointestinales, prostatitis, infecciones óseas',dur:'7-14 días según indicación',refs:'BNF 2025, IDSA Guidelines 2024',
+  pedCI:'uso restringido en menores de 18 años (riesgo de artropatía/tendinopatía); usar solo si no hay alternativa y bajo supervisión especializada',
+  emerg:{
+    ped:{dose:'10-15 mg/kg c/12h',max_single:'750 mg',max_daily:'1 500 mg',note:'USO RESTRINGIDO pediátrico — solo en infecciones graves sin alternativa (ej. fibrosis quística, ántrax). Riesgo de artropatía.'},
+    adult:{dose:'500-750 mg c/12h',max_single:'750 mg',max_daily:'1 500 mg',note:'IV: 400 mg c/12h. VO: 500-750 mg c/12h según severidad. Hidratación adecuada.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO)',dil:null,
+      ped:{dose:10,unit:'mg/kg/dosis',freq:'c/12h',max_single:750,max_daily:1500,note:'USO RESTRINGIDO — solo si no hay alternativa. Riesgo de artropatía/tendinopatía.',pedWarn:true},
+      adult:{dose:500,dose_max:750,freq:'c/12h',max_daily:1500,note:'ITU complicada: 500 mg c/12h x7-14d. No tomar con lácteos/antiácidos (quelación).'},
+      pres:[
+        {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
+        {name:'Tab 250 mg',conc:'250 mg/tab',unit:'tab',f:1/250,via:'VO'},
+        {name:'Tab 500 mg',conc:'500 mg/tab',unit:'tab',f:1/500,via:'VO'},
+        {name:'Tab 750 mg',conc:'750 mg/tab',unit:'tab',f:1/750,via:'VO'}
+      ]},
+    iv:{label:'Intravenosa (IV)',
+      dil:'Diluir o usar bolsa lista 2 mg/mL. Infusión lenta 60 min (infusión rápida → flebitis, hipotensión).',
+      ped:{dose:10,unit:'mg/kg/dosis',freq:'c/12h',max_single:400,max_daily:800,note:'USO RESTRINGIDO pediátrico. Infusión 60 min.',pedWarn:true},
+      adult:{dose:400,dose_max:400,freq:'c/12h',max_daily:800,note:'Infusión 60 min. No bolo (flebitis/hipotensión).'},
+      pres:[{name:'Bolsa 2 mg/mL (200 mL=400 mg)',conc:'2 mg/mL',unit:'mL',f:1/2,via:'IV'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'Riesgo de ruptura/tendinopatía de Aquiles, especialmente en >60 años, uso concomitante con corticoides, o trasplantados. Riesgo de artropatía en pediatría.'},
+    {t:'warn',txt:'Prolongación QT. Evitar con otros fármacos QT-prolongantes. No tomar con lácteos, antiácidos o suplementos de hierro/calcio (quelación, reduce absorción).'},
+    {t:'warn',txt:'Riesgo de aneurisma/disección aórtica (raro). Fotosensibilidad — evitar exposición solar prolongada.'}
+  ]
+}
+,
+oxitocina:{
+  name:'Oxitocina',cat:'other',class:'Hormona uterotónica (análogo sintético)',
+  mech:'Agonista receptor de oxitocina en miometrio → contracción uterina rítmica; receptor en células mioepiteliales mamarias',
+  ind:'Inducción/conducción del trabajo de parto, manejo activo del alumbramiento, hemorragia postparto',dur:'Solo en contexto obstétrico agudo',refs:'ACOG 2024, FIGO Guidelines 2024',
+  pedCI:'no aplicable en pediatría (uso exclusivamente obstétrico en gestantes/puérperas)',
+  emerg:{
+    ped:{dose:'No aplica (uso obstétrico)',max_single:'—',max_daily:'—',note:'Fármaco exclusivo de uso obstétrico en gestantes y puérperas. No aplica en pediatría.'},
+    adult:{dose:'10-40 UI infusión IV',max_single:'40 UI en infusión',max_daily:'Según protocolo institucional',note:'Hemorragia postparto: 10 UI IM ó 20-40 UI en 1000 mL SF infusión IV. Inducción: iniciar 1-2 mUI/min, titular según dinámica uterina. NUNCA bolo IV no diluido (colapso cardiovascular).'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV) — infusión titulada',
+      dil:'Hemorragia postparto: diluir 20-40 UI en 1000 mL SF o Ringer, infundir según protocolo institucional. Inducción de parto: diluir 10 UI en 1000 mL SF, iniciar a 1-2 mUI/min (≈6-12 mL/h), titular cada 15-30 min según dinámica uterina y respuesta fetal. NUNCA administrar en bolo IV no diluido (hipotensión severa, colapso cardiovascular, arritmias).',
+      adult:{dose:20,dose_max:40,unit:'UI',freq:'Infusión continua titulada',max_single:40,max_daily:120,note:'Hemorragia postparto: 20-40 UI en 1000 mL infusión. Inducción: iniciar 1-2 mUI/min, titular. Monitoreo continuo de dinámica uterina y FCF.'},
+      pres:[{name:'Amp 10 UI/mL (1 mL)',conc:'10 UI/mL',unit:'mL',f:1/10,via:'IV'}]},
+    im:{label:'Intramuscular (IM)',dil:null,
+      adult:{dose:10,dose_max:10,unit:'UI',freq:'Dosis única',max_single:10,max_daily:10,note:'Manejo activo del alumbramiento: 10 UI IM inmediatamente tras el nacimiento del bebé (antes del alumbramiento placentario).'},
+      pres:[{name:'Amp 10 UI/mL (1 mL)',conc:'10 UI/mL',unit:'mL',f:1/10,via:'IM'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'NUNCA bolo IV no diluido — causa hipotensión severa, taquicardia refleja y colapso cardiovascular. SIEMPRE diluir e infundir titulado.'},
+    {t:'warn',txt:'Intoxicación hídrica con infusiones prolongadas a dosis altas (efecto antidiurético tipo ADH) — monitorear balance hídrico y natremia.'},
+    {t:'warn',txt:'Hiperestimulación uterina (taquisistolia) puede causar sufrimiento fetal agudo. Monitoreo continuo de dinámica uterina y FCF obligatorio durante infusión.'}
+  ]
+},
+fitomenadiona:{
+  name:'Fitomenadiona (Vitamina K1)',cat:'other',class:'Vitamina liposoluble — cofactor de síntesis de factores de coagulación',
+  mech:'Cofactor esencial para la carboxilación hepática de factores de coagulación II, VII, IX, X (vía gamma-glutamil carboxilasa)',
+  ind:'Profilaxis enfermedad hemorrágica del recién nacido, reversión de sobredosis de warfarina/anticoagulantes orales, déficit de vitamina K',dur:'RN: dosis única profiláctica; sobredosis: según INR',refs:'AAP 2024, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'1 mg IM (RN a término) / 0.5 mg (prematuro)',max_single:'1 mg',max_daily:'1 mg (profilaxis RN)',note:'Profilaxis universal RN: 1 mg IM dosis única en la primera hora de vida (0.5 mg si <1500 g). Sobredosis anticoagulante: 0.5-2 mg/kg IV lento según INR.'},
+    adult:{dose:'1-10 mg IV/VO',max_single:'10 mg',max_daily:'10-40 mg (según severidad)',note:'Reversión warfarina: 1-10 mg VO/IV según INR y sangrado activo. IV lento ≥30 min — riesgo de reacción anafilactoide si rápido.'}
+  },
+  routes:{
+    im:{label:'Intramuscular (IM) — profilaxis neonatal',dil:null,
+      ped:{dose:1,unit:'mg',freq:'dosis única (RN)',max_single:1,max_daily:1,note:'1 mg IM dosis única en primera hora de vida. Prematuro <1500g: 0.5 mg.'},
+      pres:[{name:'Amp 10 mg/mL (1 mL)',conc:'10 mg/mL',unit:'mL',f:1/10,via:'IM'}]},
+    iv:{label:'Intravenosa (IV) — lenta, reversión anticoagulante',
+      dil:'Administrar SIN diluir o diluido en SF si es necesario. Infusión IV LENTA en ≥30 min (NUNCA bolo rápido — riesgo de reacción anafilactoide/shock, incluso fatal, descrito con administración rápida).',
+      ped:{dose:0.5,unit:'mg/kg/dosis',freq:'según INR/sangrado',max_single:10,max_daily:10,note:'IV lento ≥30 min. Para reversión de sobredosis de anticoagulantes orales en pediatría.'},
+      adult:{dose:5,dose_max:10,freq:'según INR/sangrado',max_daily:40,note:'IV lento ≥30 min. Reversión de warfarina con sangrado activo o INR muy elevado.'},
+      pres:[{name:'Amp 10 mg/mL (1 mL)',conc:'10 mg/mL',unit:'mL',f:1/10,via:'IV'}]},
+    oral:{label:'Oral (VO)',dil:null,
+      adult:{dose:1,dose_max:10,freq:'según INR',max_daily:10,note:'Reversión leve de sobreanticoagulación sin sangrado activo. Inicio de acción más lento que IV (6-12h).'},
+      pres:[{name:'Tab 10 mg',conc:'10 mg/tab',unit:'tab',f:1/10,via:'VO'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'Administración IV rápida puede causar reacción anafilactoide grave (disnea, hipotensión, shock), incluso fatal. SIEMPRE infusión lenta ≥30 min.'},
+    {t:'info',txt:'Profilaxis universal en RN previene la enfermedad hemorrágica del recién nacido (sangrado intracraneal/GI por déficit fisiológico de vitamina K).'},
+    {t:'warn',txt:'Revierte el efecto de warfarina pero el efecto tarda 6-12h (VO) u horas (IV) — en sangrado que amenaza la vida, combinar con plasma fresco congelado o concentrado de complejo protrombínico.'}
+  ]
+},
+enoxaparina:{
+  name:'Enoxaparina (Clexane)',cat:'other',class:'Heparina de bajo peso molecular (HBPM)',
+  mech:'Potenciación de antitrombina III → inhibición preferencial del factor Xa (y en menor grado IIa/trombina)',
+  ind:'Profilaxis y tratamiento de TVP/TEP, síndrome coronario agudo, profilaxis en cirugía/inmovilización',dur:'Profilaxis: mientras dure el riesgo; tratamiento: 3-6 meses según indicación',refs:'ESC 2024, ACCP Guidelines 2024',
+  pedCI:'uso con extrema precaución en neonatos y lactantes; ajuste de dosis especializado requerido',
+  emerg:{
+    ped:{dose:'1 mg/kg c/12h (tratamiento)',max_single:'No definido — según peso',max_daily:'Según indicación y anti-Xa',note:'Tratamiento: 1 mg/kg SC c/12h. Profilaxis: 0.5 mg/kg SC c/12h. Monitoreo con niveles anti-Xa en neonatos/lactantes.'},
+    adult:{dose:'1 mg/kg c/12h (tratamiento)',max_single:'No definido — según peso e indicación',max_daily:'Según indicación clínica',note:'TVP/TEP: 1 mg/kg SC c/12h ó 1.5 mg/kg c/24h. Profilaxis: 40 mg SC c/24h (riesgo estándar) ó 30 mg c/12h (alto riesgo ortopédico).'}
+  },
+  routes:{
+    sc:{label:'Subcutánea (SC)',dil:null,
+      ped:{dose:1,unit:'mg/kg/dosis',freq:'c/12h (tratamiento) / c/12h (profilaxis: 0.5mg/kg)',max_single:150,max_daily:300,note:'Inyección SC en abdomen, rotando sitios. No requiere monitoreo de coagulación rutinario (sí anti-Xa en casos especiales).'},
+      adult:{dose:1,dose_max:1.5,freq:'c/12h (tto estándar) ó c/24h (1.5mg/kg)',max_daily:200,note:'SC en abdomen (zona periumbilical), alternando lados. NO frotar tras inyección. Ajustar en ERC (ClCr <30: reducir dosis).'},
+      pres:[
+        {name:'Jeringa precargada 20 mg/0.2 mL',conc:'20 mg/0.2 mL',unit:'mL',f:0.2/20,via:'SC'},
+        {name:'Jeringa precargada 40 mg/0.4 mL',conc:'40 mg/0.4 mL',unit:'mL',f:0.4/40,via:'SC'},
+        {name:'Jeringa precargada 60 mg/0.6 mL',conc:'60 mg/0.6 mL',unit:'mL',f:0.6/60,via:'SC'},
+        {name:'Jeringa precargada 80 mg/0.8 mL',conc:'80 mg/0.8 mL',unit:'mL',f:0.8/80,via:'SC'},
+        {name:'Jeringa precargada 100 mg/1 mL',conc:'100 mg/1 mL',unit:'mL',f:1/100,via:'SC'}
+      ]}
+  },
+  alerts:[
+    {t:'danger',txt:'Riesgo de sangrado mayor. Contraindicado en sangrado activo, trombocitopenia inducida por heparina (HIT) previa, anestesia neuroaxial reciente sin intervalo de seguridad.'},
+    {t:'warn',txt:'Ajustar dosis en insuficiencia renal (ClCr <30 mL/min) — acumulación aumenta riesgo de sangrado. Considerar heparina no fraccionada como alternativa en ERC severa.'},
+    {t:'info',txt:'No requiere monitoreo rutinario de coagulación (a diferencia de heparina no fraccionada), salvo en embarazo, obesidad extrema, ERC o pediatría (usar anti-Xa).'},
+    {t:'warn',txt:'NUNCA administrar IM (riesgo de hematoma). Vía exclusivamente subcutánea.'}
+  ]
+}
+
 }; // END DRUGS
 </script>
 
@@ -3181,8 +3553,6 @@ function splitDrugContentTwoCol(dc) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function buildDrugSelect() {
-  const sel = document.getElementById('drugSelect');
-  if (!sel) return;
   let html = '<option value="">Seleccione...</option>';
   CAT_ORDER.forEach(cat => {
     const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
@@ -3195,7 +3565,11 @@ function buildDrugSelect() {
     });
     html += '</optgroup>';
   });
-  sel.innerHTML = html;
+  // Populate BOTH desktop sidebar select and mobile inline select
+  ['drugSelect','mobileDrugSelect'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.innerHTML = html;
+  });
 }
 
 function onDrugSelectChange(key) {
@@ -3208,15 +3582,22 @@ function onDrugSelectChange(key) {
 }
 
 function updateSelectChip(key) {
-  const chip = document.getElementById('selectNavChip');
-  if (!chip || !DRUGS[key]) return;
+  if (!DRUGS[key]) return;
   const d   = DRUGS[key];
   const cat = d.cat;
   const cc  = `var(--c-${cat})`;
   const cbg = `var(--c-${cat}-bg)`;
-  chip.style.display = 'flex';
-  chip.style.cssText = `display:flex;background:${cbg};color:${cc};border-color:${cc}50;margin-top:8px;padding:7px 12px;border-radius:8px;font-size:11.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:1px solid;line-height:1.4;align-items:center;gap:7px;`;
-  chip.innerHTML = `<span>${safe(CATS[cat].icon)}</span><span>${safe(d.name)}</span>`;
+  const chipStyle = `display:flex;background:${cbg};color:${cc};border-color:${cc}50;margin-top:8px;padding:7px 12px;border-radius:8px;font-size:11.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:1px solid;line-height:1.4;align-items:center;gap:7px;`;
+  const chipHtml  = `<span>${safe(CATS[cat].icon)}</span><span>${safe(d.name)}</span>`;
+  // Sync both desktop and mobile chips + selects
+  ['selectNavChip','mobileSelectNavChip'].forEach(id => {
+    const chip = document.getElementById(id);
+    if (chip) { chip.style.cssText = chipStyle; chip.innerHTML = chipHtml; }
+  });
+  ['drugSelect','mobileDrugSelect'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.value = key;
+  });
 }
 
 // Sync the <select> when a drug is chosen via sidebar category nav or Grupos
@@ -3224,9 +3605,7 @@ const _origSelectDrug = selectDrug;
 selectDrug = function(key) {
   _origSelectDrug(key);
   if (DRUGS[key]) {
-    const sel = document.getElementById('drugSelect');
-    if (sel) sel.value = key;
-    updateSelectChip(key);
+    updateSelectChip(key); // syncs both desktop + mobile select/chip
   }
 };
 
