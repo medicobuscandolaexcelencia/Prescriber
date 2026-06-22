@@ -1488,7 +1488,10 @@ diazepam:{
       dil:'NO diluir en soluciones acuosas (SF 0.9%, D5%) — el diazepam precipita por su vehículo propilenglicol/etanol. Administrar IV DIRECTO sin diluir, lento a 1-2 mg/min. Si requiere dilución para microgoteo, usar SOLO el mismo frasco de vidrio (no bolsa plástica) y administrar inmediatamente. Tener O₂ y ambú disponibles. Monitorear SpO₂ y FR.',
       ped:{dose:0.2,unit:'mg/kg/dosis',freq:'c/5-10 min (máx 3)',max_single:10,max_daily:30,note:'IV lento 1 mg/min.'},
       adult:{dose:5,dose_max:10,freq:'c/5-10 min (máx 3)',max_daily:30,note:'5-10 mg IV lento 1-2 mg/min.'},
-      pres:[{name:'Amp 5 mg/mL (2 mL)',conc:'5 mg/mL',unit:'mL',f:1/5,via:'IV'}]},
+      pres:[
+        {name:'Amp 10 mg/2 mL',conc:'10 mg/2 mL (5 mg/mL)',unit:'mL',f:2/10,via:'IV'},
+        {name:'Amp 5 mg/mL (2 mL = 10 mg)',conc:'5 mg/mL',unit:'mL',f:1/5,via:'IV'}
+      ]},
     rectal:{label:'Rectal (VR)',dil:null,
       ped:{dose:0.5,unit:'mg/kg/dosis',freq:'única (repetir x1 c/5 min)',max_single:10,max_daily:20,note:'Útil prehospitalario.'},
       adult:{dose:10,dose_max:20,freq:'única ó c/10 min',max_daily:20,note:'Tubo rectal 10-20 mg.'},
@@ -1957,7 +1960,14 @@ ampicilina_sulbactam:{
     im:{label:'Intramuscular (IM)',dil:'Reconstituir con agua para inyección o lidocaína 0.5% para reducir dolor.',
       ped:{dose:50,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:1500,max_daily:6000,note:'IM profundo. Menos doloroso con lidocaína.'},
       adult:{dose:1500,dose_max:1500,freq:'c/6-8h',max_daily:6000,note:'IM profundo glúteo.'},
-      pres:[{name:'Vial 1.5 g',conc:'1 500 mg/vial',unit:'mL',f:1/1500,via:'IM'}]}
+      pres:[{name:'Vial 1.5 g',conc:'1 500 mg/vial',unit:'mL',f:1/1500,via:'IM'}]},
+    oral:{label:'Oral (VO) — sultamicilina (profármaco)',dil:null,
+      ped:{dose:25,unit:'mg/kg/dosis',freq:'c/12h',max_single:750,max_daily:3000,note:'Sultamicilina es el profármaco oral equivalente. Dosis expresada en ampicilina/sulbactam combinados.'},
+      adult:{dose:375,dose_max:750,freq:'c/12h',max_daily:3000,note:'375-750 mg c/12h según severidad. Con o sin alimentos.'},
+      pres:[
+        {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL (sultamicilina)',unit:'mL',f:5/250,via:'VO'},
+        {name:'Tab 375 mg',conc:'375 mg/tab (sultamicilina)',unit:'tab',f:1/375,via:'VO'}
+      ]}
   },
   alerts:[
     {t:'warn',txt:'Verificar alergia a penicilinas. Reacciones cutáneas más frecuentes que con ampicilina sola.'},
@@ -2069,7 +2079,10 @@ ciprofloxacino:{
       dil:'Diluir o usar bolsa lista 2 mg/mL. Infusión lenta 60 min (infusión rápida → flebitis, hipotensión).',
       ped:{dose:10,unit:'mg/kg/dosis',freq:'c/12h',max_single:400,max_daily:800,note:'USO RESTRINGIDO pediátrico. Infusión 60 min.',pedWarn:true},
       adult:{dose:400,dose_max:400,freq:'c/12h',max_daily:800,note:'Infusión 60 min. No bolo (flebitis/hipotensión).'},
-      pres:[{name:'Bolsa 2 mg/mL (200 mL=400 mg)',conc:'2 mg/mL',unit:'mL',f:1/2,via:'IV'}]}
+      pres:[
+        {name:'Amp 200 mg/100 mL',conc:'200 mg/100 mL (2 mg/mL)',unit:'mL',f:1/2,via:'IV'},
+        {name:'Bolsa 2 mg/mL (200 mL=400 mg)',conc:'2 mg/mL',unit:'mL',f:1/2,via:'IV'}
+      ]}
   },
   alerts:[
     {t:'danger',txt:'Riesgo de ruptura/tendinopatía de Aquiles, especialmente en >60 años, uso concomitante con corticoides, o trasplantados. Riesgo de artropatía en pediatría.'},
@@ -2157,7 +2170,40 @@ enoxaparina:{
     {t:'info',txt:'No requiere monitoreo rutinario de coagulación (a diferencia de heparina no fraccionada), salvo en embarazo, obesidad extrema, ERC o pediatría (usar anti-Xa).'},
     {t:'warn',txt:'NUNCA administrar IM (riesgo de hematoma). Vía exclusivamente subcutánea.'}
   ]
+},
+amoxicilina_clavulanico:{
+  name:'Amoxicilina + Ácido Clavulánico',cat:'antibiotic',class:'Aminopenicilina + inhibidor de betalactamasa',
+  mech:'Amoxicilina inhibe PBP; ácido clavulánico inhibe betalactamasas, ampliando espectro a cepas productoras de betalactamasa',
+  ind:'Otitis media recurrente/resistente, sinusitis, neumonía, infecciones piel, mordeduras',dur:'7-10 días',refs:'Red Book 2024, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'45-90 mg/kg/día (amox)÷2',max_single:'875 mg',max_daily:'4 000 mg',note:'Dosis expresada en componente amoxicilina. Formulación 7:1 ó 14:1 (amox:clavulánico) según presentación.'},
+    adult:{dose:'500/125 ó 875/125 mg c/8-12h',max_single:'875/125 mg',max_daily:'3 000 mg (amox)',note:'Tomar con alimentos (reduce molestia GI). Tabletas no intercambiables entre concentraciones distintas.'}
+  },
+  routes:{
+    oral:{label:'Oral (VO) — con alimentos',dil:null,
+      ped:{dose:22.5,unit:'mg/kg/dosis',freq:'c/12h',max_single:875,max_daily:4000,
+           note:'Dosis en base a amoxicilina (22.5-45 mg/kg/dosis c/12h ≈ 45-90 mg/kg/día). Tomar con alimentos para reducir diarrea.'},
+      adult:{dose:500,dose_max:875,freq:'c/8-12h',max_daily:3000,note:'500/125 mg c/8h ó 875/125 mg c/12h. Con alimentos.'},
+      pres:[
+        {name:'Susp 250/62.5 mg por 5 mL',conc:'250 mg amox/62.5 mg clav por 5 mL',unit:'mL',f:5/250,via:'VO'},
+        {name:'Susp 400/57 mg por 5 mL',conc:'400 mg amox/57 mg clav por 5 mL',unit:'mL',f:5/400,via:'VO'},
+        {name:'Tab 500/125 mg',conc:'500 mg amox/125 mg clav',unit:'tab',f:1/500,via:'VO'},
+        {name:'Tab 875/125 mg',conc:'875 mg amox/125 mg clav',unit:'tab',f:1/875,via:'VO'}
+      ]},
+    iv:{label:'Intravenosa (IV)',
+      dil:'Reconstituir vial en agua para inyección. Diluir en 50-100 mL SF 0.9%. Infusión 30-40 min. No usar dextrosa para diluir (incompatibilidad).',
+      ped:{dose:25,unit:'mg/kg/dosis',freq:'c/8h',max_single:1000,max_daily:4000,note:'Dosis en amoxicilina. Infusión 30-40 min.'},
+      adult:{dose:1000,dose_max:1000,freq:'c/8h',max_daily:4000,note:'1000/200 mg c/8h. Infusión 30-40 min en SF.'},
+      pres:[{name:'Vial 1000/200 mg',conc:'1 000 mg amox/200 mg clav',unit:'mL',f:1/1000,via:'IV'}]}
+  },
+  alerts:[
+    {t:'warn',txt:'Verificar alergia a penicilinas. El ácido clavulánico aumenta riesgo de diarrea/molestia GI respecto a amoxicilina sola.'},
+    {t:'warn',txt:'Hepatotoxicidad colestásica rara pero descrita, más frecuente en >65 años y tratamientos prolongados (>14 días).'},
+    {t:'info',txt:'Las distintas concentraciones (250/62.5, 400/57, 500/125, 875/125) NO son intercambiables entre sí ni con amoxicilina sola — verificar siempre la presentación exacta.'}
+  ]
 }
+
 
 }; // END DRUGS
 </script>
