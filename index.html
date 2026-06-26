@@ -952,8 +952,8 @@ paracetamol:{
       ped:{dose:15,unit:'mg/kg/dosis',freq:'c/4-6h',max_single:1000,max_daily:4000,note:'Máx 90 mg/kg/día o 4 g/día. RN pretérmino: 10-12 mg/kg c/6-8h.'},
       adult:{dose:500,dose_max:1000,freq:'c/4-6h',max_daily:4000,note:'Hepatopatía/ERC: 500 mg c/8h.'},
       pres:[
-        {name:'Jarabe 120 mg/5 mL',conc:'120 mg/5 mL',unit:'mL',f:5/120,via:'VO'},
         {name:'Jarabe 160 mg/5 mL',conc:'160 mg/5 mL',unit:'mL',f:5/160,via:'VO'},
+        {name:'Jarabe 120 mg/5 mL',conc:'120 mg/5 mL',unit:'mL',f:5/120,via:'VO'},
         {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
         {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'gotas',f:20/100,dropsPerMl:20,dropNote:'20 gotas = 1 mL',via:'VO'},
         {name:'Gotas 100 mg/mL (1 mL)',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
@@ -1030,11 +1030,11 @@ tramadol:{
       dil:'Diluir en 100 mL SF 0.9%. Infusión lenta 20-30 min. NUNCA bolo IV directo (riesgo convulsiones y depresión respiratoria).',
       ped:{dose:1,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:100,max_daily:400,note:'Solo >12 años. Infusión 20-30 min.',minAgeMonths:144,pedWarn:true},
       adult:{dose:50,dose_max:100,freq:'c/6-8h',max_daily:400,note:'Diluir en 100 mL SF. Infusión lenta 20-30 min.'},
-      pres:[{name:'Amp 50 mg/mL (2 mL)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IV'}]},
+      pres:[{name:'Amp 100 mg/2 mL',conc:'100 mg/2 mL (50 mg/mL)',unit:'mL',f:2/100,via:'IV'}]},
     im:{label:'Intramuscular (IM)',dil:null,
       ped:{dose:1,unit:'mg/kg/dosis',freq:'c/8h',max_single:50,max_daily:200,note:'Solo >12 años.',minAgeMonths:144,pedWarn:true},
       adult:{dose:50,dose_max:100,freq:'c/8h',max_daily:400,note:'IM profundo.'},
-      pres:[{name:'Amp 50 mg/mL (2 mL)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IM'}]}
+      pres:[{name:'Amp 100 mg/2 mL',conc:'100 mg/2 mL (50 mg/mL)',unit:'mL',f:2/100,via:'IM'}]}
   },
   alerts:[
     {t:'danger',txt:'FDA 2017: CONTRAINDICADO en <12 años. Depresión respiratoria fatal en metabolizadores ultrarrápidos CYP2D6.'},
@@ -1085,8 +1085,8 @@ ibuprofeno:{
       ped:{dose:10,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:400,max_daily:2400,note:'No <6 meses. Antiinflamatorio: 30-40 mg/kg/día.',minAgeMonths:6},
       adult:{dose:400,dose_max:800,freq:'c/6-8h',max_daily:3200,note:'Con alimentos.'},
       pres:[
-        {name:'Susp 100 mg/5 mL',conc:'100 mg/5 mL',unit:'mL',f:5/100,via:'VO'},
         {name:'Susp 200 mg/5 mL',conc:'200 mg/5 mL',unit:'mL',f:5/200,via:'VO'},
+        {name:'Susp 100 mg/5 mL',conc:'100 mg/5 mL',unit:'mL',f:5/100,via:'VO'},
         {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
         {name:'Tab 200 mg',conc:'200 mg/tab',unit:'tab',f:1/200,via:'VO'},
         {name:'Tab 400 mg',conc:'400 mg/tab',unit:'tab',f:1/400,via:'VO'},
@@ -1181,8 +1181,8 @@ amoxicilina:{
            note:'Dosis normal: 13-15 mg/kg/dosis c/8h (≈40 mg/kg/día). Alta: 25-30 mg/kg/dosis (≈80-90 mg/kg/día).'},
       adult:{dose:500,dose_max:875,freq:'c/8h',max_daily:3000,note:'Infecciones severas: 875 mg c/8h.'},
       pres:[
-        {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
         {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
+        {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
         {name:'Susp 500 mg/5 mL',conc:'500 mg/5 mL',unit:'mL',f:5/500,via:'VO'},
         {name:'Gotas 100 mg/mL',conc:'100 mg/mL',unit:'mL',f:1/100,via:'VO'},
         {name:'Cáp 250 mg',conc:'250 mg/cáp',unit:'cáp',f:1/250,via:'VO'},
@@ -1209,6 +1209,7 @@ dicloxacilina:{
       ped:{dose:12.5,unit:'mg/kg/dosis',freq:'c/6h',max_single:500,max_daily:2000,note:'AYUNAS: 30 min antes comida. Máx 50 mg/kg/día.'},
       adult:{dose:500,dose_max:500,freq:'c/6h',max_daily:2000,note:'SIEMPRE en ayunas.'},
       pres:[
+        {name:'Susp 250 mg/5 mL',conc:'250 mg/5 mL',unit:'mL',f:5/250,via:'VO'},
         {name:'Susp 62.5 mg/5 mL',conc:'62.5 mg/5 mL',unit:'mL',f:5/62.5,via:'VO'},
         {name:'Susp 125 mg/5 mL',conc:'125 mg/5 mL',unit:'mL',f:5/125,via:'VO'},
         {name:'Cáp 250 mg',conc:'250 mg/cáp',unit:'cáp',f:1/250,via:'VO'},
@@ -1235,8 +1236,8 @@ ceftriaxona:{
       ped:{dose:50,unit:'mg/kg/dosis',freq:'c/12-24h',max_single:2000,max_daily:4000,note:'Meningitis: 100 mg/kg/día c/12h.'},
       adult:{dose:1000,dose_max:2000,freq:'c/12-24h',max_daily:4000,note:'Infusión 30-60 min.'},
       pres:[
-        {name:'Vial 500 mg',conc:'500 mg/vial',unit:'mL',f:1/500,via:'IV'},
-        {name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IV'}
+        {name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IV'},
+        {name:'Vial 500 mg',conc:'500 mg/vial',unit:'mL',f:1/500,via:'IV'}
       ]},
     im:{label:'Intramuscular (IM)',
       dil:'Reconstituir con lidocaína 1% para menos dolor. IM profundo glúteo.',
@@ -1687,12 +1688,12 @@ metoclopramida:{
       ped:{dose:0.1,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:5,max_daily:20,
            note:'CONTRAINDICADA <1 año. Riesgo extrapiramidal. Máx 0.5 mg/kg/día.',minAgeMonths:12,pedWarn:true},
       adult:{dose:10,dose_max:10,freq:'c/6-8h',max_daily:40,note:'IV en 15 min. Máx 5 días.'},
-      pres:[{name:'Amp 5 mg/mL (2 mL = 10 mg)',conc:'5 mg/mL',unit:'mL',f:1/5,via:'IV'}]},
+      pres:[{name:'Amp 10 mg/2 mL',conc:'10 mg/2 mL (5 mg/mL)',unit:'mL',f:2/10,via:'IV'}]},
     im:{label:'Intramuscular (IM)',dil:null,
       ped:{dose:0.1,unit:'mg/kg/dosis',freq:'c/8h',max_single:5,max_daily:20,
            note:'CONTRAINDICADA <1 año.',minAgeMonths:12,pedWarn:true},
       adult:{dose:10,dose_max:10,freq:'c/8h',max_daily:30,note:'IM profundo.'},
-      pres:[{name:'Amp 5 mg/mL (2 mL = 10 mg)',conc:'5 mg/mL',unit:'mL',f:1/5,via:'IM'}]},
+      pres:[{name:'Amp 10 mg/2 mL',conc:'10 mg/2 mL (5 mg/mL)',unit:'mL',f:2/10,via:'IM'}]},
     oral:{label:'Oral (VO)',dil:null,
       ped:{dose:0.1,unit:'mg/kg/dosis',freq:'c/6-8h',max_single:5,max_daily:20,
            note:'CONTRAINDICADA <1 año. Máx 5 días.',minAgeMonths:12,pedWarn:true},
@@ -1926,8 +1927,8 @@ cefazolina:{
       ped:{dose:25,unit:'mg/kg/dosis',freq:'c/8h',max_single:1000,max_daily:6000,note:'Profilaxis: 30 mg/kg dosis única 30-60 min preincisión.'},
       adult:{dose:1000,dose_max:2000,freq:'c/8h',max_daily:6000,note:'Profilaxis: 1-2 g única dosis. Tratamiento: 1 g c/8h.'},
       pres:[
-        {name:'Vial 500 mg',conc:'500 mg/vial',unit:'mL',f:1/500,via:'IV'},
-        {name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IV'}
+        {name:'Vial 1 g',conc:'1 000 mg/vial',unit:'mL',f:1/1000,via:'IV'},
+        {name:'Vial 500 mg',conc:'500 mg/vial',unit:'mL',f:1/500,via:'IV'}
       ]},
     im:{label:'Intramuscular (IM)',dil:'Reconstituir con agua para inyección o lidocaína 1% para menos dolor.',
       ped:{dose:25,unit:'mg/kg/dosis',freq:'c/8h',max_single:1000,max_daily:6000,note:'IM profundo glúteo.'},
@@ -2670,35 +2671,6 @@ function renderDrug(key) {
     </div>
   </div>`;
 
-  // ── EMERGENCY MAX DOSE BOX
-  if (d.emerg) {
-    const em  = (p.isPed && d.emerg.ped) ? d.emerg.ped : d.emerg.adult;
-    const emL = (p.isPed && d.emerg.ped) ? '👶 Pediátrico' : '🧑 Adulto';
-    if (em) {
-      html += `<div class="emerg-box">
-        <div class="emerg-box-hdr">
-          <span style="font-size:16px">🚨</span>
-          <span class="ei-title">Dosis Máxima de Emergencia — ${safe(emL)}</span>
-        </div>
-        <div class="emerg-grid">
-          <div class="emerg-item">
-            <div class="ei-label">Dosis emergencia</div>
-            <div class="ei-val">${safe(em.dose)}</div>
-          </div>
-          <div class="emerg-item">
-            <div class="ei-label">Máx por dosis</div>
-            <div class="ei-val">${safe(em.max_single)}</div>
-          </div>
-          <div class="emerg-item">
-            <div class="ei-label">Máx diario</div>
-            <div class="ei-val">${safe(em.max_daily)}</div>
-          </div>
-        </div>
-        ${em.note ? `<div class="note-bar nb-warn" style="margin-top:10px">⚠️ ${safe(em.note)}</div>` : ''}
-      </div>`;
-    }
-  }
-
   // ── VIA TABS
   html += `<div class="via-row-wrap" style="margin-bottom:12px">
     <div class="sec-label" style="margin-bottom:6px">Vía de administración</div>
@@ -2833,6 +2805,35 @@ function renderDrug(key) {
       html += `<div class="dil-card">
         <h3>🧪 Dilución / Preparación</h3>
         <div class="dil-text">${safe(res.dil)}</div>
+      </div>`;
+    }
+  }
+
+  // ── EMERGENCY MAX DOSE BOX (mostrado DESPUÉS del resultado "Administrar") ──
+  if (d.emerg) {
+    const em  = (p.isPed && d.emerg.ped) ? d.emerg.ped : d.emerg.adult;
+    const emL = (p.isPed && d.emerg.ped) ? '👶 Pediátrico' : '🧑 Adulto';
+    if (em) {
+      html += `<div class="emerg-box">
+        <div class="emerg-box-hdr">
+          <span style="font-size:16px">🚨</span>
+          <span class="ei-title">Dosis Máxima de Emergencia — ${safe(emL)}</span>
+        </div>
+        <div class="emerg-grid">
+          <div class="emerg-item">
+            <div class="ei-label">Dosis emergencia</div>
+            <div class="ei-val">${safe(em.dose)}</div>
+          </div>
+          <div class="emerg-item">
+            <div class="ei-label">Máx por dosis</div>
+            <div class="ei-val">${safe(em.max_single)}</div>
+          </div>
+          <div class="emerg-item">
+            <div class="ei-label">Máx diario</div>
+            <div class="ei-val">${safe(em.max_daily)}</div>
+          </div>
+        </div>
+        ${em.note ? `<div class="note-bar nb-warn" style="margin-top:10px">⚠️ ${safe(em.note)}</div>` : ''}
       </div>`;
     }
   }
