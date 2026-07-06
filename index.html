@@ -677,6 +677,245 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
   .calc-top-row #safetyPanel{order:3;margin-top:12px;}
   #calcPanel{order:2;}
 }
+
+/* ════ SAFETY: PANIC BUTTON RCP ════ */
+.panic-btn{
+  position:fixed;bottom:72px;right:16px;z-index:500;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#c0392b,#e74c3c);
+  border:3px solid #fff;
+  box-shadow:0 4px 20px #c0392b88,0 2px 8px #00000044;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:22px;transition:transform .15s,box-shadow .15s;
+  color:#fff;line-height:1;
+  animation:panicPulse 2.5s infinite;
+}
+.panic-btn:hover{transform:scale(1.12);box-shadow:0 6px 28px #c0392baa;}
+@keyframes panicPulse{
+  0%,100%{box-shadow:0 4px 20px #c0392b88,0 0 0 0 #c0392b44;}
+  50%{box-shadow:0 4px 20px #c0392b88,0 0 0 10px transparent;}
+}
+@media(min-width:769px){
+  .panic-btn{bottom:20px;right:20px;}
+}
+
+/* ════ PANIC MODAL ════ */
+.panic-overlay{
+  display:none;position:fixed;inset:0;z-index:600;
+  background:#00000088;backdrop-filter:blur(4px);
+  align-items:flex-start;justify-content:center;
+  padding:16px;overflow-y:auto;
+}
+.panic-overlay.open{display:flex;}
+.panic-modal{
+  background:var(--surface);border-radius:16px;
+  border:2px solid var(--danger);
+  width:100%;max-width:640px;
+  box-shadow:0 8px 40px #c0392b44;
+  margin:auto;
+}
+.panic-modal-hdr{
+  background:linear-gradient(135deg,#c0392b,#e74c3c);
+  padding:16px 20px;border-radius:14px 14px 0 0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.panic-modal-title{
+  font-size:16px;font-weight:800;color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  display:flex;align-items:center;gap:10px;letter-spacing:-.2px;
+}
+.panic-close{
+  background:none;border:none;color:#fff;font-size:24px;
+  cursor:pointer;line-height:1;padding:0 4px;opacity:.8;
+}
+.panic-close:hover{opacity:1;}
+.panic-body{padding:16px;}
+.panic-weight-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;background:var(--warn-bg);
+  border:1px solid #fbbf2455;border-radius:9px;
+  margin-bottom:14px;font-size:12px;color:var(--warn);font-weight:600;
+}
+.panic-weight-input{
+  font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;
+  width:90px;padding:4px 8px;border:2px solid var(--warn);
+  border-radius:6px;background:#fff;color:var(--text);outline:none;
+  text-align:center;
+}
+.panic-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:8px;
+}
+.panic-drug-btn{
+  padding:12px 10px;border-radius:11px;border:2px solid;
+  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
+  text-align:left;transition:all .15s;background:var(--surface);
+  box-shadow:0 2px 8px #1a22330d;
+}
+.panic-drug-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px #1a223320;}
+.panic-drug-btn:active{transform:scale(.97);}
+.panic-drug-name{font-size:13px;font-weight:800;margin-bottom:3px;letter-spacing:-.2px;}
+.panic-drug-dose{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:800;margin:4px 0;}
+.panic-drug-unit{font-size:11px;opacity:.75;font-weight:600;}
+.panic-drug-note{font-size:10px;margin-top:4px;opacity:.7;line-height:1.4;}
+.panic-sep{
+  font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1px;padding:8px 0 4px;border-top:1px solid var(--border);
+  margin-top:8px;font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+/* ════ PHYSIOLOGICAL INPUT VALIDATORS ════ */
+.field input.input-error{
+  border-color:var(--danger) !important;
+  background:var(--danger-bg) !important;
+  box-shadow:0 0 0 2px #f8514930 !important;
+}
+.field input.input-warn{
+  border-color:var(--warn) !important;
+  background:var(--warn-bg) !important;
+}
+.field-hint{
+  font-size:9.5px;font-weight:600;margin-top:3px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  display:flex;align-items:center;gap:4px;
+}
+.field-hint.hint-error{color:var(--danger);}
+.field-hint.hint-warn{color:var(--warn);}
+.field-hint.hint-ok{color:var(--ok);}
+
+/* ════ PATIENT MODE BANNER ════ */
+.mode-banner{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 14px;border-radius:9px;margin-bottom:10px;
+  border:1.5px solid;font-size:12px;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.mode-banner.banner-ped{
+  background:#f0fdf4;border-color:#6ee7b755;color:#166534;
+}
+.mode-banner.banner-adult{
+  background:#e8f0fe;border-color:#58a6ff55;color:#1558b0;
+}
+.mode-banner-icon{font-size:18px;}
+.mode-banner-text{flex:1;}
+.mode-banner-strong{font-size:13px;font-weight:800;display:block;}
+
+/* ════ CLINICAL CONTEXT ALERTS ════ */
+.ctx-alert{
+  border-radius:10px;padding:11px 14px;margin-bottom:10px;
+  display:flex;gap:10px;align-items:flex-start;border:2px solid;
+}
+.ctx-alert-pregnancy{background:#fce7f3;border-color:#f778ba80;color:#be185d;}
+.ctx-alert-renal{background:#fef3e2;border-color:#fbbf2480;color:#b45309;}
+.ctx-alert-hepatic{background:#fff7ed;border-color:#fb923c80;color:#c2410c;}
+.ctx-alert-age{background:#fdecea;border-color:#f8514980;color:#c0392b;}
+.ctx-alert-icon{font-size:20px;flex-shrink:0;line-height:1.2;}
+.ctx-alert-body{flex:1;}
+.ctx-alert-title{font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.8px;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px;}
+.ctx-alert-text{font-size:12px;line-height:1.6;font-weight:500;}
+
+/* ════ PROMINENT DRUG ALERTS (replaces text-only) ════ */
+.drug-alert-block{
+  border-radius:10px;padding:12px 14px;margin-bottom:8px;
+  display:flex;gap:10px;align-items:flex-start;border-left:4px solid;
+}
+.dab-contraindicated{background:#2a0808;border-color:#f85149;color:#ff7b72;border-left-width:5px;}
+.dab-danger{background:var(--danger-bg);border-color:#f85149;color:var(--danger);}
+.dab-warn{background:var(--warn-bg);border-color:#fbbf24;color:var(--warn);}
+.dab-info{background:var(--info-bg);border-color:#58a6ff;color:var(--info);}
+.dab-icon{font-size:18px;flex-shrink:0;line-height:1.2;}
+.dab-title{font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.7px;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:3px;}
+.dab-body{font-size:12px;line-height:1.6;font-weight:500;}
+
+/* ════ DOSE VISUAL HIERARCHY ════ */
+.dose-hierarchy{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.dose-hierarchy-row{display:flex;gap:8px;flex-wrap:wrap;}
+.dh-item{flex:1;min-width:100px;padding:10px;border-radius:8px;text-align:center;}
+.dh-habitual{background:var(--ok-bg);border:1.5px solid var(--ok);}
+.dh-max{background:var(--warn-bg);border:1.5px solid var(--warn);}
+.dh-never{background:var(--danger-bg);border:1.5px solid var(--danger);}
+.dh-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:4px;}
+.dh-habitual .dh-lbl{color:var(--ok);}
+.dh-max .dh-lbl{color:var(--warn);}
+.dh-never .dh-lbl{color:var(--danger);}
+.dh-val{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:800;}
+.dh-habitual .dh-val{color:var(--ok);}
+.dh-max .dh-val{color:var(--warn);}
+.dh-never .dh-val{color:var(--danger);}
+
+/* ════ PREGNANCY TOGGLE ════ */
+.preg-toggle-wrap{display:flex;align-items:center;gap:8px;
+  padding:8px 12px;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;margin-bottom:10px;}
+.preg-toggle-label{font-size:11.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;flex:1;}
+.preg-toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+.preg-toggle input{opacity:0;width:0;height:0;}
+.preg-slider{position:absolute;inset:0;background:#ccc;border-radius:22px;
+  transition:.3s;cursor:pointer;}
+.preg-slider:before{content:'';position:absolute;height:16px;width:16px;
+  left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s;}
+.preg-toggle input:checked + .preg-slider{background:#be185d;}
+.preg-toggle input:checked + .preg-slider:before{transform:translateX(18px);}
+
+/* ════ SYNDROME SEARCH TAGS ════ */
+.syndrome-tags{display:flex;gap:5px;flex-wrap:wrap;padding:8px 0 4px;}
+.syn-tag{
+  padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;
+  cursor:pointer;border:1.5px solid;transition:all .15s;
+  font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);
+}
+.syn-tag:hover,.syn-tag.active{color:#fff;}
+
+/* ════ FAVORITES ════ */
+.fav-btn{
+  background:none;border:none;cursor:pointer;font-size:16px;
+  padding:2px 4px;line-height:1;transition:transform .15s;
+  flex-shrink:0;
+}
+.fav-btn:hover{transform:scale(1.2);}
+.fav-section{padding:6px 0 2px;}
+.fav-section-lbl{font-size:9px;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1px;padding:4px 12px 2px;
+  font-family:'Plus Jakarta Sans',sans-serif;}
+
+/* ════ IV DILUTION DISPLAY ════ */
+.dil-auto-card{
+  background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+  border:1.5px solid #34d39980;border-radius:11px;
+  padding:14px;margin-bottom:12px;
+}
+.dil-auto-title{font-size:9.5px;font-weight:800;color:#065f46;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+  font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:6px;}
+.dil-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;}
+.dil-step{background:#fff;border:1px solid #34d39955;border-radius:8px;padding:10px;text-align:center;}
+.dil-step-num{width:20px;height:20px;border-radius:50%;background:#065f46;color:#fff;
+  font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 5px;font-family:'Plus Jakarta Sans',sans-serif;}
+.dil-step-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:800;
+  color:#065f46;margin:3px 0;}
+.dil-step-lbl{font-size:9px;color:#065f46;font-weight:600;opacity:.8;}
+
+/* ════ QUICK PROTOCOLS ════ */
+.protocols-bar{
+  display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px;
+  scrollbar-width:none;margin-bottom:10px;
+}
+.protocols-bar::-webkit-scrollbar{display:none;}
+.proto-btn{
+  display:flex;align-items:center;gap:5px;padding:6px 12px;
+  border-radius:20px;border:1.5px solid;background:var(--surface);
+  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11px;font-weight:700;white-space:nowrap;
+  flex-shrink:0;transition:all .15s;
+}
+.proto-btn:hover{transform:translateY(-1px);}
 </style>
 </head>
 <body>
@@ -740,6 +979,14 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
         <div class="calc-top-row">
         <div class="pat-card">
           <div class="sec-label">📋 Datos del Paciente</div>
+          <!-- PATIENT MODE BANNER -->
+          <div class="mode-banner banner-ped" id="modeBanner">
+            <span class="mode-banner-icon">👶</span>
+            <div class="mode-banner-text">
+              <span class="mode-banner-strong">Modo Pediátrico activo</span>
+              <span>Todas las dosis calculadas por mg/kg · Peso obligatorio</span>
+            </div>
+          </div>
           <div id="mobileTypeSwitch" style="display:none;margin-bottom:10px">
             <div class="pt-switch" style="width:fit-content">
               <button class="pt-btn ped-active" id="mbtn-ped" onclick="setPatientType('ped')">👶 Pediátrico</button>
@@ -777,6 +1024,34 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
           <div style="font-size:9px;color:var(--muted);margin-top:7px;font-style:italic">
             * Peso obligatorio en modo pediátrico. Talla real obligatoria para SC. Peso ≤50 kg → dosificación por mg/kg siempre.
           </div>
+          <!-- PREGNANCY TOGGLE -->
+          <div class="preg-toggle-wrap" style="margin-top:10px">
+            <span style="font-size:16px">🤰</span>
+            <span class="preg-toggle-label">Paciente embarazada</span>
+            <label class="preg-toggle">
+              <input type="checkbox" id="pregToggle" onchange="onPregChange()">
+              <span class="preg-slider"></span>
+            </label>
+          </div>
+        </div>
+        <!-- SYNDROME QUICK SEARCH -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow)">
+          <div class="sec-label" style="margin-bottom:6px">🔍 Buscar por síndrome / indicación</div>
+          <div class="syndrome-tags" id="syndromeTags">
+            <span class="syn-tag" data-syn="anafilaxia" style="border-color:#c0392b;color:#c0392b" onclick="filterBySyndrome('anafilaxia',this)">⚡ Anafilaxia</span>
+            <span class="syn-tag" data-syn="convulsion" style="border-color:#166534;color:#166534" onclick="filterBySyndrome('convulsion',this)">🧠 Convulsión</span>
+            <span class="syn-tag" data-syn="dolor" style="border-color:#d4520a;color:#d4520a" onclick="filterBySyndrome('dolor',this)">💊 Dolor</span>
+            <span class="syn-tag" data-syn="fiebre" style="border-color:#d4520a;color:#d4520a" onclick="filterBySyndrome('fiebre',this)">🌡️ Fiebre</span>
+            <span class="syn-tag" data-syn="asma" style="border-color:#065f46;color:#065f46" onclick="filterBySyndrome('asma',this)">🫁 Asma/Broncoespasmo</span>
+            <span class="syn-tag" data-syn="infeccion" style="border-color:#1558b0;color:#1558b0" onclick="filterBySyndrome('infeccion',this)">🦠 Infección</span>
+            <span class="syn-tag" data-syn="hipertension" style="border-color:#be185d;color:#be185d" onclick="filterBySyndrome('hipertension',this)">❤️ HTA</span>
+            <span class="syn-tag" data-syn="nausea" style="border-color:#0e7490;color:#0e7490" onclick="filterBySyndrome('nausea',this)">🤢 Náusea/Vómito</span>
+            <span class="syn-tag" data-syn="paro" style="border-color:#c0392b;color:#c0392b" onclick="filterBySyndrome('paro',this)">🫀 Paro/RCP</span>
+            <span class="syn-tag" data-syn="trombosis" style="border-color:#374151;color:#374151" onclick="filterBySyndrome('trombosis',this)">🩸 Trombosis/TEP</span>
+            <span class="syn-tag" data-syn="obstetrico" style="border-color:#be185d;color:#be185d" onclick="filterBySyndrome('obstetrico',this)">🤰 Obstétrico</span>
+            <span class="syn-tag" data-syn="itu" style="border-color:#1558b0;color:#1558b0" onclick="filterBySyndrome('itu',this)">🏥 ITU</span>
+          </div>
+          <div id="synResults" style="display:none;margin-top:8px"></div>
         </div>
         <!-- SAFETY PANEL: Allergies + Active Prescriptions -->
         <div class="safety-panel" id="safetyPanel">
@@ -2247,6 +2522,26 @@ function setPatientType(type) {
   });
   const ws = document.getElementById('wstar');
   if (ws) ws.style.display = type === 'ped' ? '' : 'none';
+  // Update mode banner
+  const banner = document.getElementById('modeBanner');
+  if (banner) {
+    banner.className = type === 'ped' ? 'mode-banner banner-ped' : 'mode-banner banner-adult';
+    if (type === 'ped') {
+      banner.innerHTML = `<span class="mode-banner-icon">👶</span>
+        <div class="mode-banner-text">
+          <span class="mode-banner-strong">Modo Pediátrico activo</span>
+          <span>Todas las dosis calculadas por mg/kg · Peso obligatorio</span>
+        </div>`;
+    } else {
+      banner.innerHTML = `<span class="mode-banner-icon">🧑</span>
+        <div class="mode-banner-text">
+          <span class="mode-banner-strong">Modo Adulto activo</span>
+          <span>Dosis estándar de adulto · Peso ≤50 kg → se usa mg/kg igualmente</span>
+        </div>`;
+    }
+  }
+  // Rebuild drug select to update ⚠ CI flags for current patient type
+  buildDrugSelect();
   onPatChange();
   if (currentDrug) renderDrug(currentDrug);
 }
@@ -2292,11 +2587,75 @@ function getPatient() {
 }
 
 // ── PATIENT CHANGE ─────────────────────────────────────────────────────────
+// ── PHYSIOLOGICAL RANGE VALIDATORS ──────────────────────────
+const PHYSIO_LIMITS = {
+  weight: {
+    min:0.3, max:250,
+    warnMin:1, warnMax:200,
+    // Impossible ranges that must block calculation
+    blockMin:0.2, blockMax:300,
+    msg: (v) => {
+      if (v <= 0)       return {level:'error', txt:'Ingrese un peso válido'};
+      if (v < 0.5)      return {level:'error', txt:`⚠ ${v} kg es inviable. Peso mínimo viable: 0.5 kg`};
+      if (v > 250)      return {level:'error', txt:`⚠ ${v} kg excede límite máximo (250 kg)`};
+      if (v < 2 && patientType==='adult')  return {level:'warn', txt:`Peso muy bajo para adulto (${v} kg). ¿Modo pediátrico?`};
+      if (v > 150)      return {level:'warn', txt:`Peso inusual (${v} kg). Confirmar antes de continuar`};
+      if (v > 50 && patientType==='ped')   return {level:'warn', txt:`Peso >50 kg en modo pediátrico — dosificando por mg/kg igual`};
+      return {level:'ok', txt:`${v} kg ✓`};
+    }
+  },
+  height: {
+    msg: (v) => {
+      if (!v) return null;
+      if (v < 30)  return {level:'error', txt:`Talla ${v} cm inviable`};
+      if (v > 220) return {level:'error', txt:`Talla ${v} cm excede límite fisiológico`};
+      if (v < 45 && patientType==='adult') return {level:'warn', txt:`Talla muy baja para adulto. ¿Modo pediátrico?`};
+      return null;
+    }
+  },
+  age: {
+    msg: (v, unit) => {
+      if (!v) return null;
+      const months = unit==='years'?v*12:unit==='months'?v:v/30;
+      if (months < 0)    return {level:'error', txt:'Edad inválida'};
+      if (months > 1440) return {level:'error', txt:'Edad > 120 años: revisar'};
+      if (months > 600 && patientType==='ped') return {level:'warn', txt:'Edad >50 años en modo pediátrico — verificar'};
+      return null;
+    }
+  }
+};
+
+function validateAndHint(inputId, hintParentId, validation) {
+  const inp = document.getElementById(inputId);
+  const val = parseFloat(inp?.value) || 0;
+  const res = validation(val);
+  // Remove old hint
+  const oldHint = document.getElementById(hintParentId + '_hint');
+  if (oldHint) oldHint.remove();
+  if (!res) { inp?.classList.remove('input-error','input-warn'); return true; }
+  inp?.classList.toggle('input-error', res.level==='error');
+  inp?.classList.toggle('input-warn',  res.level==='warn');
+  inp?.classList.remove(res.level==='error'?'input-warn':'input-error');
+  if (res.level !== 'ok') {
+    const hint = document.createElement('div');
+    hint.id = hintParentId + '_hint';
+    hint.className = `field-hint hint-${res.level}`;
+    hint.textContent = res.txt;
+    inp?.parentElement?.after(hint);
+  }
+  return res.level !== 'error';
+}
+
 function onPatChange() {
   const p   = getPatient();
   const el  = document.getElementById('patSummary');
   const ra  = document.getElementById('renalAlert');
   const wf  = document.getElementById('patWeight');
+
+  // ── PHYSIOLOGICAL VALIDATION ──────────────────────────────
+  const wValid = validateAndHint('patWeight', 'weightField', PHYSIO_LIMITS.weight.msg);
+  const hValid = validateAndHint('patHeight', 'heightField', PHYSIO_LIMITS.height.msg);
+  const aValid = validateAndHint('patAge', 'ageField', (v) => PHYSIO_LIMITS.age.msg(v, p.u));
 
   // Highlight weight if pediátrico and empty
   if (wf) wf.classList.toggle('req-empty', patientType==='ped' && !p.w);
@@ -2435,6 +2794,9 @@ function applyStoredTheme() {
 }
 
 window.onload = () => {
+  // 1. Integrity check first
+  if (!checkScriptIntegrity()) return;
+  // 2. Normal init
   applyStoredTheme();
   buildDrugSelect();
   buildNav('leftnav-inner');
@@ -2443,6 +2805,8 @@ window.onload = () => {
   renderGrupos();
   setPatientType('ped');
   checkMobileSwitch();
+  // 3. Update panic doses if weight already set
+  updatePanicDoses();
 };
 
 // ── NAV BUILD ──────────────────────────────────────────────────────────────
@@ -3657,7 +4021,759 @@ selectDrug = function(key) {
 };
 
 
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  PANIC BUTTON / CÓDIGO ROJO — Prescriber v2.9
+//  Acceso inmediato a fármacos de reanimación sin navegación.
+//  Calcula dosis en tiempo real según peso ingresado en el modal.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const PANIC_DRUGS = [
+  // ── PARO CARDIORRESPIRATORIO ──────────────────────────────────────────
+  {
+    key:'adrenalina_pcr', name:'Adrenalina', subtitle:'PCR / FV / AESP',
+    color:'#c0392b', bg:'#fdecea',
+    dosePerKg:0.01, unit:'mg/kg', via:'IV/IO',
+    conc:0.1,   // mg/mL  (1:10000)
+    concLabel:'1:10000 (0.1 mg/mL)',
+    maxDose:1,
+    freq:'c/3-5 min',
+    note:'IV/IO directo. Repetir c/3-5 min. Nunca 1:1000 IV.',
+    ped:true, adult:true,
+    adultDose:'1 mg IV',
+    cat:'PCR'
+  },
+  {
+    key:'atropina_pcr', name:'Atropina', subtitle:'Bradicardia / AESP lenta',
+    color:'#d97706', bg:'#fef3e2',
+    dosePerKg:0.02, unit:'mg/kg', via:'IV/IO',
+    conc:1,    // mg/mL
+    concLabel:'1 mg/mL',
+    minDose:0.1, maxDose:1,
+    freq:'c/3-5 min (máx 3)',
+    note:'Mín 0.1 mg (bradicardia paradójica). Máx 3 mg total.',
+    ped:true, adult:true,
+    adultDose:'1 mg IV c/3-5 min',
+    cat:'PCR'
+  },
+  {
+    key:'amiodarona_pcr', name:'Amiodarona', subtitle:'FV / TVSP refractaria',
+    color:'#7c3aed', bg:'#f3f0ff',
+    dosePerKg:5, unit:'mg/kg', via:'IV/IO',
+    conc:50,   // mg/mL
+    concLabel:'50 mg/mL',
+    maxDose:300,
+    freq:'3ª dosis ACR',
+    note:'Diluir en 20 mL D5%. Infundir en 3-5 min en FV activa.',
+    ped:true, adult:true,
+    adultDose:'300 mg IV bolo',
+    cat:'PCR'
+  },
+  // ── ANAFILAXIA ───────────────────────────────────────────────────────
+  {
+    key:'adrenalina_ana', name:'Adrenalina', subtitle:'Anafilaxia — 1ª línea',
+    color:'#c0392b', bg:'#fdecea',
+    dosePerKg:0.01, unit:'mg/kg', via:'IM',
+    conc:1,    // mg/mL  (1:1000)
+    concLabel:'1:1000 (1 mg/mL)',
+    maxDose:0.5,
+    freq:'c/5-15 min',
+    note:'IM muslo anterolateral. SIEMPRE 1ª línea. Usar 1:1000.',
+    ped:true, adult:true,
+    adultDose:'0.3-0.5 mg IM',
+    cat:'ANAFILAXIA'
+  },
+  {
+    key:'hidrocortisona_ana', name:'Hidrocortisona', subtitle:'Anafilaxia — coadyuvante',
+    color:'#b45309', bg:'#fef3e2',
+    dosePerKg:5, unit:'mg/kg', via:'IV',
+    conc:50,   // mg/mL
+    concLabel:'50 mg/mL',
+    maxDose:200,
+    freq:'dosis única stat',
+    note:'IV stat diluido. Coadyuvante, NO sustituye adrenalina.',
+    ped:true, adult:true,
+    adultDose:'200 mg IV stat',
+    cat:'ANAFILAXIA'
+  },
+  // ── STATUS CONVULSIVO ────────────────────────────────────────────────
+  {
+    key:'diazepam_status', name:'Diazepam', subtitle:'Status epiléptico — 1ª línea',
+    color:'#166534', bg:'#f0fdf4',
+    dosePerKg:0.2, unit:'mg/kg', via:'IV/Rectal',
+    conc:5,    // mg/mL
+    concLabel:'5 mg/mL',
+    maxDose:10,
+    freq:'dosis única (rep ×1 c/5 min)',
+    note:'IV lento 1 mg/min. Sin diluir. Tener O₂ y ambú listos.',
+    ped:true, adult:true,
+    adultDose:'5-10 mg IV',
+    cat:'STATUS'
+  },
+  {
+    key:'midazolam_status', name:'Midazolam', subtitle:'Status epiléptico — alternativa',
+    color:'#0e7490', bg:'#ecfeff',
+    dosePerKg:0.1, unit:'mg/kg', via:'IV/IM/IN',
+    conc:5,    // mg/mL
+    concLabel:'5 mg/mL',
+    maxDose:5,
+    freq:'c/5 min (titular)',
+    note:'IM: 0.2 mg/kg (prehospitalario). IN: 0.2 mg/kg c/fosa.',
+    ped:true, adult:true,
+    adultDose:'2-5 mg IV titular',
+    cat:'STATUS'
+  },
+  // ── HIPOGLUCEMIA ─────────────────────────────────────────────────────
+  {
+    key:'dextrosa_hipo', name:'Dextrosa 10%', subtitle:'Hipoglucemia neonatal/ped',
+    color:'#0369a1', bg:'#e0f2fe',
+    dosePerKg:2.5, unit:'mL/kg', via:'IV',
+    conc:1,    // ya en mL
+    concLabel:'10% (100 mg/mL)',
+    maxDose:50,
+    freq:'bolo lento, repetir si persiste',
+    note:'D10% IV lento 1-3 min. Adulto: D50% 25-50 mL IV.',
+    ped:true, adult:false,
+    adultDose:'D50% 25-50 mL IV',
+    cat:'HIPOGLUCEMIA'
+  },
+  // ── BRADICARDIA ──────────────────────────────────────────────────────
+  {
+    key:'naloxona_panic', name:'Naloxona', subtitle:'Depresión por opioides',
+    color:'#374151', bg:'#f9fafb',
+    dosePerKg:0.01, unit:'mg/kg', via:'IV/IM/IN',
+    conc:0.4,  // mg/mL
+    concLabel:'0.4 mg/mL',
+    maxDose:0.4,
+    freq:'c/2-3 min (titular)',
+    note:'Titular hasta FR >12. Vida media corta — vigilar resedación.',
+    ped:true, adult:true,
+    adultDose:'0.4-2 mg IV',
+    cat:'REVERSION'
+  }
+];
+
+// Category colors for section headers
+const PANIC_CATS = {
+  'PCR':         {label:'🫀 Paro Cardiorrespiratorio', color:'#c0392b'},
+  'ANAFILAXIA':  {label:'⚡ Anafilaxia', color:'#d97706'},
+  'STATUS':      {label:'🧠 Status Epiléptico', color:'#166534'},
+  'HIPOGLUCEMIA':{label:'🍬 Hipoglucemia', color:'#0369a1'},
+  'REVERSION':   {label:'💊 Reversión', color:'#374151'},
+};
+
+function openPanic() {
+  document.getElementById('panicOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Pre-fill with current patient weight if available
+  const curW = parseFloat(document.getElementById('patWeight')?.value) || 0;
+  const panicW = document.getElementById('panicWeight');
+  if (panicW && curW > 0) { panicW.value = curW; updatePanicDoses(); }
+  else updatePanicDoses();
+}
+
+function closePanic() {
+  document.getElementById('panicOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on backdrop click
+document.addEventListener('click', e => {
+  const overlay = document.getElementById('panicOverlay');
+  if (overlay && e.target === overlay) closePanic();
+});
+
+// Close with Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanic();
+});
+
+function updatePanicDoses() {
+  const w = parseFloat(document.getElementById('panicWeight')?.value) || 0;
+  const grid = document.getElementById('panicGrid');
+  const typEl = document.getElementById('panicPatType');
+  if (!grid) return;
+
+  // Determine patient type
+  const isPed = w > 0 && w <= 50;
+  if (typEl) {
+    typEl.textContent = w <= 0 ? 'Ingrese peso' : (isPed ? '👶 Pediátrico' : '🧑 Adulto');
+    typEl.style.cssText = isPed
+      ? 'margin-left:auto;font-size:11px;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#166534;font-weight:700'
+      : 'margin-left:auto;font-size:11px;padding:2px 8px;border-radius:10px;background:#e8f0fe;color:#1558b0;font-weight:700';
+  }
+
+  let html = '';
+  let lastCat = '';
+
+  PANIC_DRUGS.forEach(drug => {
+    // Skip if not applicable to this patient type
+    if (isPed && !drug.ped) return;
+    if (!isPed && !drug.adult) return;
+
+    if (drug.cat !== lastCat) {
+      const catCfg = PANIC_CATS[drug.cat] || {};
+      html += `<div class="panic-sep" style="color:${catCfg.color || 'var(--muted)'}">
+        ${catCfg.label || drug.cat}
+      </div>`;
+      lastCat = drug.cat;
+    }
+
+    let doseDisplay = '', volDisplay = '', unitDisplay = '';
+
+    if (!isPed || w <= 0) {
+      // Adult mode — show adult flat dose
+      doseDisplay = drug.adultDose || '—';
+      volDisplay  = '';
+      unitDisplay = drug.via;
+    } else {
+      // Pediatric — calculate
+      let calcDose = drug.dosePerKg * w;
+      if (drug.minDose && calcDose < drug.minDose) calcDose = drug.minDose;
+      if (drug.maxDose && calcDose > drug.maxDose) calcDose = drug.maxDose;
+      calcDose = Math.round(calcDose * 100) / 100;
+
+      // Volume
+      let vol = '';
+      if (drug.unit === 'mL/kg') {
+        vol = calcDose.toFixed(1) + ' mL';
+        doseDisplay = calcDose.toFixed(1);
+        unitDisplay = 'mL';
+      } else {
+        // mg → mL via concentration
+        const volNum = Math.round((calcDose / drug.conc) * 100) / 100;
+        vol = volNum.toFixed(2) + ' mL';
+        doseDisplay = calcDose.toFixed(2);
+        unitDisplay = 'mg → ' + vol;
+      }
+      volDisplay = vol;
+    }
+
+    html += `<button class="panic-drug-btn"
+      style="border-color:${drug.color};background:${drug.bg};"
+      onclick="panicSelectDrug('${safe(drug.key)}')">
+      <div class="panic-drug-name" style="color:${drug.color}">${safe(drug.name)}</div>
+      <div style="font-size:10px;color:${drug.color};opacity:.75;margin-bottom:6px;font-weight:600">
+        ${safe(drug.subtitle)}
+      </div>
+      <div class="panic-drug-dose" style="color:${drug.color}">
+        ${isPed && w > 0 ? safe(volDisplay) : safe(doseDisplay)}
+      </div>
+      <div class="panic-drug-unit" style="color:${drug.color}">
+        ${isPed && w > 0 ? safe(drug.dosePerKg + ' ' + drug.unit) : ''}
+      </div>
+      <div class="panic-drug-note">${safe(drug.via)} · ${safe(drug.note)}</div>
+    </button>`;
+  });
+
+  if (!html) {
+    html = '<div style="color:var(--muted);font-size:12px;padding:12px">Ingrese el peso del paciente para ver las dosis calculadas.</div>';
+  }
+
+  grid.innerHTML = html;
+}
+
+function panicSelectDrug(panicKey) {
+  // Map panic key to DRUGS key and open calculator
+  const keyMap = {
+    'adrenalina_pcr':   'adrenalina',
+    'adrenalina_ana':   'adrenalina',
+    'atropina_pcr':     'atropina',
+    'amiodarona_pcr':   null,   // not in DB yet
+    'hidrocortisona_ana':'hidrocortisona',
+    'diazepam_status':  'diazepam',
+    'midazolam_status': 'midazolam',
+    'dextrosa_hipo':    null,
+    'naloxona_panic':   'naloxona',
+  };
+  const drugKey = keyMap[panicKey];
+  closePanic();
+  if (drugKey && DRUGS[drugKey]) {
+    // Transfer weight to patient field
+    const pw = document.getElementById('panicWeight')?.value;
+    if (pw) {
+      const wf = document.getElementById('patWeight');
+      if (wf) { wf.value = pw; }
+    }
+    switchMod('calc');
+    setBnav('calc');
+    selectDrug(drugKey);
+  }
+}
+
+// ── SCRIPT INTEGRITY CHECK ───────────────────────────────────────────────
+// Runs on load to verify all critical functions are available
+function checkScriptIntegrity() {
+  const required = ['calcDose','renderDrug','buildDrugSelect','setPatientType',
+    'switchMod','safe','DRUGS','CATS'];
+  const missing = required.filter(fn => {
+    try { return typeof eval(fn) === 'undefined'; } catch(e) { return true; }
+  });
+  if (missing.length > 0) {
+    document.body.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;
+        background:#2a0808;color:#ff7b72;font-family:sans-serif;padding:20px;text-align:center;flex-direction:column;gap:16px;">
+        <div style="font-size:40px">🚨</div>
+        <div style="font-size:20px;font-weight:800">Error de Integridad del Script</div>
+        <div style="font-size:13px;opacity:.8">Elementos faltantes: ${missing.join(', ')}</div>
+        <div style="font-size:12px;opacity:.6">Recargue la página o verifique la conexión.</div>
+        <button onclick="location.reload()" style="padding:10px 24px;border-radius:8px;border:none;
+          background:#f85149;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;">
+          🔄 Recargar
+        </button>
+      </div>`;
+    return false;
+  }
+  return true;
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  CLINICAL SAFETY & UX ENHANCEMENTS — Prescriber v3.0
+//  - Pregnancy context validation
+//  - Enhanced contextual contraindication checks (renal, hepatic, age)
+//  - Syndrome/indication search
+//  - Prominent alert rendering
+//  - Dose hierarchy display (habitual / max / never exceed)
+//  - Auto IV dilution steps
+//  - Favorites system
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let isPregnant = false;
+let FAVORITES  = JSON.parse(localStorage.getItem('prescriber_favs') || '[]');
+
+// ── SYNDROME → DRUG MAPPING ───────────────────────────────────────────────
+const SYNDROME_MAP = {
+  anafilaxia:   ['adrenalina','hidrocortisona','difenhidramina','salbutamol','ondansetron'],
+  convulsion:   ['diazepam','midazolam','fenitoina'],
+  dolor:        ['paracetamol','metamizol','ibuprofeno','diclofenac','ketorolac','morfina','tramadol'],
+  fiebre:       ['paracetamol','metamizol','ibuprofeno'],
+  asma:         ['salbutamol','hidrocortisona','dexametasona','prednisona'],
+  infeccion:    ['amoxicilina','amoxicilina_clavulanico','dicloxacilina','ceftriaxona',
+                 'cefazolina','cefalexina','azitromicina','ampicilina_sulbactam',
+                 'ciprofloxacino','sulfametoxazol_trimetoprim','nitrofurantoina','gentamicina'],
+  hipertension: ['captopril','losartan','labetalol','nifedipino','furosemida','carvedilol'],
+  nausea:       ['ondansetron','metoclopramida','difenhidramina'],
+  paro:         ['adrenalina','atropina','furosemida','morfina'],
+  trombosis:    ['enoxaparina'],
+  obstetrico:   ['oxitocina','fitomenadiona','labetalol','nifedipino','enoxaparina'],
+  itu:          ['ciprofloxacino','sulfametoxazol_trimetoprim','nitrofurantoina',
+                 'amoxicilina','ceftriaxona','ampicilina_sulbactam']
+};
+
+// ── PREGNANCY CONTRAINDICATIONS ────────────────────────────────────────────
+// Categories: 'contraindicated' | 'caution' | 'safe'
+const PREG_SAFETY = {
+  // Contraindicated
+  ibuprofeno:                {cat:'contraindicated', msg:'CONTRAINDICADO en embarazo (especialmente 3er trimestre — cierre prematuro del ductus arterioso, oligohidramnios).'},
+  diclofenac:                {cat:'contraindicated', msg:'CONTRAINDICADO en embarazo (3er trimestre). AINEs asociados a cierre prematuro del ductus y complicaciones renales fetales.'},
+  ketorolac:                 {cat:'contraindicated', msg:'CONTRAINDICADO en embarazo. AINE potente con riesgo de cierre del ductus arterioso fetal.'},
+  captopril:                 {cat:'contraindicated', msg:'CONTRAINDICADO en todos los trimestres. Fetotoxicidad: hipoplasia pulmonar, malformaciones renales, muerte fetal.'},
+  losartan:                  {cat:'contraindicated', msg:'CONTRAINDICADO en todos los trimestres (ARA-II). Mismo mecanismo teratogénico que IECA. Suspender inmediatamente.'},
+  carvedilol:                {cat:'caution',        msg:'Precaución en embarazo. Betabloqueantes asociados a RCIU, bradicardia fetal, hipoglucemia neonatal. Usar solo si beneficio > riesgo.'},
+  ciprofloxacino:            {cat:'contraindicated', msg:'EVITAR en embarazo (artropatía fetal, fluoroquinolonas). Usar alternativas más seguras (cefalosporinas, penicilinas).'},
+  sulfametoxazol_trimetoprim:{cat:'contraindicated', msg:'CONTRAINDICADO en 1er trimestre (antagonismo folato → defectos tubo neural) y 3er trimestre (kernicterus neonatal).'},
+  nitrofurantoina:           {cat:'contraindicated', msg:'CONTRAINDICADO en 3er trimestre / término del parto (anemia hemolítica neonatal). Evitar en 1er trimestre si hay alternativa.'},
+  metoclopramida:            {cat:'caution',        msg:'Precaución en embarazo. Datos limitados; se usa si vómitos hiperemesis son refractarios, con vigilancia.'},
+  midazolam:                 {cat:'caution',        msg:'Precaución en embarazo. BZD asociadas a labio leporino (1er trimestre) y depresión neonatal. Usar dosis mínima.'},
+  diazepam:                  {cat:'caution',        msg:'Precaución. BZD cruzas placenta. 1er trimestre: riesgo malformaciones (menor). 3er trimestre: síndrome de abstinencia neonatal.'},
+  // Safer options
+  paracetamol:               {cat:'safe',           msg:'Compatible con embarazo a dosis recomendadas. Analgésico/antipirético de primera elección en gestantes.'},
+  amoxicilina:               {cat:'safe',           msg:'Penicilinas son el antibiótico más seguro en embarazo. Compatible en todos los trimestres.'},
+  amoxicilina_clavulanico:   {cat:'caution',        msg:'Precaución: datos de posible asociación con enterocolitis necrotizante si se usa en amenaza de parto prematuro. Compatible en general.'},
+  ceftriaxona:               {cat:'safe',           msg:'Cefalosporinas generalmente compatibles en embarazo. Evitar uso prolongado por riesgo de desplazamiento de bilirrubina.'},
+  cefalexina:                {cat:'safe',           msg:'Cefalosporina oral segura en embarazo para infecciones de piel e IVU.'},
+  azitromicina:              {cat:'caution',        msg:'Precaución. Datos tranquilizadores, pero evitar en 1er trimestre si hay alternativa. Compatible en 2do y 3er trimestre.'},
+  ondansetron:               {cat:'caution',        msg:'Precaución en 1er trimestre (posible asociación con cardiopatías fetales — evidencia controversial). Beneficio generalmente supera riesgo en hiperémesis.'},
+  labetalol:                 {cat:'safe',           msg:'1ª línea para HTA en embarazo (especialmente preeclampsia). Compatible en todos los trimestres.'},
+  nifedipino:                {cat:'safe',           msg:'1ª línea para HTA severa en embarazo y tocolítico. Compatible en 2do y 3er trimestre.'},
+  hidrocortisona:            {cat:'safe',           msg:'Corticoides sistémicos en dosis terapéuticas compatibles con embarazo cuando indicados (anafilaxia, IS, asma).'},
+  dexametasona:              {cat:'safe',           msg:'Indicado en amenaza de parto prematuro (maduración pulmonar fetal 24-34 sem). Compatible cuando indicado.'},
+  morfina:                   {cat:'caution',        msg:'Precaución. Croza placenta; uso agudo (dolor/anestesia) aceptable. Uso crónico: síndrome abstinencia neonatal.'},
+  naloxona:                  {cat:'safe',           msg:'Puede usarse en emergencia materna por sobredosis de opioides. Monitorear frecuencia cardíaca fetal.'},
+  oxitocina:                 {cat:'safe',           msg:'Uso obstétrico estándar para inducción/conducción del parto y manejo activo del alumbramiento.'},
+  fitomenadiona:             {cat:'safe',           msg:'Compatible en embarazo. Indicado para corrección de déficit de vitamina K.'},
+  enoxaparina:               {cat:'safe',           msg:'HBPM es el anticoagulante de elección en embarazo (no cruza placenta). Ajustar dosis por trimestre y peso.'},
+  furosemida:                {cat:'caution',        msg:'Precaución. Evitar uso crónico en embarazo (hipovolemia materna → hipoperfusión placentaria). Aceptable en emergencia (EAP).'},
+  omeprazol:                 {cat:'safe',           msg:'IBP de elección en embarazo para ERGE/úlcera. Amplia evidencia de seguridad.'},
+};
+
+// ── RENAL DOSE WARNINGS ────────────────────────────────────────────────────
+// Triggered when ClCr < 60 or 30
+const RENAL_WARNINGS = {
+  gentamicina:               {threshold:60, level:'danger', msg:'Nefrotóxico. Ajustar intervalo según ClCr. ClCr 40-60: c/36h. ClCr <40: c/48h. Monitorear niveles y creatinina c/48h.'},
+  nitrofurantoina:           {threshold:60, level:'danger', msg:'CONTRAINDICADO si ClCr <60 mL/min. No alcanza concentraciones urinarias terapéuticas y puede acumularse con toxicidad.'},
+  enoxaparina:               {threshold:30, level:'danger', msg:'Reducir dosis 50% si ClCr <30 mL/min (0.5 mg/kg/día). Riesgo aumentado de sangrado por acumulación. Considerar heparina no fraccionada.'},
+  fenitoina:                 {threshold:30, level:'warn',   msg:'Monitorear niveles. Fenitoína libre aumenta en ERC (menor unión proteica). Ajustar según niveles séricos.'},
+  metformina:                {threshold:45, level:'danger', msg:'Contraindicada si ClCr <45 mL/min (riesgo de acidosis láctica).'},
+  ketorolac:                 {threshold:60, level:'danger', msg:'CONTRAINDICADO en ERC (ClCr <60). Inhibición COX → vasoconstricción renal → falla renal aguda.'},
+  ibuprofeno:                {threshold:60, level:'danger', msg:'Contraindicado en ERC. AINEs reducen flujo renal y pueden precipitar falla renal aguda.'},
+  diclofenac:                {threshold:60, level:'danger', msg:'Evitar en ERC. AINE con riesgo de nefrotoxicidad adicional.'},
+  tramadol:                  {threshold:30, level:'warn',   msg:'Reducir frecuencia en ERC severa (ClCr <30): c/12h en lugar de c/8h. Acumulación de metabolitos activos.'},
+  morfina:                   {threshold:30, level:'danger', msg:'Evitar o reducir dosis 50% en ERC severa. Metabolito M6G se acumula y causa depresión respiratoria prolongada.'},
+  ciprofloxacino:            {threshold:30, level:'warn',   msg:'Reducir dosis en ERC severa: 250-500 mg c/24h (en lugar de c/12h). Monitorear niveles y función renal.'},
+  amoxicilina:               {threshold:30, level:'warn',   msg:'Reducir dosis o aumentar intervalo en ERC severa (ClCr <30): 250-500 mg c/12h máximo.'},
+  ceftriaxona:               {threshold:10, level:'warn',   msg:'Generalmente segura en ERC. No requiere ajuste hasta ClCr <10 mL/min.'},
+  metoclopramida:            {threshold:40, level:'warn',   msg:'Reducir dosis 50% en ERC moderada-severa. Mayor riesgo de reacciones extrapiramidales.'},
+  capropril:                 {threshold:30, level:'warn',   msg:'Iniciar con dosis reducida (6.25 mg/día) en ERC. Monitorear K+ y creatinina.'},
+};
+
+// ── CONTEXTUAL VALIDATION ─────────────────────────────────────────────────
+function getContextualWarnings(drugKey, p) {
+  const warnings = [];
+  const d = DRUGS[drugKey];
+  if (!d) return warnings;
+
+  // 1. PREGNANCY
+  if (isPregnant) {
+    const ps = PREG_SAFETY[drugKey];
+    if (ps) {
+      warnings.push({
+        type: 'pregnancy',
+        level: ps.cat,
+        title: ps.cat === 'contraindicated' ? '🤰 CONTRAINDICADO EN EMBARAZO' :
+               ps.cat === 'caution'        ? '🤰 PRECAUCIÓN EN EMBARAZO'   :
+                                             '🤰 Compatible en embarazo',
+        msg: ps.msg
+      });
+    } else {
+      warnings.push({
+        type:'pregnancy', level:'caution',
+        title:'🤰 Embarazo — datos insuficientes',
+        msg:'No hay datos suficientes sobre este fármaco en embarazo. Consultar especialista antes de prescribir.'
+      });
+    }
+  }
+
+  // 2. RENAL FUNCTION
+  const crCl = calcCrCl(p);
+  if (crCl !== null && crCl < 60) {
+    const rw = RENAL_WARNINGS[drugKey];
+    if (rw && crCl < rw.threshold) {
+      warnings.push({
+        type:'renal', level: rw.level,
+        title:`⚠️ AJUSTE RENAL REQUERIDO (ClCr ~${Math.round(crCl)} mL/min)`,
+        msg: rw.msg
+      });
+    }
+  }
+
+  // 3. PEDIATRIC AGE MINIMUMS
+  if (patientType === 'ped' && p.ageMonths > 0) {
+    const vk = currentVia || Object.keys(d.routes)[0];
+    const vd = d.routes[vk];
+    const cfg = vd?.ped;
+    if (cfg?.minAgeMonths && p.ageMonths < cfg.minAgeMonths) {
+      const minStr = cfg.minAgeMonths < 12
+        ? cfg.minAgeMonths + ' meses'
+        : (cfg.minAgeMonths/12) + ' años';
+      warnings.push({
+        type:'age', level:'danger',
+        title:`⛔ CONTRAINDICADO EN ESTA EDAD (mín. ${minStr})`,
+        msg:`Este fármaco no está recomendado en menores de ${minStr}. El paciente actual tiene ${p.ageMonths < 12 ? Math.round(p.ageMonths)+' meses' : (p.ageYears).toFixed(1)+' años'}.`
+      });
+    }
+  }
+
+  return warnings;
+}
+
+// ── RENDER CONTEXTUAL WARNINGS ────────────────────────────────────────────
+function renderContextualWarnings(warnings) {
+  if (!warnings.length) return '';
+  return warnings.map(w => {
+    let cls = 'ctx-alert-renal';
+    let icon = '⚠️';
+    if (w.type === 'pregnancy') {
+      cls = w.level === 'contraindicated' ? 'ctx-alert-age' :
+            w.level === 'caution'         ? 'ctx-alert-hepatic' : 'ctx-alert-renal';
+      icon = '🤰';
+    } else if (w.type === 'renal') {
+      cls = w.level === 'danger' ? 'ctx-alert-age' : 'ctx-alert-renal';
+      icon = '🫘';
+    } else if (w.type === 'age') {
+      cls = 'ctx-alert-age'; icon = '⛔';
+    }
+    return `<div class="ctx-alert ${cls}">
+      <span class="ctx-alert-icon">${safe(icon)}</span>
+      <div class="ctx-alert-body">
+        <div class="ctx-alert-title">${safe(w.title)}</div>
+        <div class="ctx-alert-text">${safe(w.msg)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER DOSE HIERARCHY ─────────────────────────────────────────────────
+function renderDoseHierarchy(d, vk, res, calcMg) {
+  if (!res || res.error) return '';
+  const cfg = res.isAdultFlat
+    ? d.routes[vk]?.adult
+    : (d.routes[vk]?.ped || d.routes[vk]?.adult);
+  if (!cfg) return '';
+
+  const habitual = calcMg ? `${Math.round(calcMg*100)/100} mg` : `${safe(cfg.dose)} ${safe(cfg.unit||'mg')}`;
+  const maxSingle = cfg.max_single ? `${safe(cfg.max_single)} mg` : '—';
+  const maxDaily  = cfg.max_daily  ? `${safe(cfg.max_daily)} mg/día` : '—';
+
+  return `<div class="dose-hierarchy">
+    <div class="sec-label" style="margin-bottom:8px">📊 Jerarquía de Dosis</div>
+    <div class="dose-hierarchy-row">
+      <div class="dh-item dh-habitual">
+        <div class="dh-lbl">Dosis Habitual</div>
+        <div class="dh-val">${habitual}</div>
+      </div>
+      <div class="dh-item dh-max">
+        <div class="dh-lbl">Máx por Dosis</div>
+        <div class="dh-val">${maxSingle}</div>
+      </div>
+      <div class="dh-item dh-never">
+        <div class="dh-lbl">Nunca Superar</div>
+        <div class="dh-val">${maxDaily}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── AUTO IV DILUTION STEPS ────────────────────────────────────────────────
+function renderDilutionSteps(dil, calcMg, pres) {
+  if (!dil) return '';
+  // Only show for IV routes with a concentration
+  if (!pres || !pres.conc) return '';
+
+  // Try to extract volume to take from pres factor
+  const f = pres.f;
+  const volToTake = f && calcMg ? Math.round(calcMg * f * 100) / 100 : null;
+
+  // Parse dilution string for volume diluent and time
+  const dilVolMatch = dil.match(/(\d+)\s*mL\s*(SF|D5|salina|suero)/i);
+  const timeMatch   = dil.match(/(\d+[-–]\d+|\d+)\s*(min)/i);
+  const dilVol  = dilVolMatch ? dilVolMatch[1] + ' mL SF' : 'Según indicación';
+  const dilTime = timeMatch   ? timeMatch[1] + ' min' : '—';
+
+  if (!volToTake) return '';
+
+  return `<div class="dil-auto-card">
+    <div class="dil-auto-title">🧪 Preparación IV Paso a Paso</div>
+    <div class="dil-steps">
+      <div class="dil-step">
+        <div class="dil-step-num">1</div>
+        <div class="dil-step-val">${safe(volToTake)} mL</div>
+        <div class="dil-step-lbl">Tomar del vial</div>
+      </div>
+      <div class="dil-step">
+        <div class="dil-step-num">2</div>
+        <div class="dil-step-val">${safe(dilVol)}</div>
+        <div class="dil-step-lbl">Diluir en</div>
+      </div>
+      <div class="dil-step">
+        <div class="dil-step-num">3</div>
+        <div class="dil-step-val">${safe(dilTime)}</div>
+        <div class="dil-step-lbl">Infundir en</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── PREGNANCY TOGGLE HANDLER ──────────────────────────────────────────────
+function onPregChange() {
+  isPregnant = document.getElementById('pregToggle')?.checked || false;
+  if (currentDrug) renderDrug(currentDrug);
+}
+
+// ── SYNDROME FILTER ───────────────────────────────────────────────────────
+let activeSyndrome = null;
+
+function filterBySyndrome(syn, el) {
+  const tags = document.querySelectorAll('.syn-tag');
+  const resDiv = document.getElementById('synResults');
+  if (!resDiv) return;
+
+  if (activeSyndrome === syn) {
+    // Toggle off
+    activeSyndrome = null;
+    tags.forEach(t => { t.classList.remove('active'); t.style.background = 'var(--surface)'; });
+    resDiv.style.display = 'none';
+    return;
+  }
+
+  activeSyndrome = syn;
+  tags.forEach(t => {
+    const isActive = t.dataset.syn === syn;
+    t.classList.toggle('active', isActive);
+    const col = t.style.color;
+    t.style.background = isActive ? col : 'var(--surface)';
+    t.style.color = isActive ? '#fff' : col;
+  });
+
+  const drugKeys = SYNDROME_MAP[syn] || [];
+  if (!drugKeys.length) { resDiv.style.display = 'none'; return; }
+
+  let html = `<div style="display:flex;gap:6px;flex-wrap:wrap;">`;
+  drugKeys.forEach(key => {
+    const d = DRUGS[key];
+    if (!d) return;
+    const cc = `var(--c-${d.cat})`;
+    const cbg = `var(--c-${d.cat}-bg)`;
+    html += `<button onclick="selectDrug('${safe(key)}')"
+      style="padding:6px 12px;border-radius:8px;border:1.5px solid ${cc};
+             background:${cbg};color:${cc};font-family:'Plus Jakarta Sans',sans-serif;
+             font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;"
+      onmouseover="this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.transform=''"
+    >${safe(d.name)}</button>`;
+  });
+  html += '</div>';
+  resDiv.innerHTML = html;
+  resDiv.style.display = 'block';
+}
+
+// ── FAVORITES SYSTEM ──────────────────────────────────────────────────────
+function toggleFavorite(key) {
+  const idx = FAVORITES.indexOf(key);
+  if (idx >= 0) FAVORITES.splice(idx, 1);
+  else FAVORITES.unshift(key);
+  try { localStorage.setItem('prescriber_favs', JSON.stringify(FAVORITES)); } catch(e) {}
+  buildNav('leftnav-inner');
+  buildNav('drawerBody');
+  buildDrugSelect();
+  if (currentDrug) renderDrug(currentDrug);
+}
+
+function isFavorite(key) { return FAVORITES.includes(key); }
+
+// ── ENHANCED buildNav WITH FAVORITES SECTION ─────────────────────────────
+const _origBuildNav = buildNav;
+buildNav = function(targetId) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const suffix = targetId.replace(/[^a-z]/gi, '');
+  let html = '';
+
+  // FAVORITES section at top
+  if (FAVORITES.length > 0) {
+    html += `<div class="fav-section">
+      <div class="fav-section-lbl">⭐ Favoritos</div>`;
+    FAVORITES.forEach(key => {
+      const d = DRUGS[key];
+      if (!d) return;
+      const cat = d.cat;
+      html += `<button class="drug-item cat-${safe(cat)}"
+        data-key="${safe(key)}"
+        data-name="${safe((d.name+'|'+d.class+'|'+d.ind+'|'+d.mech).toLowerCase())}"
+        onclick="selectDrug('${safe(key)}')"
+        style="border-left-color:gold"
+      >⭐ ${safe(d.name)}</button>`;
+    });
+    html += `</div><div style="height:1px;background:var(--border);margin:4px 0"></div>`;
+  }
+
+  // Remaining categories
+  CAT_ORDER.forEach((cat, idx) => {
+    const drugs = Object.entries(DRUGS).filter(([,d]) => d.cat === cat);
+    if (!drugs.length) return;
+    const c = CATS[cat];
+    const isOpen = CAT_OPEN[cat] !== undefined ? CAT_OPEN[cat] : false;
+    const groupId = `cg-${cat}-${suffix}`;
+    const arrowId = `ca-${cat}-${suffix}`;
+    const mh = drugs.length * 36 + 4;
+    html += `<div class="cat-hdr" data-cat="${safe(cat)}" onclick="toggleCat('${safe(cat)}')">
+      <div class="cat-hdr-left">
+        <span class="cat-pip" style="background:${safe(c.color)}"></span>
+        <span class="cat-hdr-text" style="color:${safe(c.color)}">${safe(c.name)}</span>
+        <span class="cat-count">${drugs.length}</span>
+      </div>
+      <span class="cat-arrow ${isOpen ? 'open' : ''}" id="${arrowId}">▼</span>
+    </div>
+    <div class="cat-group${isOpen ? '' : ' collapsed'}" id="${groupId}" style="max-height:${isOpen ? mh : 0}px">`;
+    drugs.forEach(([key,d]) => {
+      html += `<button class="drug-item cat-${safe(cat)}"
+        data-key="${safe(key)}"
+        data-name="${safe((d.name+'|'+d.class+'|'+d.ind+'|'+d.mech).toLowerCase())}"
+        onclick="selectDrug('${safe(key)}')">${safe(d.name)}${d.pedCI ? '<span style="color:var(--danger);font-size:9px;margin-left:3px">⚠</span>' : ''}
+      </button>`;
+    });
+    html += `</div>`;
+  });
+  el.innerHTML = html;
+};
+
+// ── HOOK renderDrug to inject contextual warnings and new features ─────────
+const _origRenderDrugV3 = renderDrug;
+renderDrug = function(key) {
+  _origRenderDrugV3(key);
+  const dc = document.getElementById('drugContent');
+  if (!dc || dc.style.display === 'none') return;
+  const p = getPatient();
+  const d = DRUGS[key];
+  if (!d) return;
+
+  // 1. Get contextual warnings
+  const ctxWarnings = getContextualWarnings(key, p);
+  let extraHtml = renderContextualWarnings(ctxWarnings);
+
+  // 2. Dose hierarchy (inject after dose-card)
+  const vk = (currentVia && d.routes[currentVia]) ? currentVia : Object.keys(d.routes)[0];
+  const res = (p.w > 0 || p.a > 0 || patientType === 'adult') ? calcDose(d, vk, p) : null;
+  if (res && !res.error) {
+    extraHtml += renderDoseHierarchy(d, vk, res, res.calcMg);
+    // 3. Auto IV dilution steps
+    if (currentPres !== null && res.pres[currentPres] && res.dil) {
+      extraHtml += renderDilutionSteps(res.dil, res.calcMg, res.pres[currentPres]);
+    }
+  }
+
+  if (extraHtml) {
+    dc.innerHTML = extraHtml + dc.innerHTML;
+  }
+
+  // 4. Add favorite button to drug header
+  const drugHdr = dc.querySelector('.drug-hdr');
+  if (drugHdr && !dc.querySelector('.fav-btn')) {
+    const favBtn = document.createElement('button');
+    favBtn.className = 'fav-btn';
+    const isFav = isFavorite(key);
+    favBtn.title  = isFav ? 'Quitar de favoritos' : 'Agregar a favoritos';
+    favBtn.innerHTML = isFav ? '⭐' : '☆';
+    favBtn.onclick = () => toggleFavorite(key);
+    drugHdr.style.position = 'relative';
+    favBtn.style.cssText = 'position:absolute;top:0;right:0;font-size:20px;padding:4px;';
+    drugHdr.appendChild(favBtn);
+  }
+};
+
+
 </script>
 
+
+<!-- ══ PANIC BUTTON (RCP / Código Rojo) ══ -->
+<button class="panic-btn" onclick="openPanic()" title="🚨 Código Rojo / RCP">❤️</button>
+
+<!-- ══ PANIC MODAL ══ -->
+<div class="panic-overlay" id="panicOverlay">
+  <div class="panic-modal">
+    <div class="panic-modal-hdr">
+      <div class="panic-modal-title">
+        <span>🚨</span>
+        <span>CÓDIGO ROJO — Fármacos de Emergencia Inmediata</span>
+      </div>
+      <button class="panic-close" onclick="closePanic()">✕</button>
+    </div>
+    <div class="panic-body">
+      <div class="panic-weight-bar">
+        <span>⚖️ Peso paciente:</span>
+        <input type="number" class="panic-weight-input" id="panicWeight"
+          placeholder="kg" min="0.5" max="300" step="0.5"
+          oninput="updatePanicDoses()">
+        <span>kg</span>
+        <span id="panicPatType" style="margin-left:auto;font-size:11px;padding:2px 8px;border-radius:10px;background:#fce7f3;color:#be185d">Ingrese peso</span>
+      </div>
+      <div id="panicGrid" class="panic-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
