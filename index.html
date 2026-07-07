@@ -361,7 +361,8 @@ body{display:flex;flex-direction:column;min-height:100vh;}
   color:var(--muted);font-family:var(--sans);font-size:12px;cursor:pointer;padding:0 0 14px;}
 .back-btn:hover{color:var(--text);}
 /* BOTTOM NAV */
-.bottomnav{display:none;height:56px;background:var(--surface);border-top:1px solid var(--border);flex-shrink:0;}
+.bottomnav{display:none;height:56px;background:var(--surface);border-top:1px solid var(--border);
+  flex-shrink:0;position:fixed;bottom:0;left:0;right:0;z-index:200;}
 .bn-inner{display:flex;height:100%;}
 .bn-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:2px;background:none;border:none;cursor:pointer;color:var(--muted);
@@ -373,27 +374,140 @@ body{display:flex;flex-direction:column;min-height:100vh;}
 .drawer-overlay{display:none;position:fixed;inset:0;background:#1a223366;z-index:300;}
 .drawer-overlay.open{display:flex;flex-direction:column;}
 .drawer-hdr{background:var(--surface);border-bottom:1px solid var(--border);
-  padding:12px 14px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
+  padding:14px 14px 10px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
 .drawer-close-row{display:flex;align-items:center;gap:10px;}
-.drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
-.drawer-title{font-size:14px;font-weight:600;}
-.drawer-search{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:7px;
-  background:var(--card);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;}
+.drawer-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;
+  padding:4px 8px;border-radius:6px;background:var(--card);border:1px solid var(--border);}
+.drawer-title{font-size:15px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;}
+.drawer-search{width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:9px;
+  background:var(--card);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;font-weight:500;outline:none;
+  -webkit-appearance:none;} /* prevent iOS zoom */
 .drawer-search:focus{border-color:var(--info);}
-.drawer-body{flex:1;overflow-y:auto;background:var(--surface);}
+.drawer-body{flex:1;overflow-y:auto;background:var(--surface);-webkit-overflow-scrolling:touch;}
 /* RESPONSIVE */
 @media(max-width:768px){
-  .leftnav{display:none;}.bottomnav{display:flex;}
-  html,body{overflow:auto;}.shell,.center{overflow:visible;}
-  .content{overflow:visible;padding:12px;}
-  .mod-tabs{position:sticky;top:var(--nav-h);z-index:100;}
-  .dose-grid,.emerg-grid,.emax-grid{grid-template-columns:repeat(2,1fr);}
-  .group-grid{grid-template-columns:repeat(2,1fr);}
+  /* ── CORE LAYOUT: proper mobile scroll ── */
+  html,body{
+    overflow:auto !important;
+    height:auto !important;
+    min-height:100%;
+  }
+  .shell{
+    display:flex;flex-direction:column;
+    overflow:visible !important;
+    min-height:0;height:auto;
+    padding-bottom:70px; /* space for bottom nav */
+  }
+  .center{
+    overflow:visible !important;
+    flex:1;display:flex;flex-direction:column;
+  }
+  /* ── HIDE desktop nav, show mobile nav ── */
+  .leftnav{display:none;}
+  .bottomnav{display:flex;}
+  /* ── Footer: hide on mobile to avoid mid-screen clutter ── */
+  footer{display:none;}
+  /* ── Header: compact on mobile ── */
+  .hdr{padding:0 12px;height:50px;}
+  :root{--nav-h:50px;}
+  .hdr-name{font-size:16px;}
+  .hdr-sub{display:none;}
   .hdr-right .pt-switch{display:none;}
-}
-@media(max-width:400px){
-  .pat-row{flex-direction:column;}.field{min-width:unset;}
+  #mobileTypeSwitch{display:block !important;}
+  /* ── Tabs: sticky below header ── */
+  .mod-tabs{
+    position:sticky;top:50px;z-index:100;
+    overflow-x:auto;scrollbar-width:none;
+    border-bottom:2px solid var(--border);
+  }
+  .mod-tab{padding:0 12px;font-size:11px;}
+  /* ── Content: proper padding ── */
+  .content{
+    overflow:visible !important;
+    padding:12px 12px 16px;
+    flex:1;
+  }
+  /* ── Patient card: 2-col grid, peso+talla prominent ── */
+  .pat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .pat-row .field:nth-child(5){grid-column:1/-1;} /* creatinina full width */
+  .calc-top-row{display:flex;flex-direction:column;gap:10px;}
+  /* ── Drug content ── */
   .dose-grid{grid-template-columns:1fr 1fr;}
+  .emerg-grid,.emax-grid{grid-template-columns:repeat(2,1fr);}
+  .group-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-dose-value{font-size:34px;}
+  /* ── Safety panel: collapsed by default on mobile ── */
+  #safetyPanel{margin-top:10px;}
+  /* ── Syndrome tags: horizontal scroll ── */
+  .syndrome-tags{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+  .syndrome-tags::-webkit-scrollbar{display:none;}
+  .syn-tag{flex-shrink:0;}
+  /* ── Mode banner: compact ── */
+  .mode-banner{padding:6px 10px;}
+  .mode-banner-icon{font-size:14px;}
+  /* ── Panic button: above bottom nav ── */
+  .panic-btn{bottom:68px;right:12px;width:50px;height:50px;font-size:20px;}
+  /* ── Drug select: full width ── */
+  .mobile-drug-select-wrap{margin-bottom:10px;}
+  .drug-select{font-size:14px;padding:11px 36px 11px 12px;}
+  /* ── Two column drug panel: stack on mobile ── */
+  .calc-layout{display:flex;flex-direction:column;}
+  /* ── Pres select: full width ── */
+  .pres-select{font-size:13px;}
+  /* ── Field inputs: bigger touch targets ── */
+  .field input, .field select{
+    font-size:16px !important; /* prevents iOS zoom */
+    padding:10px 11px;
+    min-height:44px;
+  }
+  /* ── Dose hierarchy ── */
+  .dose-hierarchy-row{grid-template-columns:1fr;}
+  /* ── Via buttons: wrap nicely ── */
+  .via-row{gap:5px;}
+  .via-btn{padding:6px 10px;font-size:11px;}
+  /* ── Drug pills: wrap ── */
+  .drug-pills{gap:4px;}
+  .dpill{font-size:9px;}
+  /* ── Reorder: mobile select first, then patient data, then results, then safety ── */
+  #mod-calc{display:flex;flex-direction:column;}
+  .mobile-drug-select-wrap{order:1;}
+  .calc-top-row{order:2;}
+  .calc-top-row .pat-card{order:1;}
+  .calc-top-row #safetyPanel{order:3;}
+  #calcPanel{order:2;}
+  /* ── Emergencias module ── */
+  .emax-grid{grid-template-columns:1fr 1fr;}
+  /* ── Patient summary: scrollable ── */
+  .pat-summary{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;gap:10px;}
+  .pat-summary::-webkit-scrollbar{display:none;}
+  .spill{flex-shrink:0;}
+  /* ── Hero: compact ── */
+  .hero-dose-card{padding:14px 16px;}
+  .hero-dose-sub{gap:10px;overflow-x:auto;flex-wrap:nowrap;}
+  .hero-sub-item{flex-shrink:0;}
+  /* ── Dil steps & hierarchy: 3 cols ── */
+  .dil-steps{grid-template-columns:repeat(3,1fr);}
+  .dil-step-val{font-size:13px;}
+  .dose-hierarchy-row{grid-template-columns:repeat(3,1fr) !important;}
+  /* ── Ctx alerts ── */
+  .ctx-alert{padding:9px 11px;}
+  .ctx-alert-title{font-size:10px;}
+  .ctx-alert-text{font-size:11px;}
+  /* ── Notes ── */
+  .note-bar{font-size:11px;padding:8px 10px;}
+  /* ── Emerg box ── */
+  .emerg-box{padding:11px 12px;}
+}
+
+@media(max-width:400px){
+  .pat-row{grid-template-columns:1fr;}
+  .pat-row .field:first-child{grid-column:1;}
+  .pat-row .field:nth-child(2){grid-column:1;}
+  .dose-grid{grid-template-columns:1fr 1fr;}
+  .hero-dose-value{font-size:30px;}
+  .mod-tab{padding:0 8px;font-size:10px;}
+  .hdr-name{font-size:15px;}
 }
 footer{background:var(--surface);border-top:1px solid var(--border);
   padding:10px 16px;text-align:center;font-size:10px;color:var(--muted);flex-shrink:0;letter-spacing:.2px;font-family:'Plus Jakarta Sans',sans-serif;}
@@ -1171,11 +1285,21 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
 </div>
 <nav class="bottomnav">
   <div class="bn-inner">
-    <button class="bn-btn active" id="bn-calc" onclick="switchMod('calc');setBnav('calc')"><span class="bn-icon">🧮</span>Calc</button>
-    <button class="bn-btn" id="bn-emerg" onclick="switchMod('emerg');setBnav('emerg')"><span class="bn-icon">🚨</span>Emerg.</button>
-    <button class="bn-btn" id="bn-grupos" onclick="switchMod('grupos');setBnav('grupos')"><span class="bn-icon">📂</span>Grupos</button>
-    <button class="bn-btn" id="bn-drugs" onclick="openDrawer()"><span class="bn-icon">💉</span>Fármacos</button>
-    <button class="bn-btn" id="bn-info" onclick="switchMod('info');setBnav('info')"><span class="bn-icon">ℹ️</span>Info</button>
+    <button class="bn-btn active" id="bn-calc" onclick="switchMod('calc');setBnav('calc')">
+      <span class="bn-icon">🧮</span><span>Calc</span>
+    </button>
+    <button class="bn-btn" id="bn-emerg" onclick="switchMod('emerg');setBnav('emerg')">
+      <span class="bn-icon">🚨</span><span>Emerg</span>
+    </button>
+    <button class="bn-btn" id="bn-grupos" onclick="switchMod('grupos');setBnav('grupos')">
+      <span class="bn-icon">📂</span><span>Grupos</span>
+    </button>
+    <button class="bn-btn" id="bn-drugs" onclick="openDrawer()">
+      <span class="bn-icon">💊</span><span>Fármacos</span>
+    </button>
+    <button class="bn-btn" onclick="openPanic()" style="color:var(--danger)">
+      <span class="bn-icon">❤️</span><span>RCP</span>
+    </button>
   </div>
 </nav>
 <div class="drawer-overlay" id="drawerOverlay">
@@ -2542,6 +2666,13 @@ function setPatientType(type) {
   }
   // Rebuild drug select to update ⚠ CI flags for current patient type
   buildDrugSelect();
+  // Also sync mobile select value if a drug is already selected
+  if (currentDrug) {
+    ['drugSelect','mobileDrugSelect'].forEach(id => {
+      const s = document.getElementById(id);
+      if (s) s.value = currentDrug;
+    });
+  }
   onPatChange();
   if (currentDrug) renderDrug(currentDrug);
 }
