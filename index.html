@@ -1030,6 +1030,135 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
   flex-shrink:0;transition:all .15s;
 }
 .proto-btn:hover{transform:translateY(-1px);}
+
+/* ════ HIGH-RISK DRUG CONFIRMATION ════ */
+.hrd-overlay{
+  display:none;position:fixed;inset:0;z-index:800;
+  background:#00000099;backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:16px;
+}
+.hrd-overlay.open{display:flex;}
+.hrd-modal{
+  background:#161b22;border:2px solid #f85149;border-radius:14px;
+  max-width:400px;width:100%;padding:24px;
+  box-shadow:0 12px 40px #f8514940;
+}
+.hrd-icon{font-size:44px;text-align:center;margin-bottom:12px;}
+.hrd-title{font-size:16px;font-weight:800;color:#f85149;text-align:center;
+  font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:8px;}
+.hrd-drug{font-size:22px;font-weight:800;color:#fff;text-align:center;
+  font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:8px;}
+.hrd-reason{font-size:12px;color:#ff7b72;text-align:center;line-height:1.6;margin-bottom:20px;}
+.hrd-actions{display:flex;gap:10px;flex-direction:column;}
+.hrd-confirm{
+  padding:14px;border-radius:10px;border:none;
+  background:#f85149;color:#fff;font-size:14px;font-weight:800;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+  transition:all .15s;letter-spacing:.2px;
+}
+.hrd-confirm:hover{background:#ff6b6b;}
+.hrd-cancel{
+  padding:14px;border-radius:10px;border:2px solid #30363d;
+  background:transparent;color:#8b949e;font-size:13px;font-weight:600;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+}
+.hrd-cancel:hover{border-color:#8b949e;color:#e6edf3;}
+
+/* ════ IV INFUSION CALCULATOR ════ */
+.iv-calc-card{
+  background:var(--surface);border:1.5px solid var(--info);
+  border-radius:12px;padding:16px;margin-bottom:14px;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--info) 10%,transparent);
+}
+.iv-calc-title{
+  font-size:10px;font-weight:800;color:var(--info);text-transform:uppercase;
+  letter-spacing:1px;font-family:'Plus Jakarta Sans',sans-serif;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;
+}
+.iv-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.iv-field{display:flex;flex-direction:column;gap:3px;}
+.iv-field label{font-size:9.5px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.6px;}
+.iv-field input,.iv-field select{
+  padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;
+  background:var(--card);color:var(--text);font-family:'IBM Plex Mono',monospace;
+  font-size:14px;font-weight:600;outline:none;transition:border .15s;
+}
+.iv-field input:focus,.iv-field select:focus{border-color:var(--info);}
+.iv-results{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+.iv-result-item{
+  background:var(--info-bg);border:1px solid #58a6ff40;
+  border-radius:9px;padding:10px;text-align:center;
+}
+.iv-result-lbl{font-size:9px;font-weight:700;color:var(--info);
+  text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;}
+.iv-result-val{font-family:'IBM Plex Mono',monospace;font-size:18px;
+  font-weight:800;color:var(--info);letter-spacing:-.5px;}
+.iv-result-unit{font-size:10px;color:var(--muted);font-weight:600;margin-top:2px;}
+body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
+
+/* ════ PROTOCOLS MODULE ════ */
+.protocols-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px;}
+.proto-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:12px;padding:16px;cursor:pointer;
+  transition:all .15s;text-align:center;box-shadow:var(--shadow);
+}
+.proto-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px #1a223325;}
+.proto-card-icon{font-size:32px;margin-bottom:8px;}
+.proto-card-name{font-size:13px;font-weight:800;margin-bottom:3px;
+  font-family:'Plus Jakarta Sans',sans-serif;}
+.proto-card-sub{font-size:10px;color:var(--muted);font-weight:500;}
+.proto-detail{display:none;}
+.proto-detail.open{display:block;}
+.proto-back{
+  display:flex;align-items:center;gap:6px;background:none;border:none;
+  color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;cursor:pointer;padding:0 0 14px;font-weight:600;
+}
+.proto-step{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:14px;margin-bottom:8px;
+  display:flex;gap:12px;align-items:flex-start;
+  box-shadow:var(--shadow);
+}
+.proto-step-num{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;flex-shrink:0;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.proto-step-body{flex:1;}
+.proto-step-title{font-size:13px;font-weight:700;margin-bottom:4px;
+  font-family:'Plus Jakarta Sans',sans-serif;}
+.proto-step-detail{font-size:12px;color:var(--muted);line-height:1.6;font-weight:500;}
+.proto-step-drug{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:6px;border:1.5px solid;
+  font-size:11px;font-weight:700;cursor:pointer;margin-top:6px;
+  font-family:'Plus Jakarta Sans',sans-serif;transition:all .12s;
+}
+.proto-step-drug:hover{opacity:.85;transform:scale(.98);}
+.proto-evidence{
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;
+  letter-spacing:.4px;margin-left:8px;vertical-align:middle;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.ev-a{background:#e8f5ee;color:#1a7f45;border:1px solid #6ee7b755;}
+.ev-b{background:#e8f0fe;color:#1558b0;border:1px solid #58a6ff55;}
+.ev-c{background:#fef3e2;color:#b45309;border:1px solid #fbbf2455;}
+
+/* ════ TOUCH-FRIENDLY BUTTONS ════ */
+@media(max-width:768px){
+  .via-btn{min-height:44px;padding:10px 14px;font-size:12px;}
+  .pres-btn,.pres-select{min-height:44px;}
+  .panic-drug-btn{min-height:80px;}
+  .proto-card{min-height:100px;}
+  .proto-step-drug{min-height:40px;padding:8px 14px;font-size:12px;}
+  .protocols-grid{grid-template-columns:repeat(2,1fr);}
+  .iv-calc-grid{grid-template-columns:1fr;}
+  .iv-results{grid-template-columns:repeat(3,1fr);}
+}
 </style>
 </head>
 <body>
@@ -1074,6 +1203,7 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
         🚨 Emergencias <span class="tab-badge">MAX</span>
       </button>
       <button class="mod-tab" onclick="switchMod('grupos')" id="tab-grupos">📂 Grupos</button>
+      <button class="mod-tab" onclick="switchMod('proto')" id="tab-proto">📋 Protocolos</button>
       <button class="mod-tab" onclick="switchMod('info')" id="tab-info">ℹ️ Acerca de</button>
     </div>
     <div class="content" id="mainContent">
@@ -1234,6 +1364,18 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
       <div class="mod-panel" id="mod-grupos">
         <div id="gruposView"></div>
       </div>
+      <!-- PROTOCOLOS -->
+      <div class="mod-panel" id="mod-proto">
+        <div id="proto-list-view">
+          <div class="sec-label" style="margin-bottom:4px">📋 Protocolos Clínicos</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">
+            Secuencias terapéuticas basadas en evidencia. Toca cualquier fármaco para abrirlo en la calculadora.
+          </div>
+          <div class="protocols-grid" id="protocolsGrid"></div>
+        </div>
+        <div class="proto-detail" id="proto-detail-view"></div>
+      </div>
+
       <!-- ACERCA DE -->
       <div class="mod-panel" id="mod-info">
         <div style="max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:12px;">
@@ -4875,8 +5017,562 @@ renderDrug = function(key) {
 };
 
 
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  PRESCRIBER v3.1 — NEW CLINICAL MODULES
+//  1. High-Risk Drug Confirmation
+//  2. IV Infusion Calculator
+//  3. Clinical Protocols (Anafilaxia, PCR, Sepsis, Asma, Status, Preeclampsia)
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── HIGH-RISK DRUGS DATABASE ───────────────────────────────────────────────
+const HIGH_RISK_DRUGS = {
+  morfina:      'Opioide potente. Riesgo de depresión respiratoria. Tener naloxona disponible.',
+  fenitoina:    'Margen terapéutico estrecho. IV rápido = arritmia/paro. Solo en SF 0.9%.',
+  adrenalina:   'Confusión 1:1000 vs 1:10000 puede ser fatal. Verificar concentración.',
+  midazolam:    'Depresión respiratoria con BZD. Tener flumazenil y O₂ disponibles.',
+  diazepam:     'Depresión respiratoria. NO diluir en SF. Administrar sin diluir IV lento.',
+  atropina:     'Dosis <0.1 mg → bradicardia paradójica. Verificar dosis mínima en pediatría.',
+  metoclopramida:'Distonías agudas en <1 año y en niños. Tener difenhidramina disponible.',
+  enoxaparina:  'Anticoagulante. Riesgo sangrado. Solo SC, nunca IM. Ajustar en ERC.',
+  oxitocina:    'Bolo IV no diluido = colapso cardiovascular. SIEMPRE infusión titulada.',
+  fitomenadiona:'IV rápido = reacción anafilactoide grave. SIEMPRE infusión lenta ≥30 min.',
+};
+
+let pendingHighRiskKey = null;
+
+function checkHighRisk(key) {
+  if (HIGH_RISK_DRUGS[key]) {
+    pendingHighRiskKey = key;
+    document.getElementById('hrdDrugName').textContent = DRUGS[key]?.name || key;
+    document.getElementById('hrdReason').textContent = HIGH_RISK_DRUGS[key];
+    document.getElementById('hrdOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    return true; // intercepted
+  }
+  return false; // not high risk, proceed normally
+}
+
+function confirmHighRisk() {
+  document.getElementById('hrdOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  if (pendingHighRiskKey) {
+    const key = pendingHighRiskKey;
+    pendingHighRiskKey = null;
+    _proceedSelectDrug(key);
+  }
+}
+
+function cancelHighRisk() {
+  document.getElementById('hrdOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  pendingHighRiskKey = null;
+}
+
+// Wrap selectDrug to intercept high-risk drugs
+const _safeSelectDrug = selectDrug;
+selectDrug = function(key) {
+  if (checkHighRisk(key)) return; // show confirmation first
+  _proceedSelectDrug(key);
+};
+
+function _proceedSelectDrug(key) {
+  _safeSelectDrug(key);
+}
+
+// ── IV INFUSION CALCULATOR ─────────────────────────────────────────────────
+function buildIVCalc(drugName, dosePerKg, unit, conc, dilVol) {
+  const patW = parseFloat(document.getElementById('patWeight')?.value) || 0;
+  return `<div class="iv-calc-card">
+    <div class="iv-calc-title">🧮 Calculadora de Infusión IV</div>
+    <div class="iv-calc-grid">
+      <div class="iv-field">
+        <label>Peso (kg)</label>
+        <input type="number" id="ivc-peso" value="${patW||''}" placeholder="kg"
+          min="0.5" max="300" step="0.5" oninput="calcIVInfusion()">
+      </div>
+      <div class="iv-field">
+        <label>Dosis (${unit})</label>
+        <input type="number" id="ivc-dose" value="${dosePerKg||''}" placeholder="${unit}"
+          step="0.01" oninput="calcIVInfusion()">
+      </div>
+      <div class="iv-field">
+        <label>Conc. fármaco (mg/mL)</label>
+        <input type="number" id="ivc-conc" value="${conc||''}" placeholder="mg/mL"
+          step="0.1" oninput="calcIVInfusion()">
+      </div>
+      <div class="iv-field">
+        <label>Vol. diluente (mL)</label>
+        <input type="number" id="ivc-vol" value="${dilVol||100}" placeholder="mL"
+          step="10" oninput="calcIVInfusion()">
+      </div>
+      <div class="iv-field">
+        <label>Tiempo infusión (min)</label>
+        <input type="number" id="ivc-time" value="30" placeholder="min"
+          step="5" oninput="calcIVInfusion()">
+      </div>
+      <div class="iv-field">
+        <label>Equipo gotero</label>
+        <select id="ivc-drop" onchange="calcIVInfusion()">
+          <option value="20">Macro 20 gtas/mL</option>
+          <option value="60">Micro 60 gtas/mL</option>
+        </select>
+      </div>
+    </div>
+    <div class="iv-results" id="ivc-results">
+      <div class="iv-result-item">
+        <div class="iv-result-lbl">Dosis total</div>
+        <div class="iv-result-val" id="ivc-r-dose">—</div>
+        <div class="iv-result-unit">mg</div>
+      </div>
+      <div class="iv-result-item">
+        <div class="iv-result-lbl">mL/h (bomba)</div>
+        <div class="iv-result-val" id="ivc-r-mlh">—</div>
+        <div class="iv-result-unit">mL/h</div>
+      </div>
+      <div class="iv-result-item">
+        <div class="iv-result-lbl">Gotas/min</div>
+        <div class="iv-result-val" id="ivc-r-gpm">—</div>
+        <div class="iv-result-unit">gtas/min</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function calcIVInfusion() {
+  const peso  = parseFloat(document.getElementById('ivc-peso')?.value) || 0;
+  const dose  = parseFloat(document.getElementById('ivc-dose')?.value) || 0;
+  const conc  = parseFloat(document.getElementById('ivc-conc')?.value) || 0;
+  const vol   = parseFloat(document.getElementById('ivc-vol')?.value)  || 100;
+  const time  = parseFloat(document.getElementById('ivc-time')?.value) || 30;
+  const drop  = parseFloat(document.getElementById('ivc-drop')?.value) || 20;
+
+  const doseTotal = Math.round(dose * peso * 100) / 100;
+  const volFarmaco = conc > 0 ? Math.round((doseTotal / conc) * 100) / 100 : 0;
+  const volTotal   = volFarmaco + vol;
+  const mlH        = time > 0 ? Math.round((volTotal / time) * 60 * 10) / 10 : 0;
+  const gpm        = time > 0 ? Math.round((volTotal * drop) / time) : 0;
+
+  const rDose = document.getElementById('ivc-r-dose');
+  const rMlh  = document.getElementById('ivc-r-mlh');
+  const rGpm  = document.getElementById('ivc-r-gpm');
+
+  if (rDose) rDose.textContent = doseTotal > 0 ? doseTotal : '—';
+  if (rMlh)  rMlh.textContent  = mlH > 0       ? mlH      : '—';
+  if (rGpm)  rGpm.textContent  = gpm > 0        ? gpm      : '—';
+}
+
+// Inject IV calc into renderDrug for IV routes
+const _origRenderDrugIV = renderDrug;
+renderDrug = function(key) {
+  _origRenderDrugIV(key);
+  const d  = DRUGS[key]; if (!d) return;
+  const vk = (currentVia && d.routes[currentVia]) ? currentVia : Object.keys(d.routes)[0];
+  const vd = d.routes[vk];
+  if (!vd || !vk.includes('iv') && vk !== 'iv') return;
+
+  const dc = document.getElementById('drugContent');
+  if (!dc) return;
+
+  // Only add if not already present
+  if (dc.querySelector('.iv-calc-card')) return;
+
+  const p = getPatient();
+  const cfg = (p.isPed && vd.ped) ? vd.ped : vd.adult;
+  if (!cfg) return;
+
+  const dosePerKg = cfg.unit?.includes('mg/kg') ? cfg.dose : null;
+  const pres0 = vd.pres?.[0];
+  const concMatch = pres0?.conc?.match(/(\d+\.?\d*)\s*mg\/mL/);
+  const concVal   = concMatch ? parseFloat(concMatch[1]) : null;
+  const dilMatch  = vd.dil?.match(/(\d+)\s*mL/);
+  const dilVol    = dilMatch ? parseInt(dilMatch[1]) : 100;
+
+  const ivHtml = buildIVCalc(d.name, dosePerKg, cfg.unit || 'mg/kg', concVal, dilVol);
+
+  // Insert after prescription text
+  const rxBox = dc.querySelector('.rx-box');
+  if (rxBox) {
+    const div = document.createElement('div');
+    div.innerHTML = ivHtml;
+    rxBox.after(div.firstElementChild);
+    calcIVInfusion();
+  }
+};
+
+// ── CLINICAL PROTOCOLS DATABASE ────────────────────────────────────────────
+const PROTOCOLS = [
+  {
+    id:'anafilaxia',
+    name:'Anafilaxia',
+    icon:'⚡',
+    color:'#c0392b',
+    sub:'Shock anafiláctico agudo',
+    evidence:'ACAAI 2023 / WAO 2020',
+    steps:[
+      {
+        num:1, color:'#c0392b',
+        title:'Adrenalina IM — INMEDIATO (1ª línea absoluta)',
+        detail:'0.01 mg/kg IM muslo anterolateral (máx 0.5 mg). Usar 1:1000 (1 mg/mL). Repetir c/5-15 min si no responde. NUNCA omitir ni retrasar.',
+        drugs:[{key:'adrenalina',label:'Adrenalina IM'}],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#d97706',
+        title:'Posición + O₂ + Acceso IV',
+        detail:'Posición supina con piernas elevadas (o semi-Fowler si disnea). O₂ al 100% por máscara. Acceso IV grueso. Monitoreo continuo FC, PA, SpO₂.',
+        drugs:[],
+        evidence:'B'
+      },
+      {
+        num:3, color:'#1558b0',
+        title:'SF 0.9% IV en bolo — Hipotensión',
+        detail:'Si hipotensión: SF 0.9% 10-20 mL/kg IV rápido (30 min). Adulto: 500-1000 mL IV rápido. Repetir según respuesta.',
+        drugs:[],
+        evidence:'B'
+      },
+      {
+        num:4, color:'#b45309',
+        title:'Corticoide IV — Prevenir reacción bifásica',
+        detail:'Hidrocortisona 5-10 mg/kg IV (máx 200 mg) ó Metilprednisolona 1 mg/kg IV. No sustituye adrenalina. Inicio acción 4-6h.',
+        drugs:[{key:'hidrocortisona',label:'Hidrocortisona IV'}],
+        evidence:'B'
+      },
+      {
+        num:5, color:'#166534',
+        title:'Antihistamínico H1 — Síntomas cutáneos',
+        detail:'Difenhidramina 1 mg/kg IV (máx 50 mg) para urticaria/prurito. Coadyuvante, NO reemplaza adrenalina.',
+        drugs:[{key:'difenhidramina',label:'Difenhidramina IV'}],
+        evidence:'B'
+      },
+      {
+        num:6, color:'#065f46',
+        title:'Broncoespasmo refractario — Salbutamol',
+        detail:'Si broncoespasmo persistente: Salbutamol 0.15 mg/kg nebulizado (mín 2.5 mg) c/20 min.',
+        drugs:[{key:'salbutamol',label:'Salbutamol NEB'}],
+        evidence:'B'
+      }
+    ]
+  },
+  {
+    id:'pcr_adulto',
+    name:'PCR Adulto',
+    icon:'🫀',
+    color:'#c0392b',
+    sub:'Paro cardiorrespiratorio',
+    evidence:'ILCOR 2021 / AHA 2020',
+    steps:[
+      {
+        num:1, color:'#c0392b',
+        title:'RCP 30:2 + DEA inmediato',
+        detail:'Iniciar RCP de alta calidad: 30 compresiones : 2 ventilaciones. Frecuencia 100-120/min. Profundidad ≥5 cm. Minimizar interrupciones. DEA tan pronto esté disponible.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#c0392b',
+        title:'FV/TVSP → Desfibrilación',
+        detail:'FV o TVSP: Descarga bifásica 200 J (ó 360 J monofásica). Reanudar RCP inmediatamente post-descarga. Repetir c/2 min si persiste.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:3, color:'#d97706',
+        title:'Adrenalina IV — c/3-5 min',
+        detail:'Adrenalina 1 mg IV c/3-5 min. En FV/TVSP: dar después de 3ª descarga. En AESP/asistolia: tan pronto se tenga acceso IV/IO.',
+        drugs:[{key:'adrenalina',label:'Adrenalina IV'}],
+        evidence:'A'
+      },
+      {
+        num:4, color:'#7c3aed',
+        title:'Amiodarona — FV/TVSP refractaria',
+        detail:'FV/TVSP refractaria (≥3 descargas): Amiodarona 300 mg IV bolo diluida en 20 mL D5%. 2ª dosis: 150 mg IV si persiste.',
+        drugs:[],
+        evidence:'B'
+      },
+      {
+        num:5, color:'#166534',
+        title:'Causas reversibles — 4H/4T',
+        detail:'Hipoxia · Hipovolemia · Hipo/Hiperpotasemia · Hipotermia | Tensión neumotórax · Taponamiento · Tóxicos · Trombosis (TEP/IAM). Tratar causa identificada.',
+        drugs:[],
+        evidence:'A'
+      }
+    ]
+  },
+  {
+    id:'status_epileptico',
+    name:'Status Epiléptico',
+    icon:'🧠',
+    color:'#166534',
+    sub:'Convulsión >5 min o recurrente',
+    evidence:'ILAE 2022 / Brophy 2012',
+    steps:[
+      {
+        num:1, color:'#166534',
+        title:'BZD IV/IM/IN — Inmediato (0-5 min)',
+        detail:'Diazepam 0.2 mg/kg IV lento (máx 10 mg) ó Midazolam 0.2 mg/kg IM/IN (máx 10 mg). O₂, posición lateral, proteger vía aérea.',
+        drugs:[{key:'diazepam',label:'Diazepam IV'},{key:'midazolam',label:'Midazolam IM/IN'}],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#166534',
+        title:'Repetir BZD — si persiste a los 5 min',
+        detail:'Segunda dosis BZD si convulsión no cedió. Preparar acceso IV si no lo hay. Glucemia capilar urgente.',
+        drugs:[{key:'diazepam',label:'2ª dosis Diazepam'},{key:'midazolam',label:'2ª dosis Midazolam'}],
+        evidence:'A'
+      },
+      {
+        num:3, color:'#7c3aed',
+        title:'Fenitoína IV — 2ª línea (15-35 min)',
+        detail:'Fenitoína 20 mg/kg IV. SOLO en SF 0.9%. Velocidad máx: 1 mg/kg/min (ped), 50 mg/min (adulto). Monitoreo ECG y PA continuo.',
+        drugs:[{key:'fenitoina',label:'Fenitoína IV'}],
+        evidence:'A'
+      },
+      {
+        num:4, color:'#c0392b',
+        title:'Status refractario — Intubación + anestesia',
+        detail:'Si no cede con fenitoína: Midazolam infusión continua (0.1-2 mg/kg/h) ó Propofol. Intubación orotraqueal. EEG continuo. UCI.',
+        drugs:[{key:'midazolam',label:'Midazolam infusión'}],
+        evidence:'B'
+      },
+      {
+        num:5, color:'#b45309',
+        title:'Hipoglucemia — si glucemia <60 mg/dL',
+        detail:'Dextrosa 10% 2.5 mL/kg IV lento ó Dextrosa 50% 1 mL/kg IV (adulto 25-50 mL). Tiamina 100 mg IV primero si sospecha alcoholismo.',
+        drugs:[],
+        evidence:'B'
+      }
+    ]
+  },
+  {
+    id:'sepsis',
+    name:'Sepsis / Shock',
+    icon:'🦠',
+    color:'#1558b0',
+    sub:'Bundle SEP-1 / Surviving Sepsis',
+    evidence:'SSC 2021 / MSP Ecuador 2025',
+    steps:[
+      {
+        num:1, color:'#c0392b',
+        title:'Reconocimiento — HORA 1',
+        detail:'qSOFA ≥2: FR >22/min, Glasgow <15, PAS <100 mmHg. Hemocultivos (2 sets) ANTES de antibióticos. Lactato sérico.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#1558b0',
+        title:'Antibiótico empírico de amplio espectro — <1h del diagnóstico',
+        detail:'Ceftriaxona 1-2 g IV + Metronidazol 500 mg IV si foco abdominal. Ajustar según foco y riesgo de multirresistencia.',
+        drugs:[{key:'ceftriaxona',label:'Ceftriaxona IV'}],
+        evidence:'A'
+      },
+      {
+        num:3, color:'#1558b0',
+        title:'Resucitación con fluidos — 30 mL/kg SF',
+        detail:'SF 0.9% ó Ringer Lactato 30 mL/kg IV en primeros 30-60 min. Reevaluar con cada bolo. Stop si: EAP, SvcO₂ >70%, delta PP.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:4, color:'#7c3aed',
+        title:'Vasopresores — si PAM <65 mmHg',
+        detail:'Noradrenalina 0.01-3 mcg/kg/min infusión (1ª línea). Dopamina solo si bradicardia. Hidrocortisona 200 mg/día si shock refractario.',
+        drugs:[{key:'hidrocortisona',label:'Hidrocortisona (shock)'}],
+        evidence:'A'
+      },
+      {
+        num:5, color:'#b45309',
+        title:'Monitoreo y metas',
+        detail:'Meta: PAM ≥65 mmHg · Diuresis ≥0.5 mL/kg/h · Lactato <2 mmol/L en 2-4h · SatO₂ >94%. Cultivos y reevaluar ATB a las 48-72h.',
+        drugs:[],
+        evidence:'A'
+      }
+    ]
+  },
+  {
+    id:'crisis_asmatica',
+    name:'Crisis Asmática',
+    icon:'🫁',
+    color:'#065f46',
+    sub:'Exacerbación broncoespástica aguda',
+    evidence:'GINA 2024 / BTS 2024',
+    steps:[
+      {
+        num:1, color:'#065f46',
+        title:'SABA — Broncodilatador de acción corta inmediato',
+        detail:'Salbutamol 0.15 mg/kg NEB (mín 2.5 mg, máx 5 mg) c/20 min × 3 dosis. O₂ durante nebulización (6-8 L/min). Con espaciador si MDI.',
+        drugs:[{key:'salbutamol',label:'Salbutamol NEB'}],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#065f46',
+        title:'Ipratropio + SABA — Crisis moderada-severa',
+        detail:'Ipratropio 0.25 mg (ped) / 0.5 mg (adulto) nebulizado con salbutamol. Solo en primeras 3 dosis. Efecto sinérgico broncodilatador.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:3, color:'#b45309',
+        title:'Corticoide sistémico — Toda crisis moderada-severa',
+        detail:'Prednisona 1-2 mg/kg VO (máx 40 mg) ó Hidrocortisona 5-10 mg/kg IV si no puede VO. Inicio efecto 4-6h. Mínimo 3-5 días.',
+        drugs:[{key:'prednisona',label:'Prednisona VO'},{key:'hidrocortisona',label:'Hidrocortisona IV'}],
+        evidence:'A'
+      },
+      {
+        num:4, color:'#1558b0',
+        title:'Mg Sulfato IV — Crisis severa refractaria',
+        detail:'MgSO₄ 25-75 mg/kg IV (máx 2 g) diluido en 100 mL SF, infusión 20 min. Broncodilatador adicional. Solo si SpO₂ <90% con tratamiento.',
+        drugs:[],
+        evidence:'B'
+      },
+      {
+        num:5, color:'#c0392b',
+        title:'Criterios de UCI / Intubación',
+        detail:'Indicaciones: SpO₂ <90% refractaria, FR >40/min, Glasgow en deterioro, silencio auscultatorio, agotamiento. Intubación de secuencia rápida.',
+        drugs:[],
+        evidence:'A'
+      }
+    ]
+  },
+  {
+    id:'preeclampsia',
+    name:'Preeclampsia Severa',
+    icon:'🤰',
+    color:'#be185d',
+    sub:'HTA + proteinuria en embarazo',
+    evidence:'ACOG 2024 / MSP Ecuador 2025',
+    steps:[
+      {
+        num:1, color:'#c0392b',
+        title:'HTA Severa — Antihipertensivo IV urgente',
+        detail:'PAS ≥160 mmHg ó PAD ≥110 mmHg. Meta: PAS 140-155 / PAD 90-105 mmHg. Labetalol 20 mg IV (2 min), repetir c/10 min (máx 300 mg) ó Nifedipino 10 mg SL.',
+        drugs:[{key:'labetalol',label:'Labetalol IV'},{key:'nifedipino',label:'Nifedipino SL'}],
+        evidence:'A'
+      },
+      {
+        num:2, color:'#7c3aed',
+        title:'Sulfato de Magnesio — Profilaxis/tratamiento eclampsia',
+        detail:'Dosis de carga: MgSO₄ 4-6 g IV en 15-20 min. Mantenimiento: 1-2 g/h infusión continua. Monitorear: reflejos osteotendinosos, FR, diuresis. Antídoto: Gluconato de Ca 1g IV.',
+        drugs:[],
+        evidence:'A'
+      },
+      {
+        num:3, color:'#1558b0',
+        title:'Control fetal + decisión de resolución',
+        detail:'Monitoreo electrónico fetal continuo. Si ≥34 sem: resolución del embarazo. Si <34 sem: corticoides para maduración pulmonar fetal (betametasona 12 mg IM c/24h × 2 dosis).',
+        drugs:[{key:'dexametasona',label:'Dexametasona IM'}],
+        evidence:'A'
+      },
+      {
+        num:4, color:'#b45309',
+        title:'Restricción de líquidos + diuresis',
+        detail:'Restricción hídrica 80 mL/h. Diuresis meta ≥25 mL/h. Furosemida SOLO si edema agudo de pulmón. Evitar sobrecarga hídrica (riesgo EAP/SDRA).',
+        drugs:[{key:'furosemida',label:'Furosemida IV (solo EAP)'}],
+        evidence:'B'
+      }
+    ]
+  }
+];
+
+// ── PROTOCOLS RENDERING ────────────────────────────────────────────────────
+function renderProtocols() {
+  const grid = document.getElementById('protocolsGrid');
+  if (!grid) return;
+  grid.innerHTML = PROTOCOLS.map(p => `
+    <div class="proto-card" onclick="openProtocol('${safe(p.id)}')"
+      style="border-color:${p.color}20;">
+      <div class="proto-card-icon">${p.icon}</div>
+      <div class="proto-card-name" style="color:${p.color}">${safe(p.name)}</div>
+      <div class="proto-card-sub">${safe(p.sub)}</div>
+      <div style="margin-top:6px">
+        <span class="proto-evidence ev-a" style="font-size:8px">${safe(p.evidence)}</span>
+      </div>
+    </div>`).join('');
+}
+
+function openProtocol(id) {
+  const proto = PROTOCOLS.find(p => p.id === id);
+  if (!proto) return;
+
+  document.getElementById('proto-list-view').style.display = 'none';
+  const detail = document.getElementById('proto-detail-view');
+  detail.classList.add('open');
+
+  detail.innerHTML = `
+    <button class="proto-back" onclick="closeProtocol()">← Volver a Protocolos</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="font-size:32px">${proto.icon}</span>
+      <div>
+        <div style="font-size:19px;font-weight:800;color:${proto.color};
+          font-family:'Plus Jakarta Sans',sans-serif">${safe(proto.name)}</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:500">${safe(proto.sub)}</div>
+        <span class="proto-evidence ev-a">${safe(proto.evidence)}</span>
+      </div>
+    </div>
+    ${proto.steps.map(step => `
+      <div class="proto-step">
+        <div class="proto-step-num" style="background:${step.color}">${step.num}</div>
+        <div class="proto-step-body">
+          <div class="proto-step-title">
+            ${safe(step.title)}
+            <span class="proto-evidence ${step.evidence === 'A' ? 'ev-a' : step.evidence === 'B' ? 'ev-b' : 'ev-c'}">
+              Evidencia ${safe(step.evidence)}
+            </span>
+          </div>
+          <div class="proto-step-detail">${safe(step.detail)}</div>
+          ${step.drugs.map(d => `
+            <button class="proto-step-drug"
+              style="border-color:${step.color};color:${step.color};
+                background:color-mix(in srgb,${step.color} 8%,transparent)"
+              onclick="openDrugFromProtocol('${safe(d.key)}')">
+              💊 ${safe(d.label)} →
+            </button>`).join('')}
+        </div>
+      </div>`).join('')}
+  `;
+}
+
+function closeProtocol() {
+  document.getElementById('proto-list-view').style.display = '';
+  const detail = document.getElementById('proto-detail-view');
+  detail.classList.remove('open');
+  detail.innerHTML = '';
+}
+
+function openDrugFromProtocol(key) {
+  switchMod('calc');
+  setBnav('calc');
+  setTimeout(() => selectDrug(key), 100);
+}
+
+// ── UPDATE window.onload to init protocols ─────────────────────────────────
+const _origOnload = window.onload;
+window.onload = function() {
+  if (_origOnload) _origOnload();
+  renderProtocols();
+};
+
+
 </script>
 
+
+<!-- ══ HIGH-RISK DRUG CONFIRMATION ══ -->
+<div class="hrd-overlay" id="hrdOverlay">
+  <div class="hrd-modal">
+    <div class="hrd-icon">⚠️</div>
+    <div class="hrd-title">FÁRMACO DE ALTO RIESGO</div>
+    <div class="hrd-drug" id="hrdDrugName">—</div>
+    <div class="hrd-reason" id="hrdReason">—</div>
+    <div class="hrd-actions">
+      <button class="hrd-confirm" id="hrdConfirmBtn" onclick="confirmHighRisk()">
+        ✓ Confirmo — Continuar con la dosis
+      </button>
+      <button class="hrd-cancel" onclick="cancelHighRisk()">
+        ✕ Cancelar — Seleccionar otro fármaco
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ PANIC BUTTON (RCP / Código Rojo) ══ -->
 <button class="panic-btn" onclick="openPanic()" title="🚨 Código Rojo / RCP">❤️</button>
