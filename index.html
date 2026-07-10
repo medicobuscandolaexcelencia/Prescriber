@@ -169,15 +169,14 @@ body{display:flex;flex-direction:column;min-height:100vh;}
 .content{flex:1;overflow-y:auto;padding:16px;}
 /* On desktop, drugContent uses two-column */
 @media(min-width:901px){
-  /* Patient card + safety panel side by side */
-  .calc-top-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-    margin-bottom:0;
+  /* Main dose calculator (left, wide) + side column (right, narrow) */
+  .rx-shell{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
   }
-  .calc-top-row .pat-card{margin-bottom:0;}
-  .calc-top-row #safetyPanel{margin-bottom:0;}
+  .rx-main{flex:1 1 0;min-width:0;}
+  .rx-aside{flex:0 0 300px;}
   /* Two column drug panel */
   .calc-layout{
     display:grid;
@@ -186,8 +185,9 @@ body{display:flex;flex-direction:column;min-height:100vh;}
     align-items:start;
   }
 }
+.rx-shell{display:flex;flex-direction:column;gap:14px;}
+.rx-aside{display:flex;flex-direction:column;gap:14px;}
 @media(max-width:900px){
-  .calc-top-row{display:flex;flex-direction:column;gap:0;}
   .calc-layout{display:flex;flex-direction:column;gap:0;}
 }
 .content::-webkit-scrollbar{width:4px;}
@@ -431,7 +431,6 @@ body{display:flex;flex-direction:column;min-height:100vh;}
   /* ── Patient card: 2-col grid, peso+talla prominent ── */
   .pat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .pat-row .field:nth-child(5){grid-column:1/-1;} /* creatinina full width */
-  .calc-top-row{display:flex;flex-direction:column;gap:10px;}
   /* ── Drug content ── */
   .dose-grid{grid-template-columns:1fr 1fr;}
   .emerg-grid,.emax-grid{grid-template-columns:repeat(2,1fr);}
@@ -469,13 +468,6 @@ body{display:flex;flex-direction:column;min-height:100vh;}
   /* ── Drug pills: wrap ── */
   .drug-pills{gap:4px;}
   .dpill{font-size:9px;}
-  /* ── Reorder: mobile select first, then patient data, then results, then safety ── */
-  #mod-calc{display:flex;flex-direction:column;}
-  .mobile-drug-select-wrap{order:1;}
-  .calc-top-row{order:2;}
-  .calc-top-row .pat-card{order:1;}
-  .calc-top-row #safetyPanel{order:3;}
-  #calcPanel{order:2;}
   /* ── Emergencias module ── */
   .emax-grid{grid-template-columns:1fr 1fr;}
   /* ── Patient summary: scrollable ── */
@@ -780,16 +772,6 @@ body.dark .pres-select{background:#161b22 !important;color:#e6edf3 !important;bo
 }
 @media(max-width:768px){
   .mobile-drug-select-wrap{display:block;}
-}
-
-/* ════ MOBILE LAYOUT REORDER: drug result before safety panel ════ */
-@media(max-width:768px){
-  #mod-calc{display:flex;flex-direction:column;}
-  .mobile-drug-select-wrap{order:1;}
-  .calc-top-row{order:2;display:flex;flex-direction:column;gap:0;}
-  .calc-top-row .pat-card{order:1;}
-  .calc-top-row #safetyPanel{order:3;margin-top:12px;}
-  #calcPanel{order:2;}
 }
 
 /* ════ SAFETY: PANIC BUTTON RCP ════ */
@@ -1220,7 +1202,8 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
           </div>
           <div class="select-nav-chip" id="mobileSelectNavChip" style="display:none"></div>
         </div>
-        <div class="calc-top-row">
+        <div class="rx-shell">
+        <div class="rx-main">
         <div class="pat-card">
           <div class="sec-label">📋 Datos del Paciente</div>
           <!-- PATIENT MODE BANNER -->
@@ -1268,8 +1251,20 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
           <div style="font-size:9px;color:var(--muted);margin-top:7px;font-style:italic">
             * Peso obligatorio en modo pediátrico. Talla real obligatoria para SC. Peso ≤50 kg → dosificación por mg/kg siempre.
           </div>
+        </div>
+        <div id="calcPanel">
+          <div class="drug-empty" id="drugEmpty">
+            <div class="drug-empty-icon">🔍</div>
+            <div style="font-size:13px;font-weight:500">Selecciona un medicamento</div>
+            <div style="font-size:11px;color:var(--muted)">Panel izquierdo · Grupos · Fármacos (móvil)</div>
+          </div>
+          <div id="drugContent" style="display:none"></div>
+        </div>
+        </div><!-- /rx-main -->
+        <aside class="rx-aside">
+        <div class="pat-card">
           <!-- PREGNANCY TOGGLE -->
-          <div class="preg-toggle-wrap" style="margin-top:10px">
+          <div class="preg-toggle-wrap">
             <span style="font-size:16px">🤰</span>
             <span class="preg-toggle-label">Paciente embarazada</span>
             <label class="preg-toggle">
@@ -1278,8 +1273,9 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
             </label>
           </div>
         </div>
+        <div id="doseHierarchySlot"></div>
         <!-- SYNDROME QUICK SEARCH -->
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:var(--shadow)">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)">
           <div class="sec-label" style="margin-bottom:6px">🔍 Buscar por síndrome / indicación</div>
           <div class="syndrome-tags" id="syndromeTags">
             <span class="syn-tag" data-syn="anafilaxia" style="border-color:#c0392b;color:#c0392b" onclick="filterBySyndrome('anafilaxia',this)">⚡ Anafilaxia</span>
@@ -1299,9 +1295,9 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
         </div>
         <!-- SAFETY PANEL: Allergies + Active Prescriptions -->
         <div class="safety-panel" id="safetyPanel">
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <!-- ALLERGIES -->
-            <div style="flex:1;min-width:220px;">
+            <div>
               <div class="safety-panel-hdr">
                 <span class="safety-panel-title">🚫 Alergias conocidas</span>
               </div>
@@ -1316,7 +1312,7 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
               </div>
             </div>
             <!-- ACTIVE PRESCRIPTIONS -->
-            <div style="flex:1;min-width:220px;">
+            <div>
               <div class="safety-panel-hdr">
                 <span class="safety-panel-title">💊 Prescripciones activas</span>
                 <button onclick="clearPrescribed()" style="font-size:10px;background:none;border:none;
@@ -1339,16 +1335,8 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
             </div>
           </div>
         </div>
-        </div><!-- /calc-top-row -->
-
-        <div id="calcPanel">
-          <div class="drug-empty" id="drugEmpty">
-            <div class="drug-empty-icon">🔍</div>
-            <div style="font-size:13px;font-weight:500">Selecciona un medicamento</div>
-            <div style="font-size:11px;color:var(--muted)">Panel izquierdo · Grupos · Fármacos (móvil)</div>
-          </div>
-          <div id="drugContent" style="display:none"></div>
-        </div>
+        </aside>
+        </div><!-- /rx-shell -->
       </div>
       <!-- EMERGENCIAS -->
       <div class="mod-panel" id="mod-emerg">
@@ -3002,16 +2990,26 @@ function calcDose(d, vk, p) {
   }
 
   let calcMg, dispRate;
+  let rawCalcMg  = null;   // dosis SIN recortar, calculada solo con mg/kg × peso
+  let wasCapped  = false;  // true si la dosis cruda superaba el máximo y fue recortada
   const unit = cfg.unit || '';
 
   if (!isAdultFlat && unit.includes('mg/kg') && p.w > 0) {
     // dose ya es mg/kg/DOSIS
-    calcMg   = cfg.dose * p.w;
-    if (cfg.max_single && calcMg > cfg.max_single) calcMg = cfg.max_single;
+    calcMg    = cfg.dose * p.w;
+    rawCalcMg = calcMg;
+    if (cfg.max_single && calcMg > cfg.max_single) {
+      calcMg    = cfg.max_single;
+      wasCapped = true;
+    }
     dispRate = `${safe(cfg.dose)} mg/kg/dosis × ${safe(p.w)} kg`;
   } else if (!isAdultFlat && unit.includes('mcg/kg') && p.w > 0) {
-    calcMg   = (cfg.dose * p.w) / 1000;
-    if (cfg.max_single && calcMg*1000 > cfg.max_single) calcMg = cfg.max_single/1000;
+    calcMg    = (cfg.dose * p.w) / 1000;
+    rawCalcMg = calcMg;
+    if (cfg.max_single && calcMg*1000 > cfg.max_single) {
+      calcMg    = cfg.max_single/1000;
+      wasCapped = true;
+    }
     dispRate = `${safe(cfg.dose)} mcg/kg/dosis × ${safe(p.w)} kg`;
   } else if (!isAdultFlat && (unit==='mg'||unit==='mcg')) {
     calcMg   = unit==='mcg' ? cfg.dose/1000 : cfg.dose;
@@ -3024,6 +3022,7 @@ function calcDose(d, vk, p) {
 
   return {
     calcMg, dispRate,
+    rawCalcMg, wasCapped,
     freq:      cfg.freq,
     maxSingle: cfg.max_single || null,
     maxDaily:  cfg.max_daily  || null,
@@ -3332,6 +3331,24 @@ function renderDrug(key) {
           ${presList.map((pr,i) => `<option value="${i}" ${currentPres===i?'selected':''}>${safe(pr.name)} — ${safe(pr.conc)}</option>`).join('')}
         </select>
         <span class="pres-select-arrow">▾</span>
+      </div>
+    </div>`;
+  }
+
+  // ── ALERTA: DOSIS RECORTADA AL MÁXIMO (posible peso mal ingresado)
+  if (res && res.wasCapped) {
+    const rawR = Math.round(res.rawCalcMg * 100) / 100;
+    const maxR = Math.round(res.maxSingle * 100) / 100;
+    html += `<div class="contrain-box cb-danger">
+      <div class="contrain-hdr">
+        <span class="contrain-icon">🚨</span>
+        <span class="contrain-title-danger">Dosis calculada supera el máximo — verifique el peso</span>
+      </div>
+      <div class="contrain-body-danger">
+        Con los datos ingresados (${safe(p.w)} kg), la fórmula mg/kg da <strong>${safe(rawR)} mg</strong>,
+        que supera la dosis máxima permitida (<strong>${safe(maxR)} mg</strong>).
+        La dosis mostrada abajo fue <strong>recortada automáticamente</strong> al máximo — esto NO significa
+        que sea la dosis correcta para este paciente. Verifique que el peso ingresado sea correcto antes de prescribir.
       </div>
     </div>`;
   }
@@ -4493,6 +4510,7 @@ function updatePanicDoses() {
     }
 
     let doseDisplay = '', volDisplay = '', unitDisplay = '';
+    let panicCapped = false, panicRawDose = null;
 
     if (!isPed || w <= 0) {
       // Adult mode — show adult flat dose
@@ -4502,8 +4520,12 @@ function updatePanicDoses() {
     } else {
       // Pediatric — calculate
       let calcDose = drug.dosePerKg * w;
+      panicRawDose = calcDose;
       if (drug.minDose && calcDose < drug.minDose) calcDose = drug.minDose;
-      if (drug.maxDose && calcDose > drug.maxDose) calcDose = drug.maxDose;
+      if (drug.maxDose && calcDose > drug.maxDose) {
+        calcDose     = drug.maxDose;
+        panicCapped  = true;
+      }
       calcDose = Math.round(calcDose * 100) / 100;
 
       // Volume
@@ -4522,13 +4544,22 @@ function updatePanicDoses() {
       volDisplay = vol;
     }
 
+    const cappedBadge = panicCapped
+      ? `<div style="font-size:9px;font-weight:800;color:#fff;background:#c0392b;
+           border-radius:6px;padding:2px 6px;margin-bottom:4px;display:inline-block"
+           title="Cálculo real: ${safe(Math.round(panicRawDose*100)/100)} mg — recortado al máximo por seguridad. Verifique el peso.">
+           ⚠ TOPE — verifique peso
+         </div>`
+      : '';
+
     html += `<button class="panic-drug-btn"
-      style="border-color:${drug.color};background:${drug.bg};"
+      style="border-color:${drug.color};background:${drug.bg};${panicCapped ? 'outline:2px solid #c0392b;' : ''}"
       onclick="panicSelectDrug('${safe(drug.key)}')">
       <div class="panic-drug-name" style="color:${drug.color}">${safe(drug.name)}</div>
       <div style="font-size:10px;color:${drug.color};opacity:.75;margin-bottom:6px;font-weight:600">
         ${safe(drug.subtitle)}
       </div>
+      ${cappedBadge}
       <div class="panic-drug-dose" style="color:${drug.color}">
         ${isPed && w > 0 ? safe(volDisplay) : safe(doseDisplay)}
       </div>
@@ -4977,21 +5008,23 @@ const _origRenderDrugV3 = renderDrug;
 renderDrug = function(key) {
   _origRenderDrugV3(key);
   const dc = document.getElementById('drugContent');
+  const hierSlot = document.getElementById('doseHierarchySlot');
+  if (hierSlot) hierSlot.innerHTML = ''; // reset: avoid showing stale hierarchy from previous drug
   if (!dc || dc.style.display === 'none') return;
   const p = getPatient();
   const d = DRUGS[key];
   if (!d) return;
 
-  // 1. Get contextual warnings
+  // 1. Get contextual warnings (stay in main flow — safety critical, must be seen with the dose)
   const ctxWarnings = getContextualWarnings(key, p);
   let extraHtml = renderContextualWarnings(ctxWarnings);
 
-  // 2. Dose hierarchy (inject after dose-card)
+  // 2. Dose hierarchy → side column, so it doesn't push the dose result down
   const vk = (currentVia && d.routes[currentVia]) ? currentVia : Object.keys(d.routes)[0];
   const res = (p.w > 0 || p.a > 0 || patientType === 'adult') ? calcDose(d, vk, p) : null;
   if (res && !res.error) {
-    extraHtml += renderDoseHierarchy(d, vk, res, res.calcMg);
-    // 3. Auto IV dilution steps
+    if (hierSlot) hierSlot.innerHTML = renderDoseHierarchy(d, vk, res, res.calcMg);
+    // 3. Auto IV dilution steps (stay in main flow, part of the dosing instructions)
     if (currentPres !== null && res.pres[currentPres] && res.dil) {
       extraHtml += renderDilutionSteps(res.dil, res.calcMg, res.pres[currentPres]);
     }
