@@ -1245,6 +1245,10 @@ body.dark .iv-result-item{background:#0d1e36;border-color:#58a6ff30;}
               <label>Creat. (mg/dL)</label>
               <input type="number" id="patCreat" placeholder="opcional" step="0.1" min="0" oninput="onPatChange()">
             </div>
+            <div class="field">
+              <label>Glucemia (mg/dL)</label>
+              <input type="number" id="patGlucemia" placeholder="opcional" step="1" min="0" oninput="onPatChange()">
+            </div>
           </div>
           <div class="pat-summary" id="patSummary" style="display:none"></div>
           <div id="renalAlert"></div>
@@ -2934,16 +2938,17 @@ function renalLabel(cc) {
 
 // ── GET PATIENT ────────────────────────────────────────────────────────────
 function getPatient() {
-  const w      = parseFloat(document.getElementById('patWeight').value)  || 0;
-  const height = parseFloat(document.getElementById('patHeight').value)  || 0;
-  const a      = parseFloat(document.getElementById('patAge').value)     || 0;
-  const u      = document.getElementById('patAgeUnit').value;
-  const creat  = parseFloat(document.getElementById('patCreat').value)   || 0;
+  const w        = parseFloat(document.getElementById('patWeight').value)  || 0;
+  const height   = parseFloat(document.getElementById('patHeight').value)  || 0;
+  const a        = parseFloat(document.getElementById('patAge').value)     || 0;
+  const u        = document.getElementById('patAgeUnit').value;
+  const creat    = parseFloat(document.getElementById('patCreat').value)   || 0;
+  const glucemia = parseFloat(document.getElementById('patGlucemia')?.value) || 0;
   const ageMonths = u==='years' ? a*12 : u==='months' ? a : a/30;
   const ageYears  = ageMonths / 12;
   // isPed: by explicit switch OR if adult switch but weight ≤50 kg (safety net)
   const isPed = patientType === 'ped' || (patientType === 'adult' && w > 0 && w <= 50);
-  return {w, height, a, u, ageMonths, ageYears, creat, isPed};
+  return {w, height, a, u, ageMonths, ageYears, creat, glucemia, isPed};
 }
 
 // ── PATIENT CHANGE ─────────────────────────────────────────────────────────
@@ -5716,6 +5721,126 @@ const _origOnload = window.onload;
 window.onload = function() {
   if (_origOnload) _origOnload();
   renderProtocols();
+};
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  MÓDULO DE INSULINA POR GLUCEMIA — Prescriber v3.2
+//  La entrada "insulina" en DRUGS cubre SOLO el bolo por peso para
+//  hiperpotasemia (0.1 U/kg, protocolo KDIGO/UpToDate — correcto para esa
+//  indicación puntual). El uso más frecuente de insulina — corrección de
+//  hiperglucemia y manejo de CAD/EHH — se dosifica según la GLUCEMIA, no
+//  según el peso. Este módulo es un cálculo independiente y separado.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Escala de corrección de referencia (insulina regular/cristalina SC).
+// ADVERTENCIA: esto es un ejemplo de esquema estándar — la sensibilidad a la
+// insulina varía mucho por paciente (peso, uso crónico de insulina, edad,
+// función renal). SIEMPRE ajustar según protocolo institucional y criterio
+// clínico individual, no usar como receta automática.
+const GLUCEMIA_SCALE = [
+  {min:0,   max:69,   dose:null, label:'<70',      tag:'hipo'},
+  {min:70,  max:149,  dose:0,    label:'70-149'},
+  {min:150, max:199,  dose:2,    label:'150-199'},
+  {min:200, max:249,  dose:4,    label:'200-249'},
+  {min:250, max:299,  dose:6,    label:'250-299'},
+  {min:300, max:349,  dose:8,    label:'300-349'},
+  {min:350, max:399,  dose:10,   label:'350-399'},
+  {min:400, max:999999,dose:12, label:'≥400', tag:'dka'}
+];
+
+function renderInsulinGlycemicModule(p) {
+  const g = p.glucemia;
+  let html = `<div class="dose-hierarchy" style="margin-top:12px">
+    <div class="sec-label" style="margin-bottom:4px">🩸 Corrección por Glucemia (independiente del peso)</div>
+    <div style="font-size:10.5px;color:var(--muted);margin-bottom:10px;line-height:1.5">
+      Escala de referencia — ajustar según sensibilidad individual, protocolo institucional y criterio clínico.
+      No usar como receta automática.
+    </div>`;
+
+  // ── Hard safety check: hypoglycemia ──
+  if (g > 0 && g < 70) {
+    html += `<div class="contrain-box cb-danger" style="margin-bottom:10px">
+      <div class="contrain-hdr">
+        <span class="contrain-icon">🚨</span>
+        <span class="contrain-title-danger">HIPOGLUCEMIA (${safe(g)} mg/dL) — NO administrar insulina</span>
+      </div>
+      <div class="contrain-body-danger">
+        Tratar la hipoglucemia primero (dextrosa VO/IV según severidad y estado de conciencia).
+        Reevaluar glucemia en 15 min antes de considerar cualquier dosis de insulina.
+      </div>
+    </div>`;
+  } else {
+    // ── Sliding scale table, highlighting the matching band ──
+    html += `<div class="dose-hierarchy-row" style="flex-wrap:wrap">`;
+    GLUCEMIA_SCALE.filter(b => b.tag !== 'hipo').forEach(band => {
+      const isMatch = g > 0 && g >= band.min && g <= band.max;
+      html += `<div class="dh-item ${isMatch ? 'dh-habitual' : ''}" style="min-width:78px;${isMatch ? '' : 'opacity:.55'}">
+        <div class="dh-lbl">${safe(band.label)} mg/dL</div>
+        <div class="dh-val">${band.dose} U</div>
+      </div>`;
+    });
+    html += `</div>`;
+
+    if (g >= 250) {
+      html += `<div class="note-bar nb-warn" style="margin-top:10px">
+        ⚠️ Glucemia ≥250 mg/dL: valorar cetonas/gasometría para descartar CAD. Si hay acidosis o cetosis, usar el protocolo de infusión IV (abajo), no solo la escala de corrección SC.
+      </div>`;
+    }
+  }
+
+  // ── DKA/HHS IV infusion starting rate (weight-based, NOT glucose-based —
+  //    but the correct model for continuous insulin therapy, unlike a fixed
+  //    "bolo por peso" for hyperglycemia which would be incorrect) ──
+  if (p.w > 0) {
+    const rateUh = Math.round(p.w * 0.1 * 100) / 100;
+    html += `<div class="dose-hierarchy" style="margin-top:10px;padding:12px">
+      <div class="sec-label" style="margin-bottom:6px">💧 Infusión IV — CAD / EHH (protocolo ADA)</div>
+      <div class="dose-hierarchy-row">
+        <div class="dh-item dh-habitual">
+          <div class="dh-lbl">Tasa inicial</div>
+          <div class="dh-val">${safe(rateUh)} U/h</div>
+        </div>
+        <div class="dh-item">
+          <div class="dh-lbl">Fórmula</div>
+          <div class="dh-val" style="font-size:11px">0.1 U/kg/h × ${safe(p.w)} kg</div>
+        </div>
+      </div>
+      <div class="note-bar nb-info" style="margin-top:8px">
+        📌 NO iniciar hasta confirmar K+ ≥3.3 mEq/L (riesgo de arritmia si hay hipopotasemia no corregida).
+        Meta: descenso de 50-70 mg/dL/h. Si no baja ≥10% en la 1ª hora, duplicar la tasa.
+        Al llegar a ~200-250 mg/dL: reducir tasa y agregar dextrosa a los líquidos (fase de transición).
+        Control de glucemia horario.
+      </div>
+    </div>`;
+  } else {
+    html += `<div class="note-bar nb-info" style="margin-top:10px">
+      📌 Ingrese el peso del paciente para calcular la tasa inicial de infusión IV (CAD/EHH).
+    </div>`;
+  }
+
+  return html + `</div>`;
+}
+
+// ── HOOK: inject glycemic module only for the insulina entry ──────────────
+const _origRenderDrugGlyc = renderDrug;
+renderDrug = function(key) {
+  _origRenderDrugGlyc(key);
+  if (key !== 'insulina') return;
+  const dc = document.getElementById('drugContent');
+  if (!dc || dc.style.display === 'none') return;
+  const p = getPatient();
+  const moduleHtml = renderInsulinGlycemicModule(p);
+  // Insert right after the drug header block so it's visible near the top,
+  // alongside the hyperkalemia dose — not buried under alerts/rx text.
+  const hdr = dc.querySelector('.drug-hdr');
+  if (hdr) {
+    const div = document.createElement('div');
+    div.innerHTML = moduleHtml;
+    hdr.after(div.firstElementChild);
+  } else {
+    dc.innerHTML = moduleHtml + dc.innerHTML;
+  }
 };
 
 
