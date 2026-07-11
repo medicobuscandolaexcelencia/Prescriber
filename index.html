@@ -2732,6 +2732,105 @@ amoxicilina_clavulanico:{
     {t:'warn',txt:'Hepatotoxicidad colestásica rara pero descrita, más frecuente en >65 años y tratamientos prolongados (>14 días).'},
     {t:'info',txt:'Las distintas concentraciones (250/62.5, 400/57, 500/125, 875/125) NO son intercambiables entre sí ni con amoxicilina sola — verificar siempre la presentación exacta.'}
   ]
+},
+amiodarona:{
+  name:'Amiodarona',cat:'cardiac',class:'Antiarrítmico clase III',
+  mech:'Bloqueo de canales de K+ (fase 3), con efectos adicionales sobre canales de Na+/Ca2+ y bloqueo β no competitivo',
+  ind:'FV/TVSP refractaria a desfibrilación (PCR), TV estable con pulso, fibrilación auricular',
+  dur:'Emergencia (PCR) — dosis única/repetida según protocolo, no tratamiento continuo',
+  refs:'ILCOR 2021, AHA 2020, Harriet Lane 23a',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'5 mg/kg IV/IO bolo',max_single:'300 mg',max_daily:'—',note:'FV/TVSP refractaria: bolo tras 3ª descarga. Repetir 2.5 mg/kg si persiste (máx. 2 dosis extra). Diluir en 20 mL D5%.'},
+    adult:{dose:'300 mg IV bolo',max_single:'300 mg',max_daily:'—',note:'FV/TVSP refractaria: bolo tras 3ª descarga. 2ª dosis 150 mg si persiste. Diluir en 20 mL D5%, pasar en 3-5 min.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa/Intraósea (IV/IO) — PCR',
+      dil:'Diluir en 20 mL D5% (INCOMPATIBLE con SF — precipita). Pasar en 3-5 min. En FV/TVSP sin pulso puede pasarse más rápido.',
+      ped:{dose:5,unit:'mg/kg/dosis',freq:'dosis única (repetir 2.5 mg/kg si persiste, máx 2 dosis extra)',max_single:300,note:'Bolo IV/IO rápido tras 3ª descarga en FV/TVSP refractaria.'},
+      adult:{dose:300,dose_max:300,max_single:300,freq:'dosis única (2ª dosis 150 mg si persiste)',note:'FV/TVSP refractaria a descarga + adrenalina. Diluir en 20 mL D5%, pasar en 3-5 min.'},
+      pres:[{name:'Amp 50 mg/mL (3 mL = 150 mg)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IV'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'INCOMPATIBLE con suero fisiológico (precipita) — diluir SOLO en D5%. Extravasación → necrosis tisular grave, usar vía central si continúa en infusión.'},
+    {t:'danger',txt:'Prolonga el intervalo QT — riesgo de Torsades de Pointes, especialmente combinado con otros fármacos que prolongan QT.'},
+    {t:'warn',txt:'Bolo IV rápido puede causar bradicardia e hipotensión severa. En PCR (sin pulso) es aceptable; con pulso presente, pasar más lento y vigilar.'},
+    {t:'info',txt:'Uso crónico (FA/TV estable) requiere carga oral escalonada (no calculada aquí) y vigilancia de toxicidad tiroidea, pulmonar y hepática a largo plazo.'}
+  ]
+},
+insulina:{
+  name:'Insulina Cristalina (Regular)',cat:'other',class:'Insulina de acción rápida — manejo agudo de hiperpotasemia',
+  mech:'Estimula la Na+/K+-ATPasa, desplazando K+ del espacio extracelular al intracelular (efecto transitorio; no elimina K+ corporal total)',
+  ind:'Hiperpotasemia con cambios en ECG o K+ >6.5 mEq/L (manejo agudo, siempre junto con dextrosa)',
+  dur:'Dosis única de emergencia — repetir según K+ de control y respuesta clínica',
+  refs:'UpToDate 2025, KDIGO, Harriet Lane 23a',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'0.1 U/kg IV',max_single:'10 U',max_daily:'—',note:'Administrar JUNTO con dextrosa (0.5-1 g/kg IV) para evitar hipoglucemia. Vigilar glucemia c/30-60 min por ≥6h.'},
+    adult:{dose:'10 U IV',max_single:'10 U',max_daily:'—',note:'Administrar JUNTO con 25 g de dextrosa (D50% 50 mL) IV. Vigilar glucemia c/30-60 min por ≥6h (riesgo de hipoglucemia tardía).'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV) — hiperpotasemia',
+      dil:'Administrar IV lento en 5-10 min, SIEMPRE junto con dextrosa concurrente para prevenir hipoglucemia.',
+      ped:{dose:0.1,unit:'U/kg/dosis',freq:'dosis única (bolo IV lento)',max_single:10,note:'Administrar junto con dextrosa 0.5-1 g/kg IV. Vigilar glucemia c/30-60 min ≥6h.'},
+      adult:{dose:10,dose_max:10,unit:'U',freq:'dosis única (bolo IV lento)',max_single:10,note:'Administrar junto con 25 g dextrosa (D50% 50 mL) IV. Vigilar glucemia c/30-60 min ≥6h.'},
+      pres:[{name:'Vial Insulina Regular 100 U/mL (10 mL)',conc:'100 U/mL',unit:'mL',f:1/100,via:'IV'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'Hipoglucemia tardía (2-6h post-dosis) es el riesgo principal — SIEMPRE administrar con dextrosa concurrente y vigilar glucemia seriada.'},
+    {t:'warn',txt:'Efecto transitorio sobre el K+ sérico (horas) — no elimina potasio corporal total. Combinar con otras medidas según causa (gluconato de calcio si cambios en ECG, resinas/diálisis).'},
+    {t:'info',txt:'Usar SOLO insulina regular/cristalina (acción rápida) para este manejo agudo — nunca NPH ni análogos de acción prolongada.'}
+  ]
+},
+fentanilo:{
+  name:'Fentanilo',cat:'analgesic',class:'Opioide sintético potente (agonista µ)',
+  mech:'Agonista µ opioide altamente liposoluble — inicio rápido (1-2 min IV), duración corta (30-60 min)',
+  ind:'Dolor agudo severo, sedación procedimental, adyuvante de inducción/intubación (RSI)',
+  dur:'Según necesidad clínica / procedimiento',refs:'Harriet Lane 23a, Goodman & Gilman 14a, BNF 2025',
+  pedCI:null,
+  emerg:{
+    ped:{dose:'1-2 mcg/kg IV',max_single:'100 mcg',max_daily:'—',note:'IV lento en 1-2 min. Rigidez torácica con bolo rápido/dosis alta — administrar lento.'},
+    adult:{dose:'25-50 mcg IV',max_single:'150 mcg',max_daily:'—',note:'Titular c/5-10 min. Rigidez torácica con bolo rápido — administrar en ≥1-2 min.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV) — bolo lento',
+      dil:'Administrar sin diluir o diluido en SF, IV lento en 1-2 min. Bolo rápido o dosis altas → rigidez torácica ("chest wall rigidity"). Naloxona y soporte ventilatorio disponibles.',
+      ped:{dose:1,unit:'mcg/kg/dosis',freq:'c/30-60min PRN (titular)',max_single:100,max_daily:400,note:'IV lento en 1-2 min. Vigilar SpO₂/FR. Rigidez torácica con bolo rápido.'},
+      adult:{dose:25,dose_max:50,unit:'mcg',freq:'c/5-10min (titular)',max_single:150,max_daily:600,note:'25-50 mcg IV lento, titular según respuesta y dolor.'},
+      pres:[{name:'Amp 50 mcg/mL (2 mL = 100 mcg)',conc:'50 mcg/mL (0.05 mg/mL)',unit:'mL',f:20,via:'IV'}]}
+  },
+  alerts:[
+    {t:'danger',txt:'Rigidez torácica ("chest wall rigidity") con bolo rápido o dosis alta — puede impedir la ventilación. Administrar SIEMPRE lento (≥1-2 min).'},
+    {t:'danger',txt:'Depresión respiratoria — potencia ~100× la morfina. Naloxona y soporte ventilatorio disponibles. Antídoto: Naloxona.'},
+    {t:'warn',txt:'Sinergismo con benzodiacepinas (midazolam) — riesgo aumentado de depresión respiratoria en sedación combinada; reducir dosis de ambos.'}
+  ]
+},
+ketamina:{
+  name:'Ketamina',cat:'analgesic',class:'Anestésico disociativo (antagonista NMDA)',
+  mech:'Antagonista no competitivo del receptor NMDA — disociación córtico-talámica, preserva reflejos protectores de vía aérea y tono simpático',
+  ind:'Sedación procedimental, analgesia subdisociativa, inducción de secuencia rápida (RSI), estado asmático refractario',
+  dur:'Procedimiento único / sedación puntual',refs:'Harriet Lane 23a, Goodman & Gilman 14a, ACEP Clinical Policy',
+  pedCI:'menores de 3 meses (mayor riesgo de laringoespasmo)',
+  emerg:{
+    ped:{dose:'1-2 mg/kg IV (sedación) · 0.1-0.3 mg/kg IV (analgesia)',max_single:'100 mg',max_daily:'—',note:'IV lento 1-2 min. Laringoespasmo raro pero descrito — succión y vía aérea disponibles. Evitar <3 meses.'},
+    adult:{dose:'1-2 mg/kg IV (sedación) · 0.1-0.3 mg/kg IV (analgesia)',max_single:'200 mg',max_daily:'—',note:'IV lento 1-2 min. Puede producir reacciones de emergencia (alucinaciones) — considerar benzodiacepina coadyuvante.'}
+  },
+  routes:{
+    iv:{label:'Intravenosa (IV) — sedación/analgesia',
+      dil:'Administrar IV lento en 1-2 min (sedación) o en 10 min (dosis analgésica subdisociativa). Monitorizar SpO₂, FC, PA. Vía aérea y succión disponibles.',
+      ped:{dose:1,unit:'mg/kg/dosis',freq:'dosis única por procedimiento (repetir 0.5 mg/kg si necesario)',max_single:100,note:'Sedación procedimental. Evitar <3 meses. Vigilar laringoespasmo.',minAgeMonths:3},
+      adult:{dose:1,dose_max:2,unit:'mg/kg/dosis',freq:'dosis única por procedimiento',max_daily:200,note:'1-2 mg/kg IV lento. Considerar midazolam coadyuvante para reacciones de emergencia.'},
+      pres:[{name:'Amp 50 mg/mL (10 mL)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IV'}]},
+    im:{label:'Intramuscular (IM) — sin acceso IV',dil:null,
+      ped:{dose:4,unit:'mg/kg/dosis',freq:'dosis única',max_single:200,note:'IM 4-5 mg/kg si no hay acceso IV. Inicio más lento (3-5 min).'},
+      adult:{dose:4,dose_max:5,unit:'mg/kg/dosis',freq:'dosis única',max_daily:300,note:'IM 4-5 mg/kg. Útil en agitación severa sin acceso IV.'},
+      pres:[{name:'Amp 50 mg/mL (10 mL)',conc:'50 mg/mL',unit:'mL',f:1/50,via:'IM'}]}
+  },
+  alerts:[
+    {t:'warn',txt:'Reacciones de emergencia (alucinaciones, agitación al despertar) — más frecuentes en adultos. Ambiente tranquilo y considerar benzodiacepina.'},
+    {t:'warn',txt:'Laringoespasmo raro pero descrito, especialmente en <3 meses o con secreciones excesivas. Succión y vía aérea disponibles.'},
+    {t:'info',txt:'Preserva reflejos de vía aérea y tono simpático (a diferencia de otros sedantes) — útil en shock/hipotensión relativa y estado asmático refractario (efecto broncodilatador).'}
+  ]
 }
 
 
@@ -2990,11 +3089,29 @@ function calcDose(d, vk, p) {
   }
 
   let calcMg, dispRate;
-  let rawCalcMg  = null;   // dosis SIN recortar, calculada solo con mg/kg × peso
+  let rawCalcMg  = null;   // dosis SIN recortar, calculada solo con mg/kg × peso (o U/kg, mcg/kg × peso)
   let wasCapped  = false;  // true si la dosis cruda superaba el máximo y fue recortada
   const unit = cfg.unit || '';
+  // doseUnit: la unidad real de la dosis para MOSTRAR en pantalla (mg por defecto, U para insulina,
+  // mcg para fentanilo/similares). Internamente calcMg SIEMPRE queda en mg (para que la conversión
+  // mg/mL de presentaciones funcione igual para todos los fármacos) — dispScale solo afecta el TEXTO
+  // que ve el clínico, no el cálculo de volumen.
+  // NOTA sobre colisiones: 'mcg' usa 'u' minúscula, nunca coincide con 'U/kg' o unit==='U'.
+  const doseUnit  = unit.includes('mcg') ? 'mcg' : ((unit.includes('U/kg') || unit === 'U') ? 'U' : 'mg');
+  const dispScale = doseUnit === 'mcg' ? 1000 : 1; // mg internos × 1000 = mcg mostrados
 
-  if (!isAdultFlat && unit.includes('mg/kg') && p.w > 0) {
+  if (unit.includes('U/kg') && p.w > 0) {
+    // Insulina y similares: dosis en UNIDADES/kg, no en mg. Mismo cálculo, unidad distinta.
+    // (Se evalúa para cualquier config —ped o adult— que use unidad por kg; algunos fármacos,
+    // como la ketamina, se dosifican por kg incluso en adultos.)
+    calcMg    = cfg.dose * p.w;
+    rawCalcMg = calcMg;
+    if (cfg.max_single && calcMg > cfg.max_single) {
+      calcMg    = cfg.max_single;
+      wasCapped = true;
+    }
+    dispRate = `${safe(cfg.dose)} U/kg/dosis × ${safe(p.w)} kg`;
+  } else if (unit.includes('mg/kg') && p.w > 0) {
     // dose ya es mg/kg/DOSIS
     calcMg    = cfg.dose * p.w;
     rawCalcMg = calcMg;
@@ -3003,7 +3120,7 @@ function calcDose(d, vk, p) {
       wasCapped = true;
     }
     dispRate = `${safe(cfg.dose)} mg/kg/dosis × ${safe(p.w)} kg`;
-  } else if (!isAdultFlat && unit.includes('mcg/kg') && p.w > 0) {
+  } else if (unit.includes('mcg/kg') && p.w > 0) {
     calcMg    = (cfg.dose * p.w) / 1000;
     rawCalcMg = calcMg;
     if (cfg.max_single && calcMg*1000 > cfg.max_single) {
@@ -3011,17 +3128,21 @@ function calcDose(d, vk, p) {
       wasCapped = true;
     }
     dispRate = `${safe(cfg.dose)} mcg/kg/dosis × ${safe(p.w)} kg`;
-  } else if (!isAdultFlat && (unit==='mg'||unit==='mcg')) {
+  } else if (!isAdultFlat && (unit==='mg'||unit==='mcg'||unit==='U')) {
     calcMg   = unit==='mcg' ? cfg.dose/1000 : cfg.dose;
     dispRate = 'Dosis fija';
   } else if (isAdultFlat) {
-    calcMg   = cfg.dose; dispRate = null;
+    if (unit.includes('/kg') && !(p.w > 0)) {
+      return {error:'Ingrese el peso del paciente para calcular esta dosis (se dosifica por kg incluso en adultos).'};
+    }
+    calcMg   = unit.includes('mcg') ? cfg.dose/1000 : cfg.dose;
+    dispRate = null;
   } else {
     return {error:'Ingrese el peso del paciente para calcular.'};
   }
 
   return {
-    calcMg, dispRate,
+    calcMg, dispRate, doseUnit, dispScale,
     rawCalcMg, wasCapped,
     freq:      cfg.freq,
     maxSingle: cfg.max_single || null,
@@ -3337,16 +3458,17 @@ function renderDrug(key) {
 
   // ── ALERTA: DOSIS RECORTADA AL MÁXIMO (posible peso mal ingresado)
   if (res && res.wasCapped) {
-    const rawR = Math.round(res.rawCalcMg * 100) / 100;
-    const maxR = Math.round(res.maxSingle * 100) / 100;
+    const rawR = Math.round(res.rawCalcMg * res.dispScale * 100) / 100;
+    const maxR = Math.round(res.maxSingle * 100) / 100; // maxSingle ya está en la unidad de despliegue nativa
+    const duw = res.doseUnit === 'U' ? 'unidades' : (res.doseUnit === 'mcg' ? 'mcg' : 'mg');
     html += `<div class="contrain-box cb-danger">
       <div class="contrain-hdr">
         <span class="contrain-icon">🚨</span>
         <span class="contrain-title-danger">Dosis calculada supera el máximo — verifique el peso</span>
       </div>
       <div class="contrain-body-danger">
-        Con los datos ingresados (${safe(p.w)} kg), la fórmula mg/kg da <strong>${safe(rawR)} mg</strong>,
-        que supera la dosis máxima permitida (<strong>${safe(maxR)} mg</strong>).
+        Con los datos ingresados (${safe(p.w)} kg), la fórmula da <strong>${safe(rawR)} ${duw}</strong>,
+        que supera la dosis máxima permitida (<strong>${safe(maxR)} ${duw}</strong>).
         La dosis mostrada abajo fue <strong>recortada automáticamente</strong> al máximo — esto NO significa
         que sea la dosis correcta para este paciente. Verifique que el peso ingresado sea correcto antes de prescribir.
       </div>
@@ -3363,9 +3485,10 @@ function renderDrug(key) {
     html += `<div class="dose-card"><h3>⚠️ Advertencia Clínica</h3>
       <p style="color:var(--warn);font-size:12px">${safe(res.error)}</p></div>`;
   } else {
-    const dR    = Math.round(res.calcMg * 100) / 100;
+    const dR    = Math.round(res.calcMg * res.dispScale * 100) / 100;
     const daily = Math.min(dR * freqN(res.freq), res.maxDaily || 99999);
     const atMax = res.maxSingle && dR >= res.maxSingle;
+    const duLbl = res.doseUnit === 'U' ? 'unidades' : (res.doseUnit === 'mcg' ? 'mcg' : 'mg');
 
     // Auto-select first presentation if none chosen yet
     if (currentPres === null && res.pres && res.pres.length > 0) {
@@ -3399,8 +3522,8 @@ function renderDrug(key) {
         ${durTxt ? `<div class="hero-dose-dur">⏱ Durante ${safe(durTxt)}</div>` : ''}
         <div class="hero-dose-sub">
           <div class="hero-sub-item">
-            <div class="hero-sub-lbl">Dosis en mg</div>
-            <div class="hero-sub-val">${safe(dR)} mg</div>
+            <div class="hero-sub-lbl">Dosis en ${duLbl}</div>
+            <div class="hero-sub-val">${safe(dR)} ${duLbl}</div>
           </div>
           <div class="hero-sub-item">
             <div class="hero-sub-lbl">Presentación</div>
@@ -3409,7 +3532,7 @@ function renderDrug(key) {
           ${dropsSubH}
           <div class="hero-sub-item">
             <div class="hero-sub-lbl">Dosis diaria</div>
-            <div class="hero-sub-val">~${safe(Math.round(daily))} mg</div>
+            <div class="hero-sub-val">~${safe(Math.round(daily))} ${duLbl}</div>
           </div>
         </div>
       </div>`;
@@ -3437,17 +3560,17 @@ function renderDrug(key) {
       <div class="dose-grid">
         <div class="di">
           <div class="di-lbl">Dosis / toma</div>
-          <div class="di-val ok">${safe(dR)} mg</div>
+          <div class="di-val ok">${safe(dR)} ${duLbl}</div>
           <div class="di-sub">${safe(res.dispRate || 'Dosis estándar')}</div>
         </div>
         <div class="di">
           <div class="di-lbl">Frecuencia</div>
           <div class="di-val" style="color:${cc};font-size:14px">${safe(res.freq)}</div>
-          <div class="di-sub">Diario: ~${safe(Math.round(daily))} mg</div>
+          <div class="di-sub">Diario: ~${safe(Math.round(daily))} ${duLbl}</div>
         </div>
         ${res.maxSingle ? `<div class="di">
           <div class="di-lbl">Máx por toma</div>
-          <div class="di-val ${atMax?'danger':'ok'}">${safe(res.maxSingle)} mg</div>
+          <div class="di-val ${atMax?'danger':'ok'}">${safe(res.maxSingle)} ${duLbl}</div>
           <div class="di-sub">${atMax ? '⚠ En límite máximo' : '✓ Dentro de rango'}</div>
         </div>` : ''}
       </div>
@@ -3521,7 +3644,8 @@ function switchPres(i) { currentPres = i;  renderDrug(currentDrug); }
 // ── BUILD RX TEXT — vía explícita en receta ────────────────────────────────
 function buildRx(d, res, p, vd) {
   if (!res || res.error) return `Rp/\n${d.name}\n\n[Complete datos del paciente para generar prescripción]`;
-  const dR      = Math.round(res.calcMg * 100) / 100;
+  const dR      = Math.round(res.calcMg * res.dispScale * 100) / 100;
+  const du      = res.doseUnit === 'U' ? 'unidades' : (res.doseUnit === 'mcg' ? 'mcg' : 'mg');
   const ageStr  = p.a ? `${p.a} ${p.u==='years'?'años':p.u==='months'?'meses':'días'}` : '';
   const daily   = Math.min(dR * freqN(res.freq), res.maxDaily || 99999);
   const viaLabel= vd?.label || '';
@@ -3541,17 +3665,17 @@ function buildRx(d, res, p, vd) {
 
   return [
     `Rp/`,
-    `${d.name.toUpperCase()}  ${dR} mg`,
+    `${d.name.toUpperCase()}  ${dR} ${du}`,
     `Vía: ${viaLabel}${presStr}${qtyStr}`,
     ``,
     `Paciente: ${ageStr||'—'}${p.w?' — '+p.w+' kg':''}${p.height?' — '+p.height+' cm':''}`,
     `Indicación: ${d.ind}`,
     ``,
-    `Dosis: ${dR} mg/toma${res.dispRate?' ('+res.dispRate+')':''}`,
+    `Dosis: ${dR} ${du}/toma${res.dispRate?' ('+res.dispRate+')':''}`,
     `Frecuencia: ${res.freq}`,
-    `Dosis diaria: ~${Math.round(daily)} mg`,
+    `Dosis diaria: ~${Math.round(daily)} ${du}`,
     d.dur        ? `Duración: ${d.dur}` : '',
-    res.maxDaily ? `Dosis máx. diaria: ${res.maxDaily} mg` : '',
+    res.maxDaily ? `Dosis máx. diaria: ${res.maxDaily} ${du}` : '',
     res.dil      ? `\nPreparación: ${res.dil}` : '',
     res.note     ? `\nNota: ${res.note}` : ''
   ].filter(Boolean).join('\n').trim();
@@ -3859,9 +3983,10 @@ const ALLERGY_MAP = {
 
 // ── DOSE VALIDATION THRESHOLDS ────────────────────────────────────────────
 // Returns {level: 'ok'|'warn'|'block', message, detail}
-function validateDose(drugKey, calcMg, freq, p) {
+function validateDose(drugKey, calcMg, freq, p, doseUnit) {
   const d = DRUGS[drugKey];
   if (!d || !calcMg) return {level:'ok'};
+  const du = doseUnit === 'U' ? 'U' : (doseUnit === 'mcg' ? 'mcg' : 'mg');
 
   const vk = currentVia || Object.keys(d.routes)[0];
   const vd = d.routes[vk];
@@ -3879,27 +4004,27 @@ function validateDose(drugKey, calcMg, freq, p) {
 
   // Hard block: exceeds max single dose by >20%
   if (maxSingle && calcMg > maxSingle * 1.2) {
-    issues.push(`Dosis calculada (${calcMg.toFixed(1)} mg) supera el máximo por dosis (${maxSingle} mg) en ${Math.round((calcMg/maxSingle-1)*100)}%.`);
+    issues.push(`Dosis calculada (${calcMg.toFixed(1)} ${du}) supera el máximo por dosis (${maxSingle} ${du}) en ${Math.round((calcMg/maxSingle-1)*100)}%.`);
     level = 'block';
   } else if (maxSingle && calcMg > maxSingle) {
-    issues.push(`Dosis (${calcMg.toFixed(1)} mg) en límite máximo por dosis (${maxSingle} mg). Ajustar a ${maxSingle} mg.`);
+    issues.push(`Dosis (${calcMg.toFixed(1)} ${du}) en límite máximo por dosis (${maxSingle} ${du}). Ajustar a ${maxSingle} ${du}.`);
     if (level !== 'block') level = 'warn';
   }
 
   // Daily dose check
   if (maxDaily && dailyCalc > maxDaily * 1.1) {
-    issues.push(`Dosis diaria calculada (${Math.round(dailyCalc)} mg/día) supera el máximo diario (${maxDaily} mg/día).`);
+    issues.push(`Dosis diaria calculada (${Math.round(dailyCalc)} ${du}/día) supera el máximo diario (${maxDaily} ${du}/día).`);
     if (level !== 'block') level = 'block';
   } else if (maxDaily && dailyCalc > maxDaily * 0.95) {
-    issues.push(`Dosis diaria (~${Math.round(dailyCalc)} mg/día) cerca del límite máximo (${maxDaily} mg/día). Vigilar acumulación.`);
+    issues.push(`Dosis diaria (~${Math.round(dailyCalc)} ${du}/día) cerca del límite máximo (${maxDaily} ${du}/día). Vigilar acumulación.`);
     if (level === 'ok') level = 'warn';
   }
 
   // Weight-based safety net for pediátric
-  if (p.isPed && p.w > 0 && cfg.unit && cfg.unit.includes('mg/kg')) {
+  if (p.isPed && p.w > 0 && cfg.unit && (cfg.unit.includes('mg/kg') || cfg.unit.includes('U/kg') || cfg.unit.includes('mcg/kg'))) {
     const dosePerKg = calcMg / p.w;
     if (dosePerKg > cfg.dose * 1.5) {
-      issues.push(`Dosis por kg (${dosePerKg.toFixed(1)} mg/kg) supera 1.5× la dosis recomendada (${cfg.dose} mg/kg). Verificar peso.`);
+      issues.push(`Dosis por kg (${dosePerKg.toFixed(1)} ${du}/kg) supera 1.5× la dosis recomendada (${cfg.dose} ${du}/kg). Verificar peso.`);
       level = 'block';
     }
   }
@@ -4092,8 +4217,9 @@ function injectSafetyIntoPanel(key) {
 
   // 2. Dose validation
   if (res && !res.error) {
-    const dR  = Math.round(res.calcMg * 100) / 100;
-    const val = validateDose(key, res.calcMg, res.freq, p);
+    const dR  = Math.round(res.calcMg * res.dispScale * 100) / 100;
+    const duw = res.doseUnit === 'U' ? 'U' : (res.doseUnit === 'mcg' ? 'mcg' : 'mg');
+    const val = validateDose(key, res.calcMg * res.dispScale, res.freq, p, res.doseUnit);
     if (val.level === 'block') {
       safetyHtml += `<div class="dose-block-warning">
         <div class="dbw-hdr">
@@ -4104,10 +4230,10 @@ function injectSafetyIntoPanel(key) {
           ${val.issues.map(i => `<div>• ${safe(i)}</div>`).join('')}
         </div>
         <div class="dbw-values">
-          <span class="dbw-val">Calculado: ${safe(dR)} mg</span>
-          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} mg</span>` : ''}
-          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} mg</span>` : ''}
-          ${val.dailyCalc ? `<span class="dbw-val">Total diario: ~${safe(Math.round(val.dailyCalc))} mg</span>` : ''}
+          <span class="dbw-val">Calculado: ${safe(dR)} ${duw}</span>
+          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} ${duw}</span>` : ''}
+          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} ${duw}</span>` : ''}
+          ${val.dailyCalc ? `<span class="dbw-val">Total diario: ~${safe(Math.round(val.dailyCalc))} ${duw}</span>` : ''}
         </div>
       </div>`;
     } else if (val.level === 'warn') {
@@ -4120,9 +4246,9 @@ function injectSafetyIntoPanel(key) {
           ${val.issues.map(i => `<div>• ${safe(i)}</div>`).join('')}
         </div>
         <div class="dbw-values">
-          <span class="dbw-val">Calculado: ${safe(dR)} mg</span>
-          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} mg</span>` : ''}
-          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} mg</span>` : ''}
+          <span class="dbw-val">Calculado: ${safe(dR)} ${duw}</span>
+          ${val.maxSingle ? `<span class="dbw-val">Máx/dosis: ${safe(val.maxSingle)} ${duw}</span>` : ''}
+          ${val.maxDaily  ? `<span class="dbw-val">Máx diario: ${safe(val.maxDaily)} ${duw}</span>` : ''}
         </div>
       </div>`;
     }
@@ -4583,7 +4709,7 @@ function panicSelectDrug(panicKey) {
     'adrenalina_pcr':   'adrenalina',
     'adrenalina_ana':   'adrenalina',
     'atropina_pcr':     'atropina',
-    'amiodarona_pcr':   null,   // not in DB yet
+    'amiodarona_pcr':   'amiodarona',
     'hidrocortisona_ana':'hidrocortisona',
     'diazepam_status':  'diazepam',
     'midazolam_status': 'midazolam',
@@ -4817,9 +4943,11 @@ function renderDoseHierarchy(d, vk, res, calcMg) {
     : (d.routes[vk]?.ped || d.routes[vk]?.adult);
   if (!cfg) return '';
 
-  const habitual = calcMg ? `${Math.round(calcMg*100)/100} mg` : `${safe(cfg.dose)} ${safe(cfg.unit||'mg')}`;
-  const maxSingle = cfg.max_single ? `${safe(cfg.max_single)} mg` : '—';
-  const maxDaily  = cfg.max_daily  ? `${safe(cfg.max_daily)} mg/día` : '—';
+  const du = res.doseUnit === 'U' ? 'U' : (res.doseUnit === 'mcg' ? 'mcg' : 'mg');
+  const dispCalc = calcMg ? Math.round(calcMg * res.dispScale * 100) / 100 : null;
+  const habitual = dispCalc ? `${dispCalc} ${du}` : `${safe(cfg.dose)} ${safe(cfg.unit||'mg')}`;
+  const maxSingle = cfg.max_single ? `${safe(cfg.max_single)} ${du}` : '—';
+  const maxDaily  = cfg.max_daily  ? `${safe(cfg.max_daily)} ${du}/día` : '—';
 
   return `<div class="dose-hierarchy">
     <div class="sec-label" style="margin-bottom:8px">📊 Jerarquía de Dosis</div>
@@ -5070,6 +5198,11 @@ const HIGH_RISK_DRUGS = {
   enoxaparina:  'Anticoagulante. Riesgo sangrado. Solo SC, nunca IM. Ajustar en ERC.',
   oxitocina:    'Bolo IV no diluido = colapso cardiovascular. SIEMPRE infusión titulada.',
   fitomenadiona:'IV rápido = reacción anafilactoide grave. SIEMPRE infusión lenta ≥30 min.',
+  labetalol:    'Bolo IV rápido → bradicardia/hipotensión severa. Contraindicado en asma activo, bloqueo AV 2-3° e ICC descompensada.',
+  amiodarona:   'INCOMPATIBLE con SF (precipita, diluir solo en D5%). Prolonga QT — riesgo de Torsades de Pointes.',
+  insulina:     'Riesgo de hipoglucemia grave/tardía. SIEMPRE administrar junto con dextrosa y vigilar glucemia seriada.',
+  fentanilo:    'Rigidez torácica con bolo rápido/dosis alta. Depresión respiratoria (~100× potencia de morfina). Administrar SIEMPRE lento.',
+  ketamina:     'Laringoespasmo (raro) y reacciones de emergencia (alucinaciones). Contraindicada <3 meses. Vía aérea y succión disponibles.',
 };
 
 let pendingHighRiskKey = null;
